@@ -1,0 +1,104 @@
+:root {
+  --bg-color-white: #ffffff;
+  --bg-color-black: #222222;
+  --palette-bg-primary-disabled: #f7f7f7;
+  --palette-bg-primary-hover: #f7f7f7;
+  --palette-bg-primary-selected: #f7f7f7;
+  --palette-bg-primary-error: #fff8f6;
+  --palette-bg-primary-core: #ff385c;
+  --palette-bg-primary-luxe: #460479;
+  --palette-bg-primary-plus: #92174d;
+
+  --font-size-xxl: 5rem; // 80px
+  --font-size-xl: 2.5rem; // 40px
+  --font-size-lg: 1.875rem; // 30px
+  --font-size-md: 1.5rem; // 24px
+  --font-size-sm: 1.125rem; // 18px
+  --font-size-xs: 1rem; // 16px
+  --font-size-xxs: 0.875rem; // 14px
+
+  --font-weight-bold: 700;
+  --font-weight-main: 500;
+  --font-weight-sm: 400;
+
+  // Spacing (Unified spacing tokens)
+  --space-xxl: 100px;
+  --space-xl: 80px;
+  --space-lg: 60px;
+  --space-md: 40px;
+  --space-sm: 20px;
+  --space-xs: 10px;
+  --space-xxs: 5px;
+  --space-xxxs: 2px;
+  --space-xxxxs: 1px;
+
+  // Border Radius
+  --border-radius-xxl: 25px;
+  --border-radius-xl: 20px;
+  --border-radius-lg: 15px;
+  --border-radius-md: 10px;
+  --border-radius-sm: 5px;
+  --border-radius-xs: 2px;
+
+  // Shadows & Transitions
+  --box-shadow-btn: 0 0 0 0 #000;
+  --box-shadow-main: 0 1px 1px 0 rgb(255 255 255 / 5%);
+  --box-shadow-header:
+    0 1px 10px -5px rgb(50 52 52 / 0%), 0 2px 44px -5px rgb(99 68 68 / 17%);
+  --transition-main: 0.3s;
+  --transition-lg: 0.5s;
+}
+
+$width-sm: 700px;
+$width-md: 991px;
+$width-xl: 1229px;
+$width-xxl: 1400px;
+
+@mixin flex-row($justify: space-between, $align: stretch, $gap: 0) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != 0 {
+    gap: var(--space-#{$gap});
+  }
+}
+
+@mixin flex-column($gap: 0, $align: stretch, $justify: flex-start) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != 0 {
+    gap: var(--space-#{$gap});
+  }
+}
+
+@mixin container-padding($bg-color: "bg-color-default") {
+  padding: var(--space-xxl) var(--space-xl) var(--space-md) var(--space-md);
+  width: 100%;
+  @if $bg-color != null {
+    background-color: var(--#{$bg-color});
+  }
+  @media (max-width: $width-md) {
+    padding: var(--space-lg) var(--space-md) var(--space-xs) var(--space-xs);
+  }
+}
+
+@mixin grid-main($min-width: 400px, $gap: space-md) {
+  display: grid;
+  @if $gap != null {
+    gap: var(--#{$gap});
+  }
+
+  // الحالة الافتراضية لجميع الشاشات (تجاوب تلقائي ذكي)
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+
+  // إذا أردت تخصيص سلوك معين عند شاشات الـ XXL وما دونها
+  @media (max-width: $width-xxl) {
+    // يمكنك تعديل الحجم هنا إذا كنت تريد حصر الحجم في الشاشات الصغيرة
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min($min-width, 100%), 1fr)
+    );
+  }
+}
