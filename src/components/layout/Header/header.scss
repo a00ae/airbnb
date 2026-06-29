@@ -1,20 +1,52 @@
 @use "../../../styles/variables" as v;
 
+$menu-items: (
+  "homes": 0,
+  "experiences": 170px,
+  "services": 360px,
+);
 
 .header {
-    margin: 20px 20px;
-    &_container {
-        // padding: 0 0 ;
-        @include v.flex-row(space-between, center, md);
-        .list {
-            @include v.typography-style(sm, main);
+    --padding-box: 5px 12px;
+  margin: 20px 50px;
+  &_container {
+    @include v.flex-row(space-between, center, md);
+    .list {
+      @include v.typography-style(sm, main);
+      position: relative;
 
-            ul {
-                @include v.flex-row(center, center, md);
-            }
+      ul {
+        @include v.flex-row(center, center, md);
+        a {
+          @include v.flex-row(center, center, xs);
+          padding: var(--padding-box);
         }
-        .menu {
-            @include v.flex-row(center, center, md);
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        width: 120px;
+        height: 3px;
+        background-color: transparent;
+        bottom: -20px;
+        transition: transform var(--transition-main) ease-in-out;
+        transform: translateX(-100px);
+      }
+      @each $name, $translate-value in $menu-items {
+        &.#{$name}::before {
+          transform: translateX($translate-value);
+          background-color: var(--bg-color-black);
         }
+      }
     }
+    .menu {
+      @include v.flex-row(center, center, sm);
+      .translate-last {
+        padding: 15px;
+        background-color: var(--bg-color-selected);
+        border-radius: 50%;
+        @include v.flex-row(center, center);
+      }
+    }
+  }
 }

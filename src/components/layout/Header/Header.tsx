@@ -1,11 +1,15 @@
-import { RiGlobalLine, RiMenuLine } from "@remixicon/react";
+import { RiGlobalLine, RiHome9Line, RiMap2Line, RiMenuLine, RiServiceBellLine } from "@remixicon/react";
 import "./header.scss";
 import Logo from "./Logo";
-
+import { type MouseEventHandler, type MouseEvent, useRef, useState } from "react";
+interface Labels {
+  labal: string;
+  icon?: React.ReactNode;
+}
 // 1. تصحيح الكلمات الإملائية في الواجهة
 interface HeaderIconItem {
   type: "menu" | "list";
-  labels?: string[];
+  labels?: Labels[];
   icons?: React.ReactNode[];
 }
 
@@ -13,7 +17,20 @@ interface HeaderIconItem {
 const listHeaderIcons: HeaderIconItem[] = [
   {
     type: "list",
-    labels: ["Homes", "Experiences", "Services"],
+    labels: [
+      {
+        labal: "Homes",
+        icon: <RiHome9Line />,
+      },
+      {
+        labal: "Experiences",
+        icon:  <RiMap2Line />,
+      },
+      {
+        labal: "Services",
+        icon: <RiServiceBellLine />,
+      },
+    ],
   },
   {
     type: "menu",
@@ -22,6 +39,12 @@ const listHeaderIcons: HeaderIconItem[] = [
 ];
 
 const Header = () => {
+  const [activeSection, setActiveSection ] = useState<string>("homes");
+
+  const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
+    e.preventDefault();
+    setActiveSection(label);
+  }
   return (
     <header className="header">
       <div className="header_container">
@@ -30,13 +53,18 @@ const Header = () => {
         </div>
 
         {listHeaderIcons.map((item) => (
-          <div key={item.type} className={item.type}>
+          <div  key={item.type} className={`${item.type} ${item.type == "list"  ? activeSection : ""}`}>
             {item.type === "list" && (
               <>
                 {item.labels && (
                   <ul>
                     {item.labels.map((label, ind) => (
-                      <li key={ind}><a href="">{label}</a></li>
+                      <li key={ind}>
+                        <a onClick={(e: MouseEvent<HTMLAnchorElement>) => handleClickMenu(e, label.labal.toLowerCase())} href="">
+                          {label.icon}
+                          {label.labal}
+                        </a>
+                      </li>
                     ))}
                   </ul>
                 )}
@@ -46,7 +74,7 @@ const Header = () => {
             {item.type === "menu" && (
               <>
                 {item.icons &&
-                  item.icons.map((icon, i) => <div key={i}>{icon}</div>)}
+                  item.icons.map((icon, i) => <div className="translate-last" key={i}>{icon}</div>)}
               </>
             )}
           </div>
