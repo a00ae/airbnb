@@ -1,6 +1,6 @@
 :root {
   --bg-color-white: #ffffff;
-  --bg-color-black: #222222;
+  --bg-color-black: #121212;
   --palette-bg-primary-disabled: #f7f7f7;
   --palette-bg-primary-hover: #f7f7f7;
   --palette-bg-primary-selected: #f7f7f7;
@@ -73,7 +73,7 @@ $width-xxl: 1400px;
   }
 }
 
-@mixin container-padding($bg-color: "bg-color-default") {
+@mixin container-padding($bg-color: "bg-color-white") {
   padding: var(--space-xxl) var(--space-xl) var(--space-md) var(--space-md);
   width: 100%;
   @if $bg-color != null {
@@ -100,5 +100,13 @@ $width-xxl: 1400px;
       auto-fill,
       minmax(min($min-width, 100%), 1fr)
     );
+  }
+}
+
+@mixin typography-style($size, $weight, $color: bg-color-black ) {
+  font-size: var(--font-size-#{$size});
+  font-weight: var(--font-weight-#{$weight});
+  @if $color != null {
+    color: var(--#{$color});
   }
 }

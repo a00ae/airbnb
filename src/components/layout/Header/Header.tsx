@@ -36,7 +36,7 @@ const Header = () => {
                 {item.labels && (
                   <ul>
                     {item.labels.map((label, ind) => (
-                      <li key={ind}>{label}</li>
+                      <li key={ind}><a href="">{label}</a></li>
                     ))}
                   </ul>
                 )}

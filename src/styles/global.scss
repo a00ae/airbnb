@@ -1,34 +1,32 @@
 @use "./variables" as v;
-
+@import url("https://fonts.googleapis.com/css2?family=Aguafina+Script&family=Carter+One&family=Geist:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 body {
-    overflow-x: hidden;
-    width: 100%;
-    background-color: var(--bg-color-white);
+  overflow-x: hidden;
+  width: 100%;
+  background-color: var(--bg-color-white);
+  font-family: "Roboto", sans-serif;
 }
 a {
-    text-decoration: none;
-    color: var(--bg-color-black);
+  text-decoration: none;
+  color: var(--bg-color-black);
 }
 ul {
   list-style: none;
 }
 
 button {
-    border: none;
+  border: none;
 }
 
 input {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
-
-
-
