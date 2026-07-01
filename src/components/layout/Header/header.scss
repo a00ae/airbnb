@@ -42,6 +42,7 @@ $menu-items: (
     .menu {
       @include v.flex-row(center, center, sm);
       .translate-last {
+        cursor: pointer;
         padding: 15px;
         background-color: var(--bg-color-selected);
         border-radius: 50%;
