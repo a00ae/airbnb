@@ -1,53 +1,83 @@
 @use "../../../styles/variables" as v;
 
-.search {
-    width: 75%;
-    @include v.grid-main(300px, xxs);
-    border: 1px solid var(--bg-color-border);
-    box-shadow: 0 0 10px -4px rgba(0 0 0 / 0.5);
-    margin: auto;
-    border-radius: 40px;
-    &_btn {
-        padding: var(--space-sm) var(--space-md);
-        position: relative;
-        border-radius: inherit;
-        transition: background-color var(--transition-main);
-        cursor: pointer;
-        &:hover {
-            background-color: var(--bg-color-btn);
-            
-        }
-        &.when {
-            &::before {
-             content: '';
-            position: absolute;
-            top: 30%;
-            left:  -4px;
-            height: calc(100% - 60%);
-            width: 2px;
-            background-color: var(--bg-color-btn);
-            }
+// تعديل الـ Map لتشمل الاسم ونقطة ارتكاز الحركة (transform-origin) لكل عنصر
+$visible-class: (
+  "where": left center,   // يبدأ التمدد من اليسار إلى اليمين
+  "when": center center, // يبدأ التمدد من المنتصف ويتوسع للجانبين
+  "who": right center    // يبدأ التمدد من اليمين إلى اليسار
+);
 
-            &::after {
-                content: '';
-                position: absolute;
-                top: 30%;
-                right: -4px;
-                height: calc(100% - 60%);
-                width: 2px;
-                background-color: var(--bg-color-btn);
-    
-            }
-        }
-        &.who .search_icon {
-            position: absolute;
-            right: 20px;
-            top: 10%;
-            @include v.flex-row(center, center);
-            padding: 20px;
-            background-color: var(--bg-color-core);
-            border-radius: 50%;
-            color: var(--bg-color-white);
-        }       
+.search {
+  width: 75%;
+  @include v.grid-main(250px, xxs);
+  border: 1px solid var(--bg-color-border);
+  box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.5);
+  margin: auto;
+  border-radius: 40px;
+
+  &_btn {
+    padding: var(--space-sm) var(--space-md);
+    position: relative;
+    border-radius: inherit;
+    transition: background-color var(--transition-main);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--bg-color-btn);
     }
+
+    /* كود الـ pseudo-elements (before & after) للـ when كما هو في كودك */
+    &.when {
+      &::before {
+        content: ""; position: absolute; top: 30%; left: -4px;
+        height: calc(100% - 60%); width: 2px; background-color: var(--bg-color-btn);
+      }
+      &::after {
+        content: ""; position: absolute; top: 30%; right: -4px;
+        height: calc(100% - 60%); width: 2px; background-color: var(--bg-color-btn);
+      }
+    }
+
+    &.who .search_icon {
+      position: absolute; right: 20px; top: 10%;
+      @include v.flex-row(center, center); padding: 20px;
+      background-color: var(--bg-color-core); border-radius: 50%;
+      color: var(--bg-color-white);
+    }
+
+    /* القوائم المنسدلة (الحالة الافتراضية قبل الفتح) */
+    [class*="last-"] {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      width: 100%;
+      height: 200px;
+      background-color: var(--bg-color-white);
+      z-index: 1;
+      border-radius: inherit;
+      box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.5);
+      cursor: auto;
+      
+      /* تأثير الاختفاء الافتراضي */
+      opacity: 0;
+      visibility: hidden;
+      transform: scaleX(0); /* نستخدم scaleX(0) لجعل العنصر ينكمش أفقياً تماماً */
+      
+      /* إضافة الترانزيشن لتنعيم الحركة */
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, visibility 0.3s;
+    }
+
+    /* المرور على الـ Map وتطبيق نقطة الانطلاق والـ visible لكل عنصر */
+    @each $class, $origin in $visible-class {
+      .last-#{$class} {
+        transform-origin: $origin; /* هنا نحدد من أين يبدأ التمدد (left أو center أو right) */
+      }
+
+      .last-#{$class}.visible {
+        transform: scaleX(1); /* يتمدد للحجم الطبيعي عند إضافة كلاس visible */
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
 }

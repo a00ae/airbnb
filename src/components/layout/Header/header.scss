@@ -50,6 +50,11 @@ $menu-items: (
         background-color: var(--bg-color-btn);
         border-radius: 50%;
         @include v.flex-row(center, center);
+        transition: background-color var(--transition-main);
+        &:hover {
+          background-color: var(--bg-color-btn-hover);
+
+        }
       }
     }
   }
