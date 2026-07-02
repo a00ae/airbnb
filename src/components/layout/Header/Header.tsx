@@ -2,6 +2,7 @@ import { RiGlobalLine, RiHome9Line, RiMap2Line, RiMenuLine, RiServiceBellLine } 
 import "./header.scss";
 import Logo from "./Logo";
 import { type MouseEventHandler, type MouseEvent, useRef, useState } from "react";
+import Search from "./Search";
 interface Labels {
   labal: string;
   icon?: React.ReactNode;
@@ -78,8 +79,9 @@ const Header = () => {
               </>
             )}
           </div>
-        ))}
+        ))}  
       </div>
+      <Search />
     </header>
   );
 };

@@ -2,10 +2,10 @@
   --bg-color-white: #ffffff;
   --bg-color-black: #121212;
   --bg-color-selected: #f7f7f7;
+  --bg-color-core: #ff385c;
   --palette-bg-primary-disabled: #f7f7f7;
   --palette-bg-primary-hover: #f7f7f7;
   --palette-bg-primary-error: #fff8f6;
-  --palette-bg-primary-core: #ff385c;
   --palette-bg-primary-luxe: #460479;
   --palette-bg-primary-plus: #92174d;
 
@@ -86,8 +86,8 @@ $width-xxl: 1400px;
 
 @mixin grid-main($min-width: 400px, $gap: space-md) {
   display: grid;
-  @if $gap != null {
-    gap: var(--#{$gap});
+  @if $gap != 0 {
+    gap: var(--space-#{$gap});
   }
 
   // الحالة الافتراضية لجميع الشاشات (تجاوب تلقائي ذكي)

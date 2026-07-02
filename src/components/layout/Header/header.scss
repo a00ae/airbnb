@@ -9,6 +9,7 @@ $menu-items: (
 .header {
     --padding-box: 5px 12px;
   margin: 20px 50px;
+  @include v.flex-column(md);
   &_container {
     @include v.flex-row(space-between, center, md);
     .list {

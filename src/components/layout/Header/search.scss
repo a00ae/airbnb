@@ -1,0 +1,52 @@
+@use "../../../styles/variables" as v;
+
+.search {
+    width: 75%;
+    @include v.grid-main(300px, xxs);
+    box-shadow: 0 0 10px -4px rgba(0 0 0 / 0.5);
+    margin: auto;
+    border-radius: 40px;
+    &_btn {
+        padding: var(--space-sm) var(--space-md);
+        position: relative;
+        border-radius: inherit;
+        transition: background-color var(--transition-main);
+        cursor: pointer;
+        &:hover {
+            background-color: var(--bg-color-selected);
+            
+        }
+        &.when {
+            &::before {
+             content: '';
+            position: absolute;
+            top: 30%;
+            left:  -4px;
+            height: calc(100% - 60%);
+            width: 2px;
+            background-color: var(--bg-color-selected);
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 30%;
+                right: -4px;
+                height: calc(100% - 60%);
+                width: 2px;
+                background-color: var(--bg-color-selected);
+    
+            }
+        }
+        &.who .search_icon {
+            position: absolute;
+            right: 20px;
+            top: 10%;
+            @include v.flex-row(center, center);
+            padding: 20px;
+            background-color: var(--bg-color-core);
+            border-radius: 50%;
+            color: var(--bg-color-white);
+        }       
+    }
+}
