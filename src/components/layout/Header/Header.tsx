@@ -51,8 +51,8 @@ const Header = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
-  const handleMainClick = (isMenu: boolean) => {
-    setVisible(prev => (prev === isMenu ? false : isMenu));
+  const handleMainClick = (type: HeaderIconItem["type"]) => {
+    setVisible(prev => (type === "menu" ? !prev : false));
   };
 
   const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
@@ -67,10 +67,10 @@ const Header = () => {
         </div>
 
         {listHeaderIcons.map((item) => {
-          const isMain = item.type;
+          // const isMain = item.type == "menu";
           return (
             <div
-            onClick={() => handleMainClick(isMain)}
+            onClick={() => handleMainClick(item.type)}
               ref={ref}
               key={item.type}
               className={`${item.type} ${item.type == "list" ? activeSection : ""}`}>
