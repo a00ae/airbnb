@@ -51,6 +51,10 @@ const Header = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
+  const handleMainClick = (isMenu: boolean) => {
+    setVisible(prev => (prev === isMenu ? false : isMenu));
+  };
+
   const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
     e.preventDefault();
     setActiveSection(label);
@@ -62,46 +66,52 @@ const Header = () => {
           <Logo />
         </div>
 
-        {listHeaderIcons.map((item) => (
-          <div
-            ref={ref}
-            key={item.type}
-            className={`${item.type} ${item.type == "list" ? activeSection : ""}`}>
-            {item.type === "list" && (
-              <>
-                {item.labels && (
-                  <ul>
-                    {item.labels.map((label, ind) => (
-                      <li key={ind}>
-                        <a
-                          onClick={(e: MouseEvent<HTMLAnchorElement>) =>
-                            handleClickMenu(e, label.labal.toLowerCase())
-                          }
-                          href="">
-                          {label.icon}
-                          {label.labal}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </>
-            )}
+        {listHeaderIcons.map((item) => {
+          const isMain = item.type;
+          return (
+            <div
+            onClick={() => handleMainClick(isMain)}
+              ref={ref}
+              key={item.type}
+              className={`${item.type} ${item.type == "list" ? activeSection : ""}`}>
+              {item.type === "list" && (
+                <>
+                  {item.labels && (
+                    <ul>
+                      {item.labels.map((label, ind) => (
+                        <li key={ind}>
+                          <a
+                            onClick={(e: MouseEvent<HTMLAnchorElement>) =>
+                              handleClickMenu(e, label.labal.toLowerCase())
+                            }
+                            href="">
+                            {label.icon}
+                            {label.labal}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              )}
 
-            {item.type === "menu" && (
-              <>
-                {item.icons &&
-                  item.icons.map((icon, i) => (
-                    <div className="translate-last" key={i}>
-                      {icon}
-                      <div
-                        className={`drop-down-${item.type} ${visible ? "active" : ""}`}>jj</div>
-                    </div>
-                  ))}
-              </>
-            )}
-          </div>
-        ))}
+              {item.type === "menu" && (
+                <>
+                  {item.icons &&
+                    item.icons.map((icon, i) => (
+                      <div className="translate-last" key={i}>
+                        {icon}
+                        <div
+                          className={`drop-down-${item.type} ${visible ? "active" : ""}`}>
+                          jj
+                        </div>
+                      </div>
+                    ))}
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
       <Search />
     </header>
