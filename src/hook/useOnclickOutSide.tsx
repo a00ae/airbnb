@@ -6,7 +6,6 @@ type OutSide = {
   handleDocumentClick: () => void;
   visible?: string | boolean | null;
 }
-
 export const useOnclickOutSide = ({ ref, handleDocumentClick, visible }: OutSide) => {
   
   useEffect(() => {
@@ -17,11 +16,11 @@ export const useOnclickOutSide = ({ ref, handleDocumentClick, visible }: OutSide
     };
 
     if (visible) {
-      window.addEventListener("click", handleClick);
+      window.addEventListener("mousedown", handleClick);
     }
 
     return () => {
-      window.removeEventListener("click", handleClick);
+      window.removeEventListener("mousedown", handleClick);
     };
   }, [visible, ref, handleDocumentClick]); // إضافة جميع التبعيات هنا
 };

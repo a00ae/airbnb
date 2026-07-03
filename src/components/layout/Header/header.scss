@@ -51,6 +51,26 @@ $menu-items: (
         border-radius: 50%;
         @include v.flex-row(center, center);
         transition: background-color var(--transition-main);
+        position: relative;
+        [class*="drop-down-"] {
+          position: absolute;
+          top: calc(100% + 10px);
+          width: 300px;
+          height: 200px;
+          background-color: red;
+          opacity: 0;
+          visibility: hidden;
+
+
+          &.visible {
+            opacity: 1;
+            visibility: visible;
+          }
+          
+        }
+        .drop-down-mune {
+          left: -20%;
+        }
         &:hover {
           background-color: var(--bg-color-btn-hover);
 
