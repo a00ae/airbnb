@@ -1,8 +1,9 @@
 import { RiGlobalLine, RiHome9Line, RiMap2Line, RiMenuLine, RiServiceBellLine } from "@remixicon/react";
 import "./header.scss";
 import Logo from "./Logo";
-import { type MouseEventHandler, type MouseEvent, useRef, useState } from "react";
+import {  type MouseEvent, useState } from "react";
 import Search from "./Search";
+
 interface Labels {
   labal: string;
   icon?: React.ReactNode;

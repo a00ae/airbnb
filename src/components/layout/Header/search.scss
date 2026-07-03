@@ -1,15 +1,14 @@
 @use "../../../styles/variables" as v;
 
-// تعديل الـ Map لتشمل الاسم ونقطة ارتكاز الحركة (transform-origin) لكل عنصر
 $visible-class: (
-  "where": left center,   // يبدأ التمدد من اليسار إلى اليمين
-  "when": center center, // يبدأ التمدد من المنتصف ويتوسع للجانبين
-  "who": right center    // يبدأ التمدد من اليمين إلى اليسار
+  "where": (left center, 140%, 0, auto),   // يبدأ التمدد من اليسار إلى اليمين
+  "when": (center center, 280%, -90%, auto), // يبدأ التمدد من المنتصف ويتوسع للجانبين
+  "who": (right center, 140%, auto, 0)    // يبدأ التمدد من اليمين إلى اليسار
 );
 
 .search {
   width: 75%;
-  @include v.grid-main(250px, xxs);
+  @include v.grid-main(300px, xxs);
   border: 1px solid var(--bg-color-border);
   box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.5);
   margin: auto;
@@ -50,7 +49,7 @@ $visible-class: (
       position: absolute;
       top: calc(100% + 10px);
       left: 0;
-      width: 100%;
+      width: 160%;
       height: 200px;
       background-color: var(--bg-color-white);
       z-index: 1;
@@ -61,16 +60,23 @@ $visible-class: (
       /* تأثير الاختفاء الافتراضي */
       opacity: 0;
       visibility: hidden;
-      transform: scaleX(0); /* نستخدم scaleX(0) لجعل العنصر ينكمش أفقياً تماماً */
+      transform: scaleX(0.9); /* نستخدم scaleX(0) لجعل العنصر ينكمش أفقياً تماماً */
       
-      /* إضافة الترانزيشن لتنعيم الحركة */
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, visibility 0.3s;
     }
 
-    /* المرور على الـ Map وتطبيق نقطة الانطلاق والـ visible لكل عنصر */
-    @each $class, $origin in $visible-class {
+    @each $class, $properties in $visible-class {
+
+        $origin: nth($properties, 1 );
+        $width: nth($properties, 2);
+        $left: nth($properties, 3);
+        $right: nth($properties, 4);
+        
       .last-#{$class} {
-        transform-origin: $origin; /* هنا نحدد من أين يبدأ التمدد (left أو center أو right) */
+        transform-origin: $origin; 
+        width: $width;
+        left: $left;
+        right: $right;
       }
 
       .last-#{$class}.visible {
