@@ -9,6 +9,7 @@ import "./header.scss";
 import Logo from "./Logo";
 import { type MouseEvent, useRef, useState } from "react";
 import Search from "./Search";
+import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
 
 interface Labels {
   labal: string;
@@ -65,6 +66,16 @@ const Header = () => {
     setVisible((prev) => (prev === labal ? null : labal));
   };
 
+  const handleDocumentClick = () => {
+    setVisible(null);
+  }
+
+  useOnclickOutSide({
+    ref,
+    handleDocumentClick,
+    visible 
+  })
+
   const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
     e.preventDefault();
     setActiveSection(label);
@@ -79,7 +90,6 @@ const Header = () => {
         {listHeaderIcons.map((item) => {
           return (
             <div
-              ref={ref}
               key={item.type}
               className={`${item.type} ${item.type == "list" ? activeSection : ""}`}>
               {item.type === "list" && (
@@ -110,11 +120,13 @@ const Header = () => {
                       const isCurrentActive: boolean = visible === icon.labal
                        return (
                         <div
+                         
                           onClick={() => handleMainClick(icon.labal)}
                           className="translate-last"
                           key={i}>
                           {icon.icon}
                           <div
+                           ref={ref}
                             className={`drop-down-${icon.labal} ${isCurrentActive ? "visible" : ""}`}></div>
                         </div>
                       );
