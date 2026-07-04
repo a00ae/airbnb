@@ -48,6 +48,11 @@ const Search = () => {
           </div>
         );
       })}
+
+      <div className="search_input">
+        <RiSearchLine/>
+        <span data-search>Start yuor searh</span>
+      </div>
     </div>
   );
 };

@@ -6,8 +6,22 @@ $menu-items: (
   "services": 360px,
 );
 
+$drop-down: (
+  "global": (
+    "width": 80%,
+    "height": 500px,
+    "transform": translateY(100%),
+    // ملاحظة: تم تصحيح لون الهاش ليكون 6 رموز
+  ),
+  "menu": (
+    "width": 330px,
+    "height": 240px,
+    "transform": translateY(-10px),
+  ),
+);
+
 .header {
-    --padding-box: 5px 12px;
+  --padding-box: 5px 12px;
   padding: 20px 50px 80px;
   @include v.flex-column(md);
   background: var(--bg-color-selected);
@@ -51,38 +65,73 @@ $menu-items: (
         border-radius: 50%;
         @include v.flex-row(center, center);
         transition: background-color var(--transition-main);
-        position: relative;
+        // position: relative;
         [class*="drop-down-"] {
           position: absolute;
-          top: calc(100% + 10px);
-          width: 300px;
-          height: 200px;
-          background-color: red;
+          background-color: var(--bg-color-white);
+          top: calc(90px + 10px);
           opacity: 0;
           visibility: hidden;
+          box-shadow: 0 0 10px -4px  rgba(0 0 0 / 0.2);
+          z-index: 1;
+          transition: transform 0.4s ease;
+          max-height: 550px;
+          overflow-y: auto;
+          scrollbar-width: thin;
+          scrollbar-color: var(--bg-color-black) transparent;
 
-
+          @media (max-width: v.$width-md) {
+            top: calc(70px + 10px);
+          }
           &.visible {
             opacity: 1;
             visibility: visible;
+            transform: translateY(0);
           }
-          
+        }
+        @each $class-name, $properties in $drop-down {
+          // استدعاء القيم عبر أسمائها وليس ترتيبها
+          $width: map-get($properties, "width");
+          $height: map-get($properties, "height");
+          $transform: map-get($properties, "transform");
+
+          .drop-down-#{$class-name} {
+            width: $width;
+            height: $height;
+            transform: $transform;
+            @if $class-name == menu {
+              right: 20px;
+              border-radius: var(--border-radius-xl);
+            } @else {
+              left: 10%;
+              right: auto;
+              border-radius: 40px;
+            }
+          }
         }
         &:hover {
           background-color: var(--bg-color-btn-hover);
-
         }
       }
     }
   }
 
   &::after {
-    content: '';
+    content: "";
     width: 100%;
     height: 2px;
     position: absolute;
     left: 0;
     bottom: 0;
     background-color: var(--bg-color-btn);
+  }
+}
+
+@media (max-width: v.$width-md) {
+  .header {
+    padding: 10px 10px 30px;
+  }
+  .list {
+    display: none;
   }
 }

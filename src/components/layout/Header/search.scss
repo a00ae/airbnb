@@ -7,6 +7,7 @@ $visible-class: (
 );
 
 .search {
+  --padding-box: var(--space-sm) var(--space-md);
   width: 75%;
   @include v.grid-main(300px, xxs);
   border: 1px solid var(--bg-color-border);
@@ -15,7 +16,7 @@ $visible-class: (
   border-radius: 40px;
 
   &_btn {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--padding-box);
     position: relative;
     border-radius: inherit;
     transition: background-color var(--transition-main);
@@ -86,4 +87,26 @@ $visible-class: (
       }
     }
   }
+
+  &_input {
+    display: none;
+    padding: var(--padding-box);
+    cursor: pointer;
+    @include v.typography-style(sm, main, bg-color-black);
+  }
+}
+
+@media (max-width: v.$width-xl) {
+  .search {
+    width: 90%;
+    &_btn {
+      display: none;
+    }
+    &_input {
+      @include v.flex-row(center, center, xs);
+    }
+  }
+  
+  
+  
 }
