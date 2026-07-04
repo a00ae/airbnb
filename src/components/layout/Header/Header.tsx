@@ -42,17 +42,27 @@ const listHeaderIcons: HeaderIconItem[] = [
   },
   {
     type: "menu",
-    icons: [<RiGlobalLine />, <RiMenuLine />],
+    labels: [
+      {
+        labal: "global",
+        icon: <RiGlobalLine />,
+      },
+      {
+        labal: "menu",
+        icon: <RiMenuLine />,
+      },
+    ],
+    // icons: [<RiGlobalLine />, ],
   },
 ];
 
 const Header = () => {
   const [activeSection, setActiveSection] = useState<string>("homes");
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
 
-  const handleMainClick = (type: HeaderIconItem["type"]) => {
-    setVisible(prev => (type === "menu" ? !prev : false));
+  const handleMainClick = (labal: string) => {
+    setVisible((prev) => (prev === labal ? null : labal));
   };
 
   const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
@@ -67,10 +77,8 @@ const Header = () => {
         </div>
 
         {listHeaderIcons.map((item) => {
-          // const isMain = item.type == "menu";
           return (
             <div
-            onClick={() => handleMainClick(item.type)}
               ref={ref}
               key={item.type}
               className={`${item.type} ${item.type == "list" ? activeSection : ""}`}>
@@ -97,16 +105,20 @@ const Header = () => {
 
               {item.type === "menu" && (
                 <>
-                  {item.icons &&
-                    item.icons.map((icon, i) => (
-                      <div className="translate-last" key={i}>
-                        {icon}
+                  {item.labels &&
+                    item.labels.map((icon, i) => {
+                      const isCurrentActive: boolean = visible === icon.labal
+                       return (
                         <div
-                          className={`drop-down-${item.type} ${visible ? "active" : ""}`}>
-                          jj
+                          onClick={() => handleMainClick(icon.labal)}
+                          className="translate-last"
+                          key={i}>
+                          {icon.icon}
+                          <div
+                            className={`drop-down-${icon.labal} ${isCurrentActive ? "visible" : ""}`}></div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                 </>
               )}
             </div>
