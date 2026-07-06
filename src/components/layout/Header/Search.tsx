@@ -33,7 +33,7 @@ const Search = () => {
           <div
             onClick={() => handleClickSearch(title)}
             key={title}
-            className={`search_btn ${currentTitleLower}`}>
+            className={`search_btn ${currentTitleLower} ${isCurrentActive ? "visible" : ""}`}>
             <p>{title}</p>
             <span>{descraption}</span>
 

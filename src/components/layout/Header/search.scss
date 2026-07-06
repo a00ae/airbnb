@@ -96,10 +96,10 @@ $visible-class: (
   }
 }
 
-@media (max-width: v.$width-xl) {
+@media (max-width: v.$width-xxl) {
   .search {
     width: 90%;
-    
+    @include v.flex-row(center, center);
     &_btn {
       display: none;
     }
