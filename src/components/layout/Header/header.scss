@@ -10,13 +10,14 @@ $drop-down: (
   "global": (
     "width": 80%,
     "height": 500px,
-    "transform": translateY(100%),
+    "transform": translateY(-40px)
+
     // ملاحظة: تم تصحيح لون الهاش ليكون 6 رموز
   ),
   "menu": (
     "width": 330px,
     "height": 240px,
-    "transform": translateY(-10px),
+    "transform": translateY(10px)
   ),
 );
 
@@ -66,54 +67,57 @@ $drop-down: (
         @include v.flex-row(center, center);
         transition: background-color var(--transition-main);
         // position: relative;
-        [class*="drop-down-"] {
-          position: absolute;
-          background-color: var(--bg-color-white);
-          top: calc(90px + 10px);
-          opacity: 0;
-          visibility: hidden;
-          box-shadow: 0 0 10px -4px  rgba(0 0 0 / 0.2);
-          z-index: 1;
-          transition: transform 0.4s ease;
-          max-height: 550px;
-          overflow-y: auto;
-          scrollbar-width: thin;
-          scrollbar-color: var(--bg-color-black) transparent;
-
-          @media (max-width: v.$width-md) {
-            top: calc(70px + 10px);
-          }
-          &.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-          }
-        }
-        @each $class-name, $properties in $drop-down {
-          // استدعاء القيم عبر أسمائها وليس ترتيبها
-          $width: map-get($properties, "width");
-          $height: map-get($properties, "height");
-          $transform: map-get($properties, "transform");
-
-          .drop-down-#{$class-name} {
-            width: $width;
-            height: $height;
-            transform: $transform;
-            @if $class-name == menu {
-              right: 20px;
-              border-radius: var(--border-radius-xl);
-            } @else {
-              left: 10%;
-              right: auto;
-              border-radius: 40px;
-            }
-          }
-        }
-        &:hover {
-          background-color: var(--bg-color-btn-hover);
-        }
       }
     }
+    [class*="drop-down-"] {
+      position: absolute;
+      background-color: var(--bg-color-white);
+      top: calc(80px + 10px);
+      opacity: 0;
+      visibility: hidden;
+      box-shadow: 0 0 10px -4px rgba(0 0 0 / 0.2);
+      z-index: 1;
+      transition: transform 0.4s ease;
+      max-height: 550px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bg-color-black) transparent;
+
+      @media (max-width: v.$width-md) {
+        top: calc(70px + 10px);
+      }
+      &.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+       
+      }
+    }
+    @each $class-name, $properties in $drop-down {
+      // استدعاء القيم عبر أسمائها وليس ترتيبها
+      $width: map-get($properties, "width");
+      $height: map-get($properties, "height");
+      $transform: map-get($properties, "transform");
+
+      .dialog.drop-down-#{$class-name} {
+        width: $width;
+        height: $height;
+        transform: $transform;
+        
+        @if $class-name == menu {
+          right: 20px;
+          border-radius: var(--border-radius-xl);
+        } @else {
+          left: 10%;
+          right: auto;
+          top: 140px;
+          border-radius: 40px;
+        }
+      }
+
+
+    }
+
   }
 
   &::after {
