@@ -1,5 +1,5 @@
 import { RiSearchLine } from "@remixicon/react";
-import { itemButtonSearch } from "./index";
+import { dataWhere, itemButtonSearch } from "./index";
 import "./search.scss";
 import { useRef, useState } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
@@ -23,6 +23,8 @@ const Search = () => {
     setActiveLabel((prev) => (prev === label ? null : label));
   };
 
+
+ 
   return (
     <div ref={ref} className="search">
       {itemButtonSearch.map(({ descraption, title }) => {
@@ -37,6 +39,7 @@ const Search = () => {
             <p>{title}</p>
             <span>{descraption}</span>
 
+
             {title === "Who" && (
               <div className="search_icon">
                 <RiSearchLine />
@@ -44,7 +47,35 @@ const Search = () => {
             )}
 
             <div
-              className={`last-${currentTitleLower} ${isCurrentActive ? "visible" : ""}`}></div>
+              className={`last-${currentTitleLower} ${isCurrentActive ? "visible" : ""}`}>
+                {dataWhere.map((item) => {
+                  return(
+                    <div key={item.type} className="child">
+                      {item.type == "where" && currentTitleLower == "where" ?
+                      <>
+                      <span>Suggested destinations</span>
+                      {item.card.map(({id, iconDataWhere, titleDataWhere, descraptionDataWhere, bgColor}) => {
+                        return (
+                          <div key={id} className="card_btn">
+                            <div style={{backgroundColor: bgColor}} className={`svg`}>
+                              {iconDataWhere}
+                            </div>
+                            <div className="card_descraption">
+                              <span>{titleDataWhere}</span>
+                              <p>{descraptionDataWhere}</p>
+                            </div>
+                          </div>
+
+                        )
+                      })}
+                      
+                      </> : null
+                      }
+
+                    </div>
+                  )
+                })}
+              </div>
           </div>
         );
       })}
