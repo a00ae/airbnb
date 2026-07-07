@@ -23,8 +23,6 @@ const Search = () => {
     setActiveLabel((prev) => (prev === label ? null : label));
   };
 
-
- 
   return (
     <div ref={ref} className="search">
       {itemButtonSearch.map(({ descraption, title }) => {
@@ -39,7 +37,6 @@ const Search = () => {
             <p>{title}</p>
             <span>{descraption}</span>
 
-
             {title === "Who" && (
               <div className="search_icon">
                 <RiSearchLine />
@@ -48,40 +45,55 @@ const Search = () => {
 
             <div
               className={`last-${currentTitleLower} ${isCurrentActive ? "visible" : ""}`}>
-                {dataWhere.map((item) => {
-                  return(
-                    <div key={item.type} className="child">
-                      {item.type == "where" && currentTitleLower == "where" ?
+              {dataWhere.map((item) => {
+                return (
+                  <div key={item.type} className="child">
+                    {currentTitleLower == "where" && (
                       <>
-                      <span>Suggested destinations</span>
-                      {item.card.map(({id, iconDataWhere, titleDataWhere, descraptionDataWhere, bgColor}) => {
-                        return (
-                          <div key={id} className="card_btn">
-                            <div style={{backgroundColor: bgColor}} className={`svg`}>
-                              {iconDataWhere}
-                            </div>
-                            <div className="card_descraption">
-                              <span>{titleDataWhere}</span>
-                              <p>{descraptionDataWhere}</p>
-                            </div>
-                          </div>
+                        <span>Suggested destinations</span>
+                        {item.whereData?.map(
+                          ({
+                            id,
+                            iconDataWhere,
+                            titleDataWhere,
+                            descraptionDataWhere,
+                            bgColor,
+                          }) => {
+                            return (
+                              <div key={id} className="card_btn">
+                                <div
+                                  style={{ backgroundColor: bgColor }}
+                                  className={`svg`}>
+                                  {iconDataWhere}
+                                </div>
+                                <div className="card_descraption">
+                                  <span>{titleDataWhere}</span>
+                                  <p>{descraptionDataWhere}</p>
+                                </div>
+                              </div>
+                            );
+                          },
+                        )}
+                      </>
+                    )}
 
-                        )
-                      })}
-                      
-                      </> : null
-                      }
-
-                    </div>
-                  )
-                })}
-              </div>
+                    {currentTitleLower == "who" && (
+                      <>
+                        {item.whoData?.map(() => {
+                          return <div></div>;
+                        })}
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         );
       })}
 
       <div className="search_input">
-        <RiSearchLine/>
+        <RiSearchLine />
         <span data-search>Start yuor searh</span>
       </div>
     </div>
