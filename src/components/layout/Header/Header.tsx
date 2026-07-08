@@ -10,8 +10,7 @@ import Logo from "./Logo";
 import { type MouseEvent, useState } from "react";
 import Search from "./Search";
 import Dialog from "../../ui/Dialog/Dialog";
-import DropDown from "../../ui/Dialog/Drop-down";
-import { itemButtonSearch } from ".";
+
 
 interface Labels {
   label: string;
