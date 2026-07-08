@@ -104,7 +104,7 @@ $bg-color-svg: (#b2ebf2, #b2ebf2, #f8bbd0, #f8bbd0, #f0f4c3, #f0f4c3);
         opacity 0.2s ease,
         visibility 0.3s;
 
-      .child {
+      [class*="child-"] {
         @include v.flex-column(xs);
         overflow-y: auto;
         padding: 20px;
@@ -137,7 +137,7 @@ $bg-color-svg: (#b2ebf2, #b2ebf2, #f8bbd0, #f8bbd0, #f0f4c3, #f0f4c3);
           background: transparent;
         }
 
-        .card_btn {
+        .where_card-btn {
           @include v.flex-row(flex-start, stretch, xs);
           padding: 15px 10px;
           border-radius: 5px;
@@ -162,6 +162,10 @@ $bg-color-svg: (#b2ebf2, #b2ebf2, #f8bbd0, #f8bbd0, #f0f4c3, #f0f4c3);
           &:hover {
             background-color: var(--bg-color-btn);
           }
+        }
+
+        .who_card-btn {
+
         }
       }
     }
