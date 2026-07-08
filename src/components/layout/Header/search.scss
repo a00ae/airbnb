@@ -1,34 +1,5 @@
 @use "../../../styles/variables" as v;
 
-$visible-class: (
-  "where": (
-    left center,
-    140%,
-    0,
-    auto,
-  ),
-  // يبدأ التمدد من اليسار إلى اليمين
-  "when": (
-      center center,
-      280%,
-      -90%,
-      auto,
-    ),
-  // يبدأ التمدد من المنتصف ويتوسع للجانبين
-  "who": (
-      right center,
-      140%,
-      auto,
-      0,
-    ), // يبدأ التمدد من اليمين إلى اليسار
-);
-
-// $last-child-card-button: (
-//   "where_card-btn": (
-
-//   ),
-// )
-
 .search {
   --padding-box: var(--space-sm) var(--space-md);
   width: 75%;
@@ -50,7 +21,6 @@ $visible-class: (
       background-color: var(--bg-color-btn);
     }
 
-    /* كود الـ pseudo-elements (before & after) للـ when كما هو في كودك */
     &.when {
       &::before {
         content: "";
@@ -83,25 +53,6 @@ $visible-class: (
       color: var(--bg-color-white);
     }
 
-    // @each $class, $properties in $visible-class {
-    //   $origin: nth($properties, 1);
-    //   $width: nth($properties, 2);
-    //   $left: nth($properties, 3);
-    //   $right: nth($properties, 4);
-
-    //   .last-#{$class} {
-    //     transform-origin: $origin;
-    //     width: $width;
-    //     left: $left;
-    //     right: $right;
-    //   }
-
-    //   .last-#{$class}.visible {
-    //     transform: scaleX(1); /* يتمدد للحجم الطبيعي عند إضافة كلاس visible */
-    //     opacity: 1;
-    //     visibility: visible;
-    //   }
-    // }
   }
 
   &_input {
@@ -137,7 +88,6 @@ $visible-class: (
         border-radius: 4px;
       }
 
-      /* 3. جعل خلفية المسار شفافة لتطابق كود فايرفوكس لديك */
       &::-webkit-scrollbar-track {
         background: transparent;
       }
