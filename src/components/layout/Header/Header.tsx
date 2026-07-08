@@ -112,7 +112,7 @@ const Header = () => {
           setVisible={setVisible}
         />
       </div>
-      <Search />
+      <Search visible={!!visible}/>
       
     </header>
   );
