@@ -23,7 +23,11 @@ $visible-class: (
     ), // يبدأ التمدد من اليمين إلى اليسار
 );
 
-$bg-color-svg: (#b2ebf2, #b2ebf2, #f8bbd0, #f8bbd0, #f0f4c3, #f0f4c3);
+// $last-child-card-button: (
+//   "where_card-btn": (
+
+//   ),
+// )
 
 .search {
   --padding-box: var(--space-sm) var(--space-md);
@@ -165,7 +169,29 @@ $bg-color-svg: (#b2ebf2, #b2ebf2, #f8bbd0, #f8bbd0, #f0f4c3, #f0f4c3);
         }
 
         .who_card-btn {
-
+          @include v.flex-row(space-between, center, xs);
+          .who-descraption {
+            @include v.flex-column(xxs);
+            span {
+              @include v.typography-style(sm, main, bg-color-black);
+            }
+            p {
+              @include v.typography-style(xs, sm, bg-color-grey);
+            }
+          }
+          .who-number {
+            @include v.flex-row(center, center, xs);
+            @include v.typography-style(sm, main, bg-color-black);
+            .increment, .discriment {
+              padding: 10px 15px;
+              background-color: var(--bg-color-selected);
+              border-radius: 50%;
+              @include v.flex-row(center, center);
+            }
+            .valued {
+              @include v.flex-row(center, center);
+            }
+          }
         }
       }
     }
