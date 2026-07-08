@@ -1,5 +1,5 @@
 import { RiSearchLine } from "@remixicon/react";
-import { dataWhere, itemButtonSearch } from "./index";
+import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
 import { useEffect, useRef, useState } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
@@ -9,12 +9,38 @@ type Props = {
   visible: boolean;
 };
 
+// 1. Independent card component (contains its own counter)
+const WhoCard = ({ who }: { who: DataSearchWho }) => {
+  // Each card has its own independent counter, starting from 0, for example
+  const [count, setCount] = useState(0); 
+
+  return (
+    <div className="who_card-btn">
+      <div className="who-descraption">
+        <span>{who.titleDataWho}</span>
+        <p>{who.descraptionDataWho}</p>
+      </div>
+      <div className="who-number">
+        <span
+          onClick={() => setCount((prev) => Math.max(0, prev - 1))} 
+          className="discriment">
+          —
+        </span>
+        <span className="valued">{count}</span>
+        <span
+          onClick={() => setCount((prev) => prev + 1)}
+          className="increment">
+          +
+        </span>
+      </div>
+    </div>
+  );
+};
+
 /*This section is the search section located in the Header. */
 
 const Search = ({ visible }: Props) => {
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
-  const [increment, setIncrement] = useState<number>(0);
-  // const [active, setAcive] = useState<string | null>(null);
   /* Take a reference from the element */
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -71,7 +97,7 @@ const Search = ({ visible }: Props) => {
           </div>
         );
       })}
-        {/* One-button search for small screens */}
+      {/* One-button search for small screens */}
       <div className="search_input">
         <RiSearchLine />
         <span data-search>Start yuor searh</span>
@@ -114,26 +140,8 @@ const Search = ({ visible }: Props) => {
                 {/* قسم الأشخاص - Who - People section*/}
                 {item.type === "who" && (
                   <>
-                    {item.whoData?.map((who, index) => (
-                      <div key={index} className="who_card-btn">
-                        <div className="who-descraption">
-                          <span>{who.titleDataWho}</span>
-                          <p>{who.descraptionDataWho}</p>
-                        </div>
-                        <div className="who-number">
-                          <span
-                            onClick={() => setIncrement(increment - 1)}
-                            className="discriment">
-                            —
-                          </span>
-                          <span className="valued">{increment}</span>
-                          <span
-                            onClick={() => setIncrement(increment + 1)}
-                            className="increment">
-                            +
-                          </span>
-                        </div>
-                      </div>
+                    {item.whoData?.map((who) => (
+                      <WhoCard key={who.id} who={who} /> // استخدام id كـ key لمنع مشاكل الأداء
                     ))}
                   </>
                 )}
