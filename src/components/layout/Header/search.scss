@@ -37,7 +37,7 @@ $visible-class: (
   box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.5);
   margin: auto;
   border-radius: 40px;
-  position:  relative;
+  position: relative;
 
   &_btn {
     padding: var(--padding-box);
@@ -83,122 +83,6 @@ $visible-class: (
       color: var(--bg-color-white);
     }
 
-    /* القوائم المنسدلة (الحالة الافتراضية قبل الفتح) */
-    [class*="last-"] {
-      position: absolute;
-      top: calc(100% + 10px);
-      left: 0;
-      width: 160%;
-      overflow: hidden;
-      background-color: var(--bg-color-white);
-      z-index: 1;
-      border-radius: inherit;
-      box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.5);
-      cursor: auto;
-      padding: 3px;
-
-      /* تأثير الاختفاء الافتراضي */
-      opacity: 0;
-      visibility: hidden;
-      transform: scaleX(
-        0.9
-      ); /* نستخدم scaleX(0) لجعل العنصر ينكمش أفقياً تماماً */
-
-      transition:
-        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.2s ease,
-        visibility 0.3s;
-
-      [class*="child-"] {
-        @include v.flex-column(xs);
-        overflow-y: auto;
-        padding: 20px;
-        max-height: 420px;
-
-        /* تنسيق متصفح Firefox (يخفي الأسهم تلقائيًا ويجعل الشريط نحيفًا) */
-        scrollbar-width: thin;
-        scrollbar-color: var(--bg-color-border) transparent;
-
-        /* تنسيق متصفحات WebKit (Chrome, Safari, Edge) */
-        &::-webkit-scrollbar {
-          width: 4px; /* عرض شريط التمرير */
-        }
-
-        /* 1. الكود المسؤول عن إخفاء الأسهم تماماً */
-        &::-webkit-scrollbar-button {
-          display: none;
-          width: 0;
-          height: 0;
-        }
-
-        /* 2. تحديد لون المؤشر المتحرك لكي يظهر (لأنك قمت بتحديد عرض 4px للشريط) */
-        &::-webkit-scrollbar-thumb {
-          background-color: var(--bg-color-border);
-          border-radius: 4px;
-        }
-
-        /* 3. جعل خلفية المسار شفافة لتطابق كود فايرفوكس لديك */
-        &::-webkit-scrollbar-track {
-          background: transparent;
-        }
-
-        .where_card-btn {
-          @include v.flex-row(flex-start, stretch, xs);
-          padding: 15px 10px;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: background-color var(--transition-main);
-          .svg {
-            @include v.flex-row(center, center);
-            padding: 10px;
-            border-radius: inherit;
-          }
-
-          .card_descraption {
-            @include v.flex-column(xxs);
-            span {
-              @include v.typography-style(sm, main, bg-color-black);
-            }
-            p {
-              @include v.typography-style(xs, sm, bg-color-grey);
-            }
-          }
-
-          &:hover {
-            background-color: var(--bg-color-btn);
-          }
-        }
-
-        .who_card-btn {
-          @include v.flex-row(space-between, center, xs);
-          padding: var(--padding-box);
-          .who-descraption {
-            @include v.flex-column(xxs);
-            span {
-              @include v.typography-style(sm, main, bg-color-black);
-            }
-            p {
-              @include v.typography-style(xs, sm, bg-color-grey);
-            }
-          }
-          .who-number {
-            @include v.flex-row(center, center, xs);
-            @include v.typography-style(sm, main, bg-color-black);
-            .increment, .discriment {
-              padding: 10px 15px;
-              background-color: var(--bg-color-selected);
-              border-radius: 50%;
-              @include v.flex-row(center, center);
-              cursor: pointer
-            }
-            .valued {
-              @include v.flex-row(center, center);
-            }
-          }
-        }
-      }
-    }
-
     // @each $class, $properties in $visible-class {
     //   $origin: nth($properties, 1);
     //   $width: nth($properties, 2);
@@ -225,6 +109,95 @@ $visible-class: (
     padding: var(--padding-box);
     cursor: pointer;
     @include v.typography-style(sm, main, bg-color-black);
+  }
+
+  .drop-down {
+    overflow: hidden;
+    padding: 5px;
+    [class*="child-"] {
+      @include v.flex-column(xs);
+      overflow-y: auto;
+      padding: 20px;
+      max-height: 100%;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bg-color-border) transparent;
+
+      &::-webkit-scrollbar {
+        width: 4px; 
+      }
+
+      &::-webkit-scrollbar-button {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--bg-color-border);
+        border-radius: 4px;
+      }
+
+      /* 3. جعل خلفية المسار شفافة لتطابق كود فايرفوكس لديك */
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .where_card-btn {
+        @include v.flex-row(flex-start, stretch, xs);
+        padding: 15px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color var(--transition-main);
+        .svg {
+          @include v.flex-row(center, center);
+          padding: 10px;
+          border-radius: inherit;
+        }
+
+        .card_descraption {
+          @include v.flex-column(xxs);
+          span {
+            @include v.typography-style(sm, main, bg-color-black);
+          }
+          p {
+            @include v.typography-style(xs, sm, bg-color-grey);
+          }
+        }
+
+        &:hover {
+          background-color: var(--bg-color-btn);
+        }
+      }
+
+      .who_card-btn {
+        @include v.flex-row(space-between, center, xs);
+        padding: var(--padding-box);
+        .who-descraption {
+          @include v.flex-column(xxs);
+          span {
+            @include v.typography-style(sm, main, bg-color-black);
+          }
+          p {
+            @include v.typography-style(xs, sm, bg-color-grey);
+          }
+        }
+        .who-number {
+          @include v.flex-row(center, center, xs);
+          @include v.typography-style(sm, main, bg-color-black);
+          .increment,
+          .discriment {
+            padding: 10px 15px;
+            background-color: var(--bg-color-selected);
+            border-radius: 50%;
+            @include v.flex-row(center, center);
+            cursor: pointer;
+          }
+          .valued {
+            @include v.flex-row(center, center);
+          }
+        }
+      }
+    }
   }
 }
 

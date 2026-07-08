@@ -12,7 +12,7 @@ const DropDown = (props: Props) => {
       style={{
         position: "absolute",
         width: "620px",
-        height: "400px",
+        height: "430px",
         backgroundColor: "white",
         top: "110%",
         // left: "0",
