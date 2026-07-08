@@ -33,6 +33,7 @@ const Dialog = ({ className, visible, setVisible }: Props) => {
     visible: !!visible,
   });
 
+
   return (
     <div
       ref={backdropRef}

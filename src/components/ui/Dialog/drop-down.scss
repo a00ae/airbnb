@@ -1,0 +1,47 @@
+@use "../../../styles/variables" as v;
+
+.drop-down {
+  opacity: 0;
+  visibility: hidden;
+  // تم تصحيح translateX(auto) إلى translateX(0) لأن auto غير صالحة هنا
+  transform: translateX(0) scaleX(0.9); 
+  
+  transition:
+    width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease,
+    visibility 0.3s;
+
+  // 1. إنشاء الخريطة (Map) التي تحتوي على المتغيرات لكل كلاس
+  $dropdown-states: (
+    "where": (
+      "translate": 0,
+      "origin": left center,
+      "width": null // لا يحتاج عرض مخصص
+    ),
+    "when": (
+      "translate": 200px,
+      "origin": center center,
+      "width": 750px // العرض المخصص لـ when
+    ),
+    "who": (
+      "translate": 500px,
+      "origin": right center,
+      "width": null // لا يحتاج عرض مخصص
+    )
+  );
+
+  // 2. عمل الـ Loop لقراءة البيانات وتوليد الكود تلقائياً
+  @each $state, $props in $dropdown-states {
+    &.#{$state} {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(map-get($props, "translate")) scaleX(1); // أضفنا scaleX(1) لإلغاء تأثير الـ scale الأولي عند الظهور
+      transform-origin: map-get($props, "origin");
+
+      @if map-get($props, "width") != null {
+        width: map-get($props, "width") !important;
+      }
+    }
+  }
+}

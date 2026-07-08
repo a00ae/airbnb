@@ -10,6 +10,8 @@ import Logo from "./Logo";
 import { type MouseEvent, useState } from "react";
 import Search from "./Search";
 import Dialog from "../../ui/Dialog/Dialog";
+import DropDown from "../../ui/Dialog/Drop-down";
+import { itemButtonSearch } from ".";
 
 interface Labels {
   label: string;
@@ -43,7 +45,7 @@ const listHeaderIcons: HeaderIconItem[] = [
 const Header = () => {
   const [activeSection, setActiveSection] = useState<string>("homes");
   const [visible, setVisible] = useState<string | null>(null); // تحديد النوع كـ string أو null فقط
-
+  
   const handleMainClick = (e: React.MouseEvent, labal: string) => {
     e.stopPropagation();
     setVisible((prev) => (prev === labal ? null : labal));
@@ -53,6 +55,9 @@ const Header = () => {
     (prev) => prev.label === visible,
   );
 
+
+
+  
   const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
     e.preventDefault();
     setActiveSection(label);
@@ -109,6 +114,7 @@ const Header = () => {
         />
       </div>
       <Search />
+      
     </header>
   );
 };
