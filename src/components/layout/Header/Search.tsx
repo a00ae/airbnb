@@ -12,7 +12,7 @@ type Props = {
 // 1. Independent card component (contains its own counter)
 const WhoCard = ({ who }: { who: DataSearchWho }) => {
   // Each card has its own independent counter, starting from 0, for example
-  const [count, setCount] = useState(0); 
+  const [count, setCount] = useState(0);
 
   return (
     <div className="who_card-btn">
@@ -22,7 +22,7 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
       </div>
       <div className="who-number">
         <span
-          onClick={() => setCount((prev) => Math.max(0, prev - 1))} 
+          onClick={() => setCount((prev) => Math.max(0, prev - 1))}
           className="discriment">
           —
         </span>
@@ -90,8 +90,9 @@ const Search = ({ visible }: Props) => {
             <span>{descraption}</span>
 
             {title === "Who" && (
-              <div className="search_icon">
+              <div className={`search_icon ${!activeLabel ? "" : "visible"}`}>
                 <RiSearchLine />
+                <span>Search</span>
               </div>
             )}
           </div>
@@ -141,7 +142,7 @@ const Search = ({ visible }: Props) => {
                 {item.type === "who" && (
                   <>
                     {item.whoData?.map((who) => (
-                      <WhoCard key={who.id} who={who} /> // استخدام id كـ key لمنع مشاكل الأداء
+                      <WhoCard key={who.id} who={who} />
                     ))}
                   </>
                 )}

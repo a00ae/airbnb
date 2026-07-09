@@ -44,15 +44,49 @@
 
     &.who .search_icon {
       position: absolute;
+      overflow: hidden;
       right: 20px;
       top: 10%;
-      @include v.flex-row(center, center);
+      @include v.flex-row(center, center,);
       padding: 20px;
       background-color: var(--bg-color-core);
       border-radius: 50%;
       color: var(--bg-color-white);
-    }
+      // أضفنا الـ transition هنا لتشمل التغيرات الأخرى للـ border-radius والأبعاد
+      transition: all 0.3s ease-in-out;
 
+      // الحالة عند الظهور
+      &.visible {
+        border-radius: 40px;
+        gap: var(--space-xs);
+
+        span {
+
+          transform: translateX(0);
+          opacity: 1;
+          visibility: visible;
+          max-width: 100px; /* يعطي مساحة للنص ليظهر بسلاسة */
+        }
+      }
+
+      // الحالة الافتراضية المخفية
+      span {
+        @include v.typography-style(sm, main, bg-color-white);
+        display: inline-block; /* نثبتها هنا ولا نغيرها أبداً */
+        transform: translateX(50px);
+        opacity: 0;
+        visibility: hidden;
+        max-width: 0; /* لجعل النص لا يأخذ مساحة وهو مخفي */
+        overflow: hidden;
+
+        // تأكد أن المتغير --transition-main يحتوي على وقت مناسب (مثلاً 0.3s)
+        transition:
+          transform var(--transition-main),
+          opacity var(--transition-main),
+          max-width var(--transition-main),
+          visibility var(--transition-main);
+      }
+    }
   }
 
   &_input {
@@ -74,7 +108,7 @@
       scrollbar-color: var(--bg-color-border) transparent;
 
       &::-webkit-scrollbar {
-        width: 4px; 
+        width: 4px;
       }
 
       &::-webkit-scrollbar-button {

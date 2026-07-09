@@ -7,10 +7,9 @@ import {
 } from "@remixicon/react";
 import "./header.scss";
 import Logo from "./Logo";
-import { type MouseEvent, useState } from "react";
+import { type MouseEvent, useState, memo } from "react";
 import Search from "./Search";
 import Dialog from "../../ui/Dialog/Dialog";
-
 
 interface Labels {
   label: string;
@@ -22,7 +21,7 @@ interface HeaderIconItem {
   labels?: Labels[];
   icons?: React.ReactNode[];
 }
-
+// Definition of the array of all header elements
 const listHeaderIcons: HeaderIconItem[] = [
   {
     type: "list",
@@ -41,30 +40,31 @@ const listHeaderIcons: HeaderIconItem[] = [
   },
 ];
 
+/* Header component */
 const Header = () => {
+  // Create a case for each element
   const [activeSection, setActiveSection] = useState<string>("homes");
-  const [visible, setVisible] = useState<string | null>(null); // تحديد النوع كـ string أو null فقط
-  
+  const [visible, setVisible] = useState<string | null>(null);
+
+  // Another function to switch the top menu states such as Home, Services, etc.
+  const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
+    e.preventDefault();
+    setActiveSection(label);
+  };
+  // A function to change the state of items in the list and a language button.
   const handleMainClick = (e: React.MouseEvent, labal: string) => {
     e.stopPropagation();
     setVisible((prev) => (prev === labal ? null : labal));
   };
 
-  const labalFind = listHeaderIcons[1].labels?.find(
-    (prev) => prev.label === visible,
-  );
+  // const global = visible && visible == "global" ? "global" : "";
 
-
-
-  
-  const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
-    e.preventDefault();
-    setActiveSection(label);
-  };
+  // console.log(global);
 
   return (
     <header className="header">
       <div className="header_container">
+        {/* Website logo */}
         <div className="logo">
           <Logo />
         </div>
@@ -74,6 +74,8 @@ const Header = () => {
             <div
               key={item.type}
               className={`${item.type} ${item.type === "list" ? activeSection : ""}`}>
+              {/* Check if the house and services list is correct. */}
+              {/* Mid-Sections - Home Menu */}
               {item.type === "list" && item.labels && (
                 <ul>
                   {item.labels.map((label, ind) => (
@@ -90,7 +92,7 @@ const Header = () => {
                   ))}
                 </ul>
               )}
-
+              {/* User interface elements: Languages ​​button and Main menu button */}
               {item.type === "menu" && item.labels && (
                 <>
                   {item.labels.map((icon, i) => (
@@ -106,16 +108,17 @@ const Header = () => {
             </div>
           );
         })}
+        {/* Dialog Menus */}
         <Dialog
-          className={`drop-down-${!visible ? "" : visible} ${labalFind ? "visible" : ""}`}
+          className={`drop-down-${!visible ? "" : visible}`}
           visible={visible}
           setVisible={setVisible}
         />
       </div>
-      <Search visible={!!visible}/>
-      
+      {/* Search component */}
+      <Search visible={!!visible} />
     </header>
   );
 };
 
-export default Header;
+export default memo(Header);

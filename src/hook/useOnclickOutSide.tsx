@@ -12,7 +12,7 @@ export const useOnclickOutSide = ({ ref, handleDocumentClick, visible }: OutSide
     const handleClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         handleDocumentClick();
-        console.log("click")
+        // console.log("click")
       }
     };
     if (visible) {

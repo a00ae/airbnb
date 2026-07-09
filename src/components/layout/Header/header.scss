@@ -10,7 +10,7 @@ $drop-down: (
   "global": (
     "width": 80%,
     "height": 500px,
-    "transform": translateY(-40px),  
+    "transform": translateY(-40px),
   ),
   "menu": (
     "width": 330px,
@@ -81,17 +81,16 @@ $drop-down: (
       scrollbar-width: thin;
       scrollbar-color: var(--bg-color-black) transparent;
 
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(0);
+
       @media (max-width: v.$width-md) {
         top: calc(70px + 10px);
       }
-      &.visible {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
     }
     @each $class-name, $properties in $drop-down {
-      // استدعاء القيم عبر أسمائها وليس ترتيبها
+      // استدعاء القيم عبر أسمائها
       $width: map-get($properties, "width");
       $height: map-get($properties, "height");
       $transform: map-get($properties, "transform");
@@ -100,6 +99,8 @@ $drop-down: (
         width: $width;
         height: $height;
         transform: $transform;
+        visibility: visible;
+        opacity: 1;
 
         @if $class-name == menu {
           right: 20px;
