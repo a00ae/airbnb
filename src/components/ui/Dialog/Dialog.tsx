@@ -1,6 +1,5 @@
 import { useRef, useEffect } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
-import { RiCloseLine } from "@remixicon/react";
 import GlobalLanguage from "../Card/Drop-Down/GlobalLanguage";
 
 type Props = {
@@ -38,7 +37,7 @@ const Dialog = ({ className, visible, setVisible, children }: Props) => {
 
   return (
     <div
-      
+
       ref={backdropRef}
       tabIndex={0} // Changed to 0 so it's programmatically and naturally focusable
       onKeyDown={handleKeyDown} // onKeyDown feels snappier for dialog closures than onKeyUp
