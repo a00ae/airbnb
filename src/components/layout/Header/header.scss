@@ -1,24 +1,9 @@
 @use "../../../styles/variables" as v;
-
 $menu-items: (
   "homes": 0,
   "experiences": 170px,
   "services": 360px,
 );
-
-$drop-down: (
-  "global": (
-    "width": 80%,
-    "height": 500px,
-    "transform": translateY(-40px),
-  ),
-  "menu": (
-    "width": 330px,
-    "height": 240px,
-    "transform": translateY(10px),
-  ),
-);
-
 .header {
   --padding-box: 5px 12px;
   padding: 20px 50px 80px;
@@ -64,55 +49,10 @@ $drop-down: (
         border-radius: 50%;
         @include v.flex-row(center, center);
         transition: background-color var(--transition-main);
-        // position: relative;
       }
     }
-    [class*="drop-down-"] {
-      position: absolute;
-      background-color: var(--bg-color-white);
-      top: calc(80px + 10px);
-      opacity: 0;
-      visibility: hidden;
-      box-shadow: 0 0 10px -4px rgba(0 0 0 / 0.2);
-      z-index: 1;
-      transition: transform 0.4s ease;
-      max-height: 550px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--bg-color-black) transparent;
-
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(0);
-
-      @media (max-width: v.$width-md) {
-        top: calc(70px + 10px);
-      }
-    }
-    @each $class-name, $properties in $drop-down {
-      // استدعاء القيم عبر أسمائها
-      $width: map-get($properties, "width");
-      $height: map-get($properties, "height");
-      $transform: map-get($properties, "transform");
-
-      .dialog.drop-down-#{$class-name} {
-        width: $width;
-        height: $height;
-        transform: $transform;
-        visibility: visible;
-        opacity: 1;
-
-        @if $class-name == menu {
-          right: 20px;
-          border-radius: var(--border-radius-xl);
-        } @else {
-          left: 10%;
-          right: auto;
-          top: 140px;
-          border-radius: 40px;
-        }
-      }
-    }
+    
+    
   }
   &::after {
     content: "";
@@ -132,4 +72,5 @@ $drop-down: (
   .list {
     display: none;
   }
+  
 }

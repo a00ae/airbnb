@@ -1,13 +1,16 @@
 import { useRef, useEffect } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
+import { RiCloseLine } from "@remixicon/react";
+import GlobalLanguage from "../Card/Drop-Down/GlobalLanguage";
 
 type Props = {
   className?: string;
   visible?: string | null;
   setVisible: (visible: string | null) => void;
+  children?: React.ReactNode;
 };
 
-const Dialog = ({ className, visible, setVisible }: Props) => {
+const Dialog = ({ className, visible, setVisible, children }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const backdropRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,16 +36,16 @@ const Dialog = ({ className, visible, setVisible }: Props) => {
     visible: !!visible,
   });
 
-
   return (
     <div
+      
       ref={backdropRef}
       tabIndex={0} // Changed to 0 so it's programmatically and naturally focusable
       onKeyDown={handleKeyDown} // onKeyDown feels snappier for dialog closures than onKeyUp
       style={{
         width: "100%",
         height: "100vh",
-        position: "fixed", 
+        position: "fixed",
         inset: 0,
         display: "flex",
         justifyContent: "center",
@@ -51,13 +54,16 @@ const Dialog = ({ className, visible, setVisible }: Props) => {
         opacity: visible ? 1 : 0,
         visibility: visible ? "visible" : "hidden",
         zIndex: 999,
-      }}
-    >
-      <div 
-        ref={ref} 
+      }}>
+      <div
+        ref={ref}
         className={`dialog ${className || ""}`}
         style={{ backdropFilter: "blur(3px)" }} // Better way to blur just the background
       >
+        {visible == "global" && (
+          <GlobalLanguage close={handleClose}/>
+        )}
+        {children}
       </div>
     </div>
   );
