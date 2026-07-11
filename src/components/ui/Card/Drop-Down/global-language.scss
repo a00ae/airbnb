@@ -45,6 +45,24 @@ $drop-down: (
         background-color: var(--bg-color-selected);
       }
     }
+    &_btn {
+      @include v.flex-column(md);
+      padding: var(--space-xs);
+      span[data-title-lang] {
+          @include v.typography-style(md, main, bg-color-black);
+          text-transform: capitalize
+      }
+      .btn-group {
+        @include v.flex-row(flex-start, center, xs);
+        .lang-btn {
+          @include v.typography-style(xs , main , bg-color-black);
+          padding: var(--space-xs) var(--space-sm);
+          border-radius: var(--border-radius-sm);
+          cursor: pointer;
+          
+        }
+      }
+    }
   }
 
   @media (max-width: v.$width-md) {
