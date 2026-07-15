@@ -1,6 +1,7 @@
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
 import GlobalLanguage from "../Card/Drop-Down/GlobalLanguage";
+import { RiQuestionLine } from "@remixicon/react";
 
 type Props = {
   className?: string;
@@ -8,6 +9,59 @@ type Props = {
   setVisible: (visible: string | null) => void;
   children?: React.ReactNode;
 };
+
+const menu: {
+  icon?: React.ReactNode;
+  title?: string;
+  descraption?: string;
+  titles?: string[];
+}[] = [
+  {
+    icon: <RiQuestionLine />,
+    title: "help center",
+  },
+  {
+    title: "become a host",
+    descraption: "it's easy to start hosting and earn extra income",
+  },
+  {
+    titles: ["rever a host", "find a co-host", "gift cards"],
+  },
+  {
+    title: "log in or sign up",
+  },
+];
+// من اجل الصيانة 
+const element = menu.map((card, index) => {
+
+  if(card.title &&  card.icon)
+    return (
+      <div key={index}>
+          {card.icon}
+          <span data-title> {card.title}</span>
+      </div>
+    );
+  if(card.title && card.descraption) 
+    return (
+      <div key={index}>
+          <span data-title>{card.title}</span>
+          <span data-descraption>{card.descraption}</span>
+      </div>
+    );
+  if(card.titles) 
+   return card.titles.map((ele, index) => (
+    <div key={index}>
+      <span>{ele}</span>
+    </div>
+  ))
+  if(card.title) 
+    return (
+      <div key={index}>
+        <span>{card.title}</span>
+      </div>
+    )
+
+});
 
 const Dialog = ({ className, visible, setVisible, children }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -37,7 +91,6 @@ const Dialog = ({ className, visible, setVisible, children }: Props) => {
 
   return (
     <div
-
       ref={backdropRef}
       tabIndex={0} // Changed to 0 so it's programmatically and naturally focusable
       onKeyDown={handleKeyDown} // onKeyDown feels snappier for dialog closures than onKeyUp
@@ -59,9 +112,10 @@ const Dialog = ({ className, visible, setVisible, children }: Props) => {
         className={`dialog ${className || ""}`}
         style={{ backdropFilter: "blur(3px)" }} // Better way to blur just the background
       >
-        {visible == "global" && (
-          <GlobalLanguage close={handleClose}/>
-        )}
+        {visible == "global" && <GlobalLanguage close={handleClose} />}
+        {visible == "menu" && <>
+        {element}
+        </>}
         {children}
       </div>
     </div>
