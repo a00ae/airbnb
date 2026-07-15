@@ -6,6 +6,7 @@ const  LANGUAGES  = {
   ar: "arabic",
 } as const;
 
+
 type LanguageType = typeof LANGUAGES[keyof typeof LANGUAGES];
 type Props = {
   close: () => void;
@@ -13,6 +14,13 @@ type Props = {
 
 const GlobalLanguage = (props: Props) => {
   const [language, setLanguage] = useState<LanguageType>(LANGUAGES.en);
+  const [active, setActive] = useState<boolean>(false);
+
+
+  // تغير حالة الى العملات واللغات 
+  const handleClickCurrency = () => {
+    setActive(true);
+  }
   return (
     <div className="global-language">
       {/* colse */}
@@ -22,7 +30,11 @@ const GlobalLanguage = (props: Props) => {
       {/*  */}
       
       <div className="global-language_btn">
-        <span data-title-lang>langage</span>
+        <div className={`heading-title ${active ? "active" : ""}`}>
+        <span data-title-lang onClick={() => setActive(false)}>langage</span>
+        <span data-title-lang onClick={handleClickCurrency}>Currency</span>
+
+        </div>
         <div className="btn-group">
         {Object.entries(LANGUAGES).map(([key, value]) => (
           <button
