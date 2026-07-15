@@ -79,6 +79,7 @@ $drop-down: (
           transition: transform var(--transition-main);
         }
 
+        
         &.active::after {
           transform: translateX(100px);
         }
