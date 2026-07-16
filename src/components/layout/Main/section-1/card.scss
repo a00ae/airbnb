@@ -2,4 +2,28 @@
 
 .card {
     @include v.container-padding();
+    &_heading-container{
+        @include v.flex-row(space-between, center, sm);
+        width: 100%;
+        .left {
+            cursor: pointer;
+            @include v.flex-row(flex-start, center, sm);
+            h2 {
+                @include v.typography-style(md, bold);
+            }
+            
+        }
+        .right {
+            @include v.flex-row(flex-start, center, sm);
+        }
+
+        // arrow
+        .arrow {
+            @include v.flex-row(center, center);
+            padding: var(--space-xxs);
+            background-color: var(--bg-color-selected);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
 }

@@ -1,13 +1,18 @@
-[
-    {
-        "id": 1,
-        "img": "",
-        "title": "",
-        "date": "",
-        "price": 290,
-        "star": 5
-    },
-    {
 
+
+[
+  {
+    "id": 1,
+    "city": "istnabul",
+    "apartments": {
+      "id": 1,
+      "img": "",
+      "title": "flat in fatih",
+      "date": "6-8",
+      "price": 290,
+      "star": 5
     }
+  },
+
+  {}
 ]
