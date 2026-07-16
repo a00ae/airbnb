@@ -7,7 +7,6 @@ $drop-down: (
   ),
   "menu": (
     "width": 330px,
-    "height": 240px,
     "transform": translateY(10px),
   ),
 );
@@ -71,7 +70,7 @@ $drop-down: (
           content: "";
           position: absolute;
           width: 90px;
-          height: 3px;
+          height: 2px;
           background-color: var(--bg-color-black);
           top: 90%;
           left: 0;
@@ -79,7 +78,6 @@ $drop-down: (
           transition: transform var(--transition-main);
         }
 
-        
         &.active::after {
           transform: translateX(100px);
         }
@@ -96,6 +94,66 @@ $drop-down: (
     }
   }
 
+  .menu_btn {
+    --padding-menu-btn: 16px 10%;
+    padding: var(--padding-menu-btn);
+    @include v.typography-style(sm, sm);
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.3s;
+    cursor: pointer;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 110%;
+      left: 10%;
+      width: 80%;
+      height: 1px;
+      z-index: 5;
+    }
+
+    &.icon {
+      @include v.flex-row(flex-start, center, xs);
+      &::after {
+        background-color: var(--bg-color-grey);
+      }
+    }
+
+    &.description {
+      @include v.flex-column(xs);
+      &::after {
+        background-color: var(--bg-color-grey);
+      }
+    }
+
+    &.titles {
+      cursor: default; // تغيير شكل الماوس ليكون عادياً وليس للضغط
+      @include v.flex-column(xxxs);
+      padding: 0;
+      .item-btn {
+        transition: inherit;
+        padding: 16px 10%;
+        cursor: pointer;
+        &:hover {
+          background-color: var(--bg-color-selected);
+        }
+      }
+    }
+
+    &.log-in {
+      &::after {
+        background-color: var(--bg-color-grey);
+        top: -10%;
+      }
+    }
+
+    // هنا السحر: يشتغل الهوفر على كل الحالات ما عدا titles
+    &:not(.titles):hover {
+      background-color: var(--bg-color-selected);
+    }
+  }
+
   @media (max-width: v.$width-md) {
     top: calc(70px + 10px);
   }
@@ -107,17 +165,19 @@ $drop-down: (
 
   .dialog.drop-down-#{$class-name} {
     width: $width;
-    height: $height;
     transform: $transform;
     visibility: visible;
     opacity: 1;
-    padding: var(--space-sm);
 
     @if $class-name == menu {
-      right: 20px;
+      @include v.flex-column(sm);
+      padding: 15px 0;
+      right: 40px;
       border-radius: var(--border-radius-xl);
     } @else {
+      padding: var(--space-sm);
       left: 10%;
+      height: $height;
       right: auto;
       top: 140px;
       border-radius: 40px;

@@ -10,19 +10,21 @@ type Props = {
   children?: React.ReactNode;
 };
 
-const menu: {
+interface MenuList {
   icon?: React.ReactNode;
   title?: string;
-  descraption?: string;
+  description?: string;
   titles?: string[];
-}[] = [
+}
+
+const menu: MenuList[] = [
   {
     icon: <RiQuestionLine />,
     title: "help center",
   },
   {
     title: "become a host",
-    descraption: "it's easy to start hosting and earn extra income",
+    description: "it's easy to start hosting and earn extra income",
   },
   {
     titles: ["rever a host", "find a co-host", "gift cards"],
@@ -31,37 +33,55 @@ const menu: {
     title: "log in or sign up",
   },
 ];
-// من اجل الصيانة 
-const element = menu.map((card, index) => {
+// من اجل الصيانة
+// مكون فرعي مستقل ومسهل للصيانة
+const MenuCard: React.FC<{ card: MenuList }> = ({ card }) => {
+  // الحالة الأولى: عنوان وأيقونة
+  if (card.title && card.icon) {
+    return (
+      <div className="menu_btn icon">
+        {card.icon}
+        <span data-title>{card.title}</span>
+      </div>
+    );
+  }
 
-  if(card.title &&  card.icon)
+  // الحالة الثانية: عنوان ووصف
+  if (card.title && card.description) {
+    // تعديل إملائي بسيط لـ description
     return (
-      <div key={index}>
-          {card.icon}
-          <span data-title> {card.title}</span>
+      <div className="menu_btn description">
+        <span data-title>{card.title}</span>
+        <span data-description>{card.description}</span>
       </div>
     );
-  if(card.title && card.descraption) 
+  }
+
+  // الحالة الثالثة: قائمة عناوين فرعية
+  if (card.titles) {
     return (
-      <div key={index}>
-          <span data-title>{card.title}</span>
-          <span data-descraption>{card.descraption}</span>
+      <div className="menu_btn titles">
+        {card.titles.map((item) => (
+          <div key={item} className="item-btn">
+            <span>{item}</span>
+          </div>
+        ))}
       </div>
     );
-  if(card.titles) 
-   return card.titles.map((ele, index) => (
-    <div key={index}>
-      <span>{ele}</span>
-    </div>
-  ))
-  if(card.title) 
+  }
+
+  // الحالة الرابعة: عنوان فقط
+  if (card.title) {
     return (
-      <div key={index}>
+      <div className="menu_btn log-in">
         <span>{card.title}</span>
       </div>
-    )
+    );
+  }
 
-});
+  // في حال لم يطابق أي شرط
+  return null;
+};
 
 const Dialog = ({ className, visible, setVisible, children }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -113,9 +133,13 @@ const Dialog = ({ className, visible, setVisible, children }: Props) => {
         style={{ backdropFilter: "blur(3px)" }} // Better way to blur just the background
       >
         {visible == "global" && <GlobalLanguage close={handleClose} />}
-        {visible == "menu" && <>
-        {element}
-        </>}
+        {visible == "menu" && (
+          <>
+            {menu.map((card, index) => (
+              <MenuCard key={index} card={card} />
+            ))}
+          </>
+        )}
         {children}
       </div>
     </div>
