@@ -5,7 +5,7 @@ import  './card.scss'
 const Card = () => {
   return (
     <div className='card'>
-      <div className="heading-container">
+      <div className="card_heading-container">
         <div className="left">
         <h2>Popular homes in Istanbul</h2>
         <div className="arrow">
@@ -16,11 +16,11 @@ const Card = () => {
         {/* right */}
         <div className="right">
 
-          <div className="arrow-left-line">
+          <div className="arrow">
           <RiArrowLeftSLine />
 
           </div>
-          <div className="arrow-right-line">
+          <div className="arrow">
           <RiArrowRightSLine />
 
           </div>
