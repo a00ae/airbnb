@@ -1,9 +1,8 @@
 import { RiArrowLeftSLine, RiArrowRightLongLine, RiArrowRightSLine } from '@remixicon/react'
 import  './card.scss'
 
-type Props = {}
 
-const Card = (props: Props) => {
+const Card = () => {
   return (
     <div className='card'>
       <div className="heading-container">
