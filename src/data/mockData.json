@@ -1,18 +1,72 @@
-
-
 [
   {
     "id": 1,
-    "city": "istnabul",
-    "apartments": {
-      "id": 1,
-      "img": "",
-      "title": "flat in fatih",
-      "date": "6-8",
-      "price": 290,
-      "star": 5
-    }
-  },
-
-  {}
+    "city": "istanbul",
+    "currency": "TL",
+    "apartments": [
+      {
+        "id": 1,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+        "month": "jul",
+        "price": 290,
+        "rating": 5
+      },
+      {
+        "id": 2,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+         "month": "jul",
+        "price": 290,
+        "rating": 5
+      },
+      {
+        "id": 3,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+         "month": "jul",
+        "price": 290,
+        "rating": 5
+      },
+      {
+        "id": 4,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+        "month": "jul",
+        "price": 290,
+        "rating": 5
+      },
+      {
+        "id": 5,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+        "month": "jul",
+        "price": 290,
+        "rating": 5
+      },
+      {
+        "id": 6,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+        "month": "jul",
+        "price": 290,
+        "rating": 5
+      },
+      {
+        "id": 7,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+        "price": 290,
+        "month": "jul",
+        "rating": 5
+      }
+    ]
+  }
 ]

@@ -4,6 +4,7 @@ interface Props {
   width?: number | string;
   height?: number | string;
 }
+                            
 
 const Logo = ({ width = 50, height = 60 }: Props) => {
   return (

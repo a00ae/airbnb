@@ -1,29 +1,83 @@
 @use "../../../../styles/variables" as v;
 
+
 .card {
     @include v.container-padding();
-    &_heading-container{
-        @include v.flex-row(space-between, center, sm);
-        width: 100%;
-        .left {
-            cursor: pointer;
-            @include v.flex-row(flex-start, center, sm);
-            h2 {
-                @include v.typography-style(md, bold);
+    
+    .apartments {
+        @include v.flex-column(md);
+        // heading
+        &_heading-container{
+            @include v.flex-row(space-between, center, sm);
+            width: 100%;
+            .left {
+                cursor: pointer;
+                @include v.flex-row(flex-start, center, sm);
+                h2 {
+                    @include v.typography-style(md, bold);
+                }
+                
             }
-            
+            .right {
+                @include v.flex-row(flex-start, center, sm);
+            }
+    
+            // arrow
+            .arrow {
+                @include v.flex-row(center, center);
+                padding: var(--space-xxs);
+                background-color: var(--bg-color-selected);
+                border-radius: 50%;
+                cursor: pointer;
+            }
         }
-        .right {
+        // perant
+        &_real-estate-card {
             @include v.flex-row(flex-start, center, sm);
+            overflow: hidden;
         }
+        // child
+        &_real-estate-cards {
+            @include v.flex-column(xs);
+            .img-cards { 
+                img { 
+                    border-radius: 20px;
+                }
+            }
 
-        // arrow
-        .arrow {
-            @include v.flex-row(center, center);
-            padding: var(--space-xxs);
-            background-color: var(--bg-color-selected);
-            border-radius: 50%;
-            cursor: pointer;
+            // card - decription
+            .card-description {
+                padding: var(--space-xxs);
+                @include v.flex-column(xxxs);
+                @include v.typography-style(xs, sm, bg-color-grey-description);
+                span[data-card-title] {
+                    @include v.typography-style(sm, main);
+                    text-transform: capitalize;
+                }
+                &_price {
+                    @include v.flex-row(flex-start, center, sm);
+                    .rating {
+                        @include v.flex-row(flex-start, center,xxs);
+                        position: relative;
+                        @include v.typography-style(sm, main, bg-color-grey);
+                        svg {
+                            width: 14px;
+                        }
+                        &::before {
+                            content: '';
+                            width: 5px;
+                            height: 5px;
+                            position: absolute;
+                            left: -8px;
+                            background-color: var(--bg-color-grey);
+                            border-radius: 50%;
+                        }
+                    }
+                }
+
+            }
+
+
         }
     }
 }
