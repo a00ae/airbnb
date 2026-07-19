@@ -1,83 +1,110 @@
 @use "../../../../styles/variables" as v;
 
-
 .card {
-    @include v.container-padding();
+  @include v.container-padding();
+
+  .apartments {
+    @include v.flex-column(md);
     
-    .apartments {
-        @include v.flex-column(md);
-        // heading
-        &_heading-container{
-            @include v.flex-row(space-between, center, sm);
-            width: 100%;
-            .left {
-                cursor: pointer;
-                @include v.flex-row(flex-start, center, sm);
-                h2 {
-                    @include v.typography-style(md, bold);
-                }
-                
-            }
-            .right {
-                @include v.flex-row(flex-start, center, sm);
-            }
-    
-            // arrow
-            .arrow {
-                @include v.flex-row(center, center);
-                padding: var(--space-xxs);
-                background-color: var(--bg-color-selected);
-                border-radius: 50%;
-                cursor: pointer;
-            }
+    // heading
+    &_heading-container {
+      @include v.flex-row(space-between, center, sm);
+      width: 100%;
+      .left {
+        cursor: pointer;
+        @include v.flex-row(flex-start, center, sm);
+        h2 {
+          @include v.typography-style(md, bold);
         }
-        // perant
-        &_real-estate-card {
-            @include v.flex-row(flex-start, center, sm);
-            overflow: hidden;
+      }
+      .right {
+        @include v.flex-row(flex-start, center, sm);
+        gap: var(--space-xs); // مسافة فاصلة بين السهمين
+      }
+
+      // arrow
+      .arrow {
+        @include v.flex-row(center, center);
+        padding: var(--space-xxs);
+        background-color: var(--bg-color-selected);
+        border-radius: 50%;
+        cursor: pointer;
+        border: none; // لضمان عدم وجود حدود افتراضية للزر
+        
+        &:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
         }
-        // child
-        &_real-estate-cards {
-            @include v.flex-column(xs);
-            .img-cards { 
-                img { 
-                    border-radius: 20px;
-                }
-            }
-
-            // card - decription
-            .card-description {
-                padding: var(--space-xxs);
-                @include v.flex-column(xxxs);
-                @include v.typography-style(xs, sm, bg-color-grey-description);
-                span[data-card-title] {
-                    @include v.typography-style(sm, main);
-                    text-transform: capitalize;
-                }
-                &_price {
-                    @include v.flex-row(flex-start, center, sm);
-                    .rating {
-                        @include v.flex-row(flex-start, center,xxs);
-                        position: relative;
-                        @include v.typography-style(sm, main, bg-color-grey);
-                        svg {
-                            width: 14px;
-                        }
-                        &::before {
-                            content: '';
-                            width: 5px;
-                            height: 5px;
-                            position: absolute;
-                            left: -8px;
-                            background-color: var(--bg-color-grey);
-                            border-radius: 50%;
-                        }
-                    }
-                }
-
-            }
-
-
-        }
+      }
     }
+
+    // 1. الحاوية الخارجية الثابتة (الـ Wrapper)
+    &_real-estate-card {
+      overflow: hidden; /* تخفي الكروت الزائدة بذكاء */
+      width: 100%;
+    }
+
+    // 2. المسار المتحرك الداخلي
+    .cards-track {
+      @include v.flex-row(flex-start, center, sm);
+      width: max-content; /* تسمح للمسار بالتمدد أفقياً لأقصى درجة لاستيعاب كل الكروت */
+      transition: transform 0.4s ease-out; /* حركة التحرك الناعمة الناتجة عن الكود */
+      will-change: transform;
+    }
+
+    // 3. كلاس الكرت (تم تصحيح الـ Nesting ليصبح مطابقاً للـ HTML)
+    &_real-estate-cards {
+      @include v.flex-column(xs);
+      flex-shrink: 0; /* تمنع انضغاط الكرت أو انكماشه عند صغر الشاشة */
+      width: 160px; /* يجب أن تطابق القيمة المحددة في كود الـ JavaScript تماماً */
+
+      .img-cards {
+        width: 100%;
+        height: auto;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 20px;
+          display: block;
+        }
+      }
+
+      // card - description
+      .card-description {
+        padding: var(--space-xxs);
+        @include v.flex-column(xxxs);
+        @include v.typography-style(xs, sm, bg-color-grey-description);
+        
+        span[data-card-title] {
+          @include v.typography-style(sm, main);
+          text-transform: capitalize;
+          white-space: nowrap; /* تمنع نزول عنوان الشقة لسطر جديد وتشوه الكرت */
+          overflow: hidden;
+          text-overflow: ellipsis; /* تضع نقاط (...) إذا كان العنوان طويلاً جداً */
+        }
+        
+        &_price {
+          @include v.flex-row(flex-start, center, sm);
+          .rating {
+            @include v.flex-row(flex-start, center, xxs);
+            position: relative;
+            @include v.typography-style(sm, main, bg-color-grey);
+            svg {
+              width: 14px;
+            }
+            &::before {
+              content: "";
+              width: 5px;
+              height: 5px;
+              position: absolute;
+              left: -8px;
+              background-color: var(--bg-color-grey);
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+    }
+  }
 }
