@@ -66,6 +66,24 @@
         "price": 290,
         "month": "jul",
         "rating": 5
+      },
+      {
+        "id": 8,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+        "price": 290,
+        "month": "jul",
+        "rating": 5
+      },
+      {
+        "id": 9,
+        "img": "public/images/section-istanbul/istanbul-01.avif",
+        "title": "flat in fatih",
+        "history": "6–8",
+        "price": 290,
+        "month": "jul",
+        "rating": 5
       }
     ]
   }
