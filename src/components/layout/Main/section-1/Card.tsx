@@ -45,10 +45,8 @@ const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
   const [visibleCards, setVisibleCards] = useState<number>(7);
   
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const cardWidth = 160; // عرض الكرت الإجمالي شامل الـ Gap والتنسيق
+  const cardWidth = 170; // عرض الكرت الإجمالي شامل الـ Gap والتنسيق
 
-
-  const maxIndex = apartments.length - visibleCards;
 
   // حساب كم كرت يمكن للشاشة استيعابه حالياً
   useEffect(() => {
@@ -132,7 +130,7 @@ const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
                 </span>
                 <div className="card-description_price">
                   <span data-card-price>
-                    {currency} {item.price}
+                    {currency} {item.price} total
                   </span>
                   <div className="rating">
                     <RiStarFill />

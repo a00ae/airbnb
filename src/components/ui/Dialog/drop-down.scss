@@ -20,12 +20,12 @@
       "width": null // لا يحتاج عرض مخصص
     ),
     "when": (
-      "translate": 200px,
+      "translate": calc(50% / 1.5),
       "origin": center center,
       "width": 750px // العرض المخصص لـ when
     ),
     "who": (
-      "translate": 500px,
+      "translate":calc(100% - 40px),
       "origin": right center,
       "width": null // لا يحتاج عرض مخصص
     )

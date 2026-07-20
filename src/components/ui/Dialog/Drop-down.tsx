@@ -15,7 +15,6 @@ const DropDown = (props: Props) => {
         height: "430px",
         backgroundColor: "white",
         top: "110%",
-        // left: "0",
         zIndex: 3,
         borderRadius: 40,
         boxShadow: "0 0 10px -3px rgba(0 0 0 / 0.5 )",
