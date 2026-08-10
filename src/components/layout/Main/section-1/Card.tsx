@@ -5,19 +5,7 @@ import {
   RiStarFill,
 } from "@remixicon/react";
 import "./card.scss";
-import itemData from "../../../../data/mockData.json";
 import { useState, useEffect, useRef } from "react";
-
-// 1. المكون الرئيسي
-const Card = () => {
-  return (
-    <section className="card">
-      {itemData.map((cityData) => (
-        <CityApartmentsRow key={cityData.id} cityData={cityData} />
-      ))}
-    </section>
-  );
-};
 
 // تعريف الأنواع (Types)
 interface Apartment {
@@ -36,6 +24,68 @@ interface CityData {
   currency: string;
   apartments: Apartment[];
 }
+
+
+
+
+
+// 1. المكون الرئيسي
+const Card = () => {
+  const [cities, setCities] = useState<CityData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchCitiesData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await fetch('https://6a78f2ae674f43f4db10f4cd.mockapi.io/apartments/cities');
+
+      if(!response.ok) {
+        throw new Error(`Server error: ${response.text} ${response.statusText}`);
+      }
+
+      const data: CityData[] = await response.json();
+
+      setCities(data);
+
+      
+    } catch (err) {
+      console.error("Data fetching failed:", err);
+
+      setError('An unexpected error occurred while connecting to the server.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    Promise.resolve().then(fetchCitiesData);
+  }, []);
+
+   if (loading) {
+    return <div className="loading">جاري تحميل الشقق من السيرفر الأونلاين...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="error-box">
+        <p>❌ فشل التحميل: {error}</p>
+        <button onClick={fetchCitiesData}>إعادة المحاولة</button>
+      </div>
+    );
+  }
+
+  return (
+    <section className="card">
+      {cities.map((cityData) => (
+        <CityApartmentsRow key={cityData.id} cityData={cityData} />
+      ))}
+    </section>
+  );
+};
+
+
 
 // 2. المكون الفرعي المستقل لكل صف شقق
 const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
@@ -121,7 +171,7 @@ const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
               style={{ flexShrink: 0, width: `${cardWidth}px` }}
             >
               <div className="img-cards">
-                <img src={item.img} alt={item.title} />
+                <img src={`${import.meta.env.BASE_URL}${item.img}`} alt={item.title} />
               </div>
               <div className="card-description">
                 <span data-card-title>{item.title}</span>
