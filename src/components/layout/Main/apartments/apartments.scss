@@ -2,6 +2,7 @@
 
 .card {
   @include v.container-padding();
+   @include v.flex-column(xxl);
 
   .apartments {
     @include v.flex-column(md);
