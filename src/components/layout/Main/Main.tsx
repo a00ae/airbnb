@@ -1,4 +1,4 @@
-import Card from "./apartments/Card"
+import PopularApartments from "./apartments/PopularApartments"
 
 
 
@@ -10,7 +10,7 @@ const Main = () => {
         flexDirection: "column",
         gap: "var(--space-md)"
     }} className="main">
-        <Card />
+        <PopularApartments />
 
     </div>
   )
