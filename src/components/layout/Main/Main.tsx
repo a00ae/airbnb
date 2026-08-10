@@ -1,9 +1,9 @@
-import Card from "./section-1/Card"
+import Card from "./apartments/Card"
 
 
 
 
-const Mian = () => {
+const Main = () => {
   return (
     <div style={{
         display: "flex",
@@ -16,4 +16,4 @@ const Mian = () => {
   )
 }
 
-export default Mian
+export default Main

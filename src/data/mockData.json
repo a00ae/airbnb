@@ -2,7 +2,7 @@
   {
     "id": 1,
     "city": "istanbul",
-    "currency": "$",
+    "currency": {"euro": "€", "tl": "TL", "Dolar": "$"} ,
     "apartments": [
       {
         "id": 1,
@@ -11,7 +11,7 @@
         "history": "6–8",
         "month": "jul",
         "price": 140,
-        "rating": 3.20
+        "rating": 3.2
       },
       {
         "id": 2,
@@ -20,7 +20,7 @@
         "history": "6–8",
          "month": "jul",
         "price": 170,
-        "rating": 3.80
+        "rating": 3.8
       },
       {
         "id": 3,
@@ -29,7 +29,7 @@
         "history": "6–8",
          "month": "jul",
         "price": 190,
-        "rating": 4.99
+        "rating": 4.9
       },
       {
         "id": 4,
@@ -38,7 +38,7 @@
         "history": "6–8",
         "month": "jul",
         "price": 165,
-        "rating": 3.90
+        "rating": 3.9
       },
       {
         "id": 5,
@@ -47,7 +47,7 @@
         "history": "6–8",
         "month": "jul",
         "price": 400,
-        "rating": 4.63
+        "rating": 4.6
       },
       {
         "id": 6,
@@ -56,7 +56,7 @@
         "history": "6–8",
         "month": "jul",
         "price": 170,
-        "rating": 3.90
+        "rating": 3.9
       },
       {
         "id": 7,
@@ -65,7 +65,7 @@
         "history": "6–8",
         "price": 490,
         "month": "jul",
-        "rating": 4.80
+        "rating": 4.8
       },
       {
         "id": 8,
@@ -74,7 +74,7 @@
         "history": "6–8",
         "price": 200,
         "month": "jul",
-        "rating": 4.40
+        "rating": 4.4
       },
       {
         "id": 9,
@@ -83,7 +83,7 @@
         "history": "6–9",
         "price": 210,
         "month": "Agu",
-        "rating": 3.20
+        "rating": 3.2
       },
       {
         "id": 10,
@@ -92,7 +92,7 @@
         "history": "10–12",
         "price": 190,
         "month": "nav",
-        "rating": 4.20
+        "rating": 4.2
       },
       {
         "id": 11,
@@ -101,7 +101,7 @@
         "history": "1–3",
         "price": 690,
         "month": "sub",
-        "rating": 4.95
+        "rating": 4.9
       },
       {
         "id": 12,
@@ -110,7 +110,7 @@
         "history": "22–24",
         "price": 490,
         "month": "jul",
-        "rating": 4.77
+        "rating": 4.7
       },
       {
         "id": 13,
@@ -119,7 +119,7 @@
         "history": "6–8",
         "price": 190,
         "month": "Agu",
-        "rating": 4.10
+        "rating": 4.1
       },
       {
         "id": 14,
@@ -128,7 +128,7 @@
         "history": "12–16",
         "price": 477,
         "month": "Agu",
-        "rating": 4.90
+        "rating": 4.9
       },
       {
         "id": 15,
@@ -137,7 +137,7 @@
         "history": "6–8",
         "price": 310,
         "month": "jul",
-        "rating": 4.23
+        "rating": 4.2
       }
     ]
   }
