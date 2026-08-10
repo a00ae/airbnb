@@ -6,6 +6,7 @@ import {
 } from "@remixicon/react";
 import "./card.scss";
 import { useState, useEffect, useRef } from "react";
+import Loader from "../../../ui/Loder/Loader";
 
 // تعريف الأنواع (Types)
 interface Apartment {
@@ -18,16 +19,18 @@ interface Apartment {
   rating: number;
 }
 
+interface CurrencyType {
+  euro: string;
+  tl: string;
+  dolar: string;
+}
+
 interface CityData {
   city: string;
   id: string | number;
-  currency: string;
+  currency: CurrencyType;
   apartments: Apartment[];
 }
-
-
-
-
 
 // 1. المكون الرئيسي
 const Card = () => {
@@ -39,42 +42,41 @@ const Card = () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('https://6a78f2ae674f43f4db10f4cd.mockapi.io/apartments/cities');
+      const response = await fetch(
+        "https://6a78f2ae674f43f4db10f4cd.mockapi.io/apartments/cities",
+      );
 
-      if(!response.ok) {
-        throw new Error(`Server error: ${response.text} ${response.statusText}`);
+      if (!response.ok) {
+        throw new Error(
+          `Server error: ${response.text} ${response.statusText}`,
+        );
       }
 
       const data: CityData[] = await response.json();
 
       setCities(data);
-
-      
     } catch (err) {
       console.error("Data fetching failed:", err);
 
-      setError('An unexpected error occurred while connecting to the server.');
+      setError("An unexpected error occurred while connecting to the server.");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     Promise.resolve().then(fetchCitiesData);
   }, []);
 
-   if (loading) {
-    return <div className="loading">جاري تحميل الشقق من السيرفر الأونلاين...</div>;
-  }
+  if (loading) return <Loader />;
 
-  if (error) {
+  if (error)
     return (
       <div className="error-box">
         <p>❌ فشل التحميل: {error}</p>
         <button onClick={fetchCitiesData}>إعادة المحاولة</button>
       </div>
     );
-  }
 
   return (
     <section className="card">
@@ -85,18 +87,15 @@ const Card = () => {
   );
 };
 
-
-
 // 2. المكون الفرعي المستقل لكل صف شقق
 const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
   const { city, apartments, currency } = cityData;
-  
+
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [visibleCards, setVisibleCards] = useState<number>(7);
-  
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const cardWidth = 170; // عرض الكرت الإجمالي شامل الـ Gap والتنسيق
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const cardWidth = 160; // عرض الكرت الإجمالي شامل الـ Gap والتنسيق
 
   // حساب كم كرت يمكن للشاشة استيعابه حالياً
   useEffect(() => {
@@ -117,14 +116,11 @@ const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
   const isNextDisabled = currentIndex + visibleCards > apartments.length;
 
   const nextSlide = () => {
-  
-      setCurrentIndex((prev) => prev + 1);
+    setCurrentIndex((prev) => prev + 1);
   };
 
   const prevSlide = () => {
-    
-      setCurrentIndex((prev) => prev - 1);
-    
+    setCurrentIndex((prev) => prev - 1);
   };
 
   return (
@@ -139,11 +135,17 @@ const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
         </div>
         <div className="right">
           {/* زر العودة للخلف */}
-          <button onClick={prevSlide} disabled={isPrevDisabled} className="arrow">
+          <button
+            onClick={prevSlide}
+            disabled={isPrevDisabled}
+            className="arrow">
             <RiArrowLeftSLine />
           </button>
           {/* زر التقدم للأمام */}
-          <button onClick={nextSlide} disabled={isNextDisabled} className="arrow">
+          <button
+            onClick={nextSlide}
+            disabled={isNextDisabled}
+            className="arrow">
             <RiArrowRightSLine />
           </button>
         </div>
@@ -153,25 +155,25 @@ const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
       <div
         ref={wrapperRef}
         className="apartments_real-estate-card"
-        style={{ overflow: "hidden", width: "100%" }}
-      >
+        style={{ overflow: "hidden", width: "100%" }}>
         {/* صف الكروت الداخلي الذي يتحرك */}
         <div
           className="cards-track"
           style={{
             display: "flex",
             transform: `translateX(${-currentIndex * cardWidth}px)`,
-            transition: "transform 0.4s ease-out"
-          }}
-        >
+            transition: "transform 0.4s ease-out",
+          }}>
           {apartments.map((item) => (
-            <div 
-              key={item.id} 
-              className="apartments_real-estate-cards" 
-              style={{ flexShrink: 0, width: `${cardWidth}px` }}
-            >
+            <div
+              key={item.id}
+              className="apartments_real-estate-cards"
+              style={{ flexShrink: 0, width: `${cardWidth}px` }}>
               <div className="img-cards">
-                <img src={`${import.meta.env.BASE_URL}${item.img}`} alt={item.title} />
+                <img
+                  src={`${import.meta.env.BASE_URL}${item.img}`}
+                  alt={item.title}
+                />
               </div>
               <div className="card-description">
                 <span data-card-title>{item.title}</span>
@@ -180,7 +182,7 @@ const CityApartmentsRow = ({ cityData }: { cityData: CityData }) => {
                 </span>
                 <div className="card-description_price">
                   <span data-card-price>
-                    {currency} {item.price} total
+                    {currency.euro} {item.price} total
                   </span>
                   <div className="rating">
                     <RiStarFill />

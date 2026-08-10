@@ -1,13 +1,11 @@
-import Header from "./components/layout/Header/Header.tsx"
-import Mian from "./components/layout/Main/Mian.tsx"
-
+import {Header, Main} from "./components"
 function App() {
 
 
   return (
     <>
     <Header/>
-    <Mian/>
+    <Main/>
     </>
   )
 }
