@@ -3,6 +3,7 @@
 .card {
   @include v.container-padding();
    @include v.flex-column(xxl);
+   overflow: hidden;
 
   .apartments {
     @include v.flex-column(md);

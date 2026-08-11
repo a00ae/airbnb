@@ -10,6 +10,11 @@ $menu-items: (
   @include v.flex-column(md);
   background: var(--bg-color-selected);
   position: relative;
+  transform: translateY(0);
+  transition: transform 0.3s;
+  z-index: 1;
+  
+
   &_container {
     @include v.flex-row(space-between, center, md);
     .list {
@@ -73,4 +78,19 @@ $menu-items: (
     display: none;
   }
   
+}
+
+
+.header_container.is-visible {
+  .list {
+    transform: translateY(0);
+    transition: transform 0.5s;
+
+  }
+}
+.header_container.is-exiting {
+  .list {
+    transform: translateY(-40px);
+    transition: transform 0.3s;
+  }
 }

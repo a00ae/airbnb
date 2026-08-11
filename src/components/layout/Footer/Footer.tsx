@@ -1,8 +1,15 @@
+import FutureGetaways from "./components/futureGetaways"
 
 
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <footer className="footer">
+      <div className="footer_container">
+        <FutureGetaways />
+
+
+      </div>
+    </footer>
   )
 }
 

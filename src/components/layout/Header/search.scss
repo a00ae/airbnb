@@ -9,6 +9,9 @@
   margin: auto;
   border-radius: 40px;
   position: relative;
+  z-index: 4;
+  position: sticky;
+  top: 10px;
 
   &_btn {
     padding: var(--padding-box);
@@ -16,9 +19,15 @@
     border-radius: inherit;
     transition: background-color var(--transition-main);
     cursor: pointer;
+    @include v.flex-column(xxs);
 
     &:hover {
       background-color: var(--bg-color-btn);
+    }
+
+    &.where .inp {
+      background-color: transparent;
+      @include v.typography-style(sm, main, bg-color-black);
     }
 
     &.when {
@@ -106,6 +115,7 @@
       max-height: 100%;
       scrollbar-width: thin;
       scrollbar-color: var(--bg-color-border) transparent;
+  
 
       &::-webkit-scrollbar {
         width: 4px;
@@ -183,6 +193,20 @@
       }
     }
   }
+}
+
+
+.header_container.is-visible ~ .search {
+  transform: translateY(20px);
+  // position: fixed;
+  transition: transform 0.3s, width 0.3s ;
+  
+} 
+
+.header_container.is-exiting  ~ .search {
+  transform: translateY(0);
+  transition: transform 0.3s;
+  width: 60%;
 }
 
 @media (max-width: v.$width-xxl) {
