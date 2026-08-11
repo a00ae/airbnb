@@ -11,7 +11,7 @@ const CARD_WIDTH = 160;
 
 interface CityApartmentsRowProps {
   cityData: CityData;
-  currencies: Currencies;
+  currencies?: Currencies;
 }
 
 export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowProps) => {
@@ -22,7 +22,7 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   // تحديد رمز العملة للمدينة من كائن العملات
-  const cityCurrencySymbol = currencies[defaultCurrency] || "$";
+  const cityCurrencySymbol = currencies && currencies[defaultCurrency] || "$";
 
   useEffect(() => {
     const handleResize = () => {
@@ -89,7 +89,7 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
           {(apartments || []).map((item) => {
             // استخدام عملة الشقة إن وجدت وإلا استخدام عملة المدينة الافتراضية
             const currencySymbol = item.currencyKey 
-              ? currencies[item.currencyKey] || cityCurrencySymbol 
+              ? currencies && currencies[item.currencyKey] || cityCurrencySymbol 
               : cityCurrencySymbol;
 
             return (

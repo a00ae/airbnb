@@ -1,9 +1,10 @@
-import { RiSearchLine } from "@remixicon/react";
+import { RiSearchLine, RiMapPinLine } from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
 import DropDown from "../../ui/Dialog/Drop-down";
+import { useApartments } from "../../../hook/useApartments";
 
 type Props = {
   visible: boolean;
@@ -11,7 +12,6 @@ type Props = {
 
 // 1. Independent card component (contains its own counter)
 const WhoCard = ({ who }: { who: DataSearchWho }) => {
-  // Each card has its own independent counter, starting from 0, for example
   const [count, setCount] = useState(0);
 
   return (
@@ -37,57 +37,77 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
   );
 };
 
-/*This section is the search section located in the Header. */
-
+/* Search Section Component */
 const Search = ({ visible }: Props) => {
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
-  /* Take a reference from the element */
   const ref = useRef<HTMLDivElement | null>(null);
 
-  //* If there is no element, return a blank space. */
+  // 🟢 جلب الفلاتر والمدن المتاحة من الهوك
+  const { cities, filters } = useApartments();
+  const { selectedCity, setSelectedCity } = filters;
+
+  // إغلاق الـ Dropdown عند الضغط بالخارج
   const handleClicOutSide = () => {
     setActiveLabel(null);
   };
 
-  /* Hook catches external clicks */
   useOnclickOutSide({
     ref: ref,
     handleDocumentClick: handleClicOutSide,
     visible: activeLabel,
   });
 
-  /* If the external window is opened*/
-
   useEffect(() => {
     if (visible) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveLabel(null);
     }
   }, [visible]);
 
-  /*A function to change the state of an element from*/
   const handleClickSearch = (label: string) => {
     setActiveLabel((prev) => (prev === label ? null : label));
   };
-  /* If there is no element, return null. */
+
+  // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
+  const uniqueCities = useMemo(() => {
+    if (!cities || cities.length === 0) return [];
+    return Array.from(new Set(cities.map((c) => c.city)));
+  }, [cities]);
+
+  // 🟢 الدالة الخاصة باختيار مدينة عند الضغط عليها في القائمة
+  const handleSelectCity = (cityName: string) => {
+    setSelectedCity(cityName);
+    setActiveLabel(null); // إغلاق الـ Dropdown بعد الاختيار
+  };
+
   if (!ref) return null;
 
   return (
     <div ref={ref} className="search">
-      {/* This is the parent element, and from here come the offspring elements. */}
       {itemButtonSearch.map(({ descraption, title }) => {
-        /* To revert the address value to lowercase letters without spaces */
         const currentTitleLower: string = title.trim().toLowerCase();
-        /* Store a verification status for swapping items */
         const isCurrentActive: boolean = activeLabel === title;
-        /*Create three search buttons in the UI*/
+
         return (
           <div
             onClick={() => handleClickSearch(title)}
             key={title}
-            className={`search_btn ${currentTitleLower} ${isCurrentActive ? "visible" : ""}`}>
+            className={`search_btn ${currentTitleLower} ${
+              isCurrentActive ? "visible" : ""
+            }`}>
             <p>{title}</p>
-            <span>{descraption}</span>
+
+            {/* 🟢 ربط حقل الإدخال بالـ State القادمة من الهوك */}
+            {title === "Where" ? (
+              <input
+                className="inp"
+                placeholder={descraption}
+                value={selectedCity === "all" ? "" : selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
+                onClick={(e) => e.stopPropagation()} // منع إغلاق القائمة عند الكتابة
+              />
+            ) : (
+              <span>{descraption}</span>
+            )}
 
             {title === "Who" && (
               <div className={`search_icon ${!activeLabel ? "" : "visible"}`}>
@@ -98,47 +118,79 @@ const Search = ({ visible }: Props) => {
           </div>
         );
       })}
-      {/* One-button search for small screens */}
+
+      {/* شريط البحث الخاص بالشاشات الصغيرة */}
       <div className="search_input">
         <RiSearchLine />
-        <span data-search>Start yuor searh</span>
+        <span data-search>Start your search</span>
       </div>
-      {/* Create a drop-down list and change its status according to user clicks. */}
+
+      {/* القائمة المنسدلة DropDown */}
       <DropDown className={!activeLabel ? "" : activeLabel}>
         {dataWhere
           .filter((item) => item.type === activeLabel?.toLowerCase().trim())
           .map((item, i) => {
             return (
               <div key={i} className={`child-${item.type}`}>
-                {/* قسم الوجهات - Where  - Destinations section*/}
-                {item.type === "where" && (
+                {/* 🟢 قسم الوجهات - Where */}
+
+                {item.type === "where"  && (
                   <>
-                    <span>Suggested destinations</span>
-                    {item.whereData?.map(
-                      ({
-                        id,
-                        iconDataWhere,
-                        titleDataWhere,
-                        descraptionDataWhere,
-                        bgColor,
-                      }) => (
-                        <div key={id} className="where_card-btn">
+                    {selectedCity.length > 0 ? (
+                      <>
+                        {/* عرض المدن القادمة من الـ API مباشرة */}
+                        {uniqueCities.map((cityName) => (
                           <div
-                            style={{ backgroundColor: bgColor }}
-                            className="svg">
-                            {iconDataWhere}
+                            key={cityName}
+                            className="where_card-btn"
+                            onClick={() => handleSelectCity(cityName)}>
+                            <div
+                              style={{ backgroundColor: "var(--bg-color-btn)" }}
+                              className="svg">
+                              <RiMapPinLine />
+                            </div>
+                            <div className="card_descraption">
+                              <span>{cityName}</span>
+                              <p>Popular destination</p>
+                            </div>
                           </div>
-                          <div className="card_descraption">
-                            <span>{titleDataWhere}</span>
-                            <p>{descraptionDataWhere}</p>
-                          </div>
-                        </div>
-                      ),
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <span>Suggested destinations</span>
+
+                        {/* القائمة الثابتة الافتراضية لو أحببت إبقاءها */}
+                        {item.whereData?.map(
+                          ({
+                            id,
+                            iconDataWhere,
+                            titleDataWhere,
+                            descraptionDataWhere,
+                            bgColor,
+                          }) => (
+                            <div
+                              key={id}
+                              className="where_card-btn"
+                              onClick={() => handleSelectCity(titleDataWhere)}>
+                              <div
+                                style={{ backgroundColor: bgColor }}
+                                className="svg">
+                                {iconDataWhere}
+                              </div>
+                              <div className="card_descraption">
+                                <span>{titleDataWhere}</span>
+                                <p>{descraptionDataWhere}</p>
+                              </div>
+                            </div>
+                          ),
+                        )}
+                      </>
                     )}
                   </>
                 )}
 
-                {/* قسم الأشخاص - Who - People section*/}
+                {/* قسم الأشخاص - Who */}
                 {item.type === "who" && (
                   <>
                     {item.whoData?.map((who) => (
