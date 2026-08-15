@@ -43,8 +43,9 @@ const Search = ({ visible }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   // 🟢 جلب الفلاتر والمدن المتاحة من الهوك
-  const { cities, filters } = useApartments();
-  const { selectedCity, setSelectedCity } = filters;
+  const { cities, filters, filteredApartments, isLoading, error, currentCurrency } = useApartments();
+  const { selectedCity, setSelectedCity, searchQuery, setSearchQuery } = filters;
+  
 
   // إغلاق الـ Dropdown عند الضغط بالخارج
   const handleClicOutSide = () => {
@@ -101,8 +102,8 @@ const Search = ({ visible }: Props) => {
               <input
                 className="inp"
                 placeholder={descraption}
-                value={selectedCity === "all" ? "" : selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 onClick={(e) => e.stopPropagation()} // منع إغلاق القائمة عند الكتابة
               />
             ) : (
@@ -126,7 +127,7 @@ const Search = ({ visible }: Props) => {
       </div>
 
       {/* القائمة المنسدلة DropDown */}
-      <DropDown className={!activeLabel ? "" : activeLabel}>
+      <DropDown  className={!activeLabel ? "" : activeLabel}>
         {dataWhere
           .filter((item) => item.type === activeLabel?.toLowerCase().trim())
           .map((item, i) => {
@@ -136,7 +137,7 @@ const Search = ({ visible }: Props) => {
 
                 {item.type === "where"  && (
                   <>
-                    {selectedCity.length > 0 ? (
+                    {filteredApartments.length > 0  ? (
                       <>
                         {/* عرض المدن القادمة من الـ API مباشرة */}
                         {uniqueCities.map((cityName) => (
@@ -150,7 +151,7 @@ const Search = ({ visible }: Props) => {
                               <RiMapPinLine />
                             </div>
                             <div className="card_descraption">
-                              <span>{cityName}</span>
+                              <span>{}</span>
                               <p>Popular destination</p>
                             </div>
                           </div>
@@ -160,7 +161,6 @@ const Search = ({ visible }: Props) => {
                       <>
                         <span>Suggested destinations</span>
 
-                        {/* القائمة الثابتة الافتراضية لو أحببت إبقاءها */}
                         {item.whereData?.map(
                           ({
                             id,

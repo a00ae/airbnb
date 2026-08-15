@@ -16,6 +16,7 @@ export const useApartments = () => {
   const [error, setError] = useState<string | null>(null);
 
   // الفلاتر
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("all");
   const [maxPrice, setMaxPrice] = useState<number>(500);
   const [minRating, setMinRating] = useState<number>(0);  
@@ -46,8 +47,8 @@ export const useApartments = () => {
   };
 
   useEffect(() => {
-    fetchApartments(); 
-  }, [API_URL]);
+    Promise.resolve().then(fetchApartments); 
+  }, []);
 
   // دمج كل الشقق في مصفوفة واحدة
   const allApartments = useMemo(() => {
@@ -66,11 +67,9 @@ export const useApartments = () => {
   const filteredApartments = useMemo(() => {
     return allApartments.filter((apt) => {
       // 🟢 دعم مطابقة المدن بغض النظر عن حالة الأحرف ودعم خيار "جميع المدن"
-      if (
-        selectedCity &&
-        selectedCity !== "all" &&
-        apt.cityName.toLowerCase() !== selectedCity.toLowerCase()
-      ) {
+      if(searchQuery && !apt.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+
+      if (selectedCity && apt.cityName !== selectedCity ) {
         return false;
       }
 
@@ -79,7 +78,7 @@ export const useApartments = () => {
 
       return true;
     });
-  }, [allApartments, selectedCity, maxPrice, minRating]);
+  }, [allApartments, selectedCity, maxPrice, minRating, searchQuery]);
 
   // 🟢 استخراج العملة ديناميكياً بحسب المدينة المختارة
   const currentCurrency = useMemo(() => {
@@ -104,6 +103,8 @@ export const useApartments = () => {
     filters: {
       selectedCity,
       setSelectedCity,
+      searchQuery,
+      setSearchQuery,
       maxPrice,
       setMaxPrice,
       minRating, 
