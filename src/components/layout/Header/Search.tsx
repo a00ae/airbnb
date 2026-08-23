@@ -7,7 +7,7 @@ import DropDown from "../../ui/Dialog/Drop-down";
 import { useApartments } from "../../../hook/useApartments";
 
 type Props = {
-  visible: boolean;
+  visible?: boolean;
 };
 
 // 1. Independent card component (contains its own counter)

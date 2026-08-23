@@ -3,6 +3,7 @@ import {
   RiHome9Line,
   RiMap2Line,
   RiMenuLine,
+  RiMoonLine,
   RiServiceBellLine,
 } from "@remixicon/react";
 import "./header.scss";
@@ -11,10 +12,13 @@ import { type MouseEvent, useState, memo, useRef } from "react";
 import Search from "./Search";
 import Dialog from "../../ui/Dialog/Dialog";
 import { useScrollVisibility } from "../../../hook/useScrollVisibility";
+import Menu from "./components/Menu";
+import DropDown from "../../ui/Dialog/Drop-down";
+import DilogCard from "../../ui/Dialog/DilogCard";
 
 interface Labels {
   label: string;
-  icon?: React.ReactNode;
+  icon: React.ReactNode;
 }
 
 interface HeaderIconItem {
@@ -35,6 +39,7 @@ const listHeaderIcons: HeaderIconItem[] = [
   {
     type: "menu",
     labels: [
+      { label: "mode", icon: <RiMoonLine /> },
       { label: "global", icon: <RiGlobalLine /> },
       { label: "menu", icon: <RiMenuLine /> },
     ],
@@ -45,9 +50,9 @@ const listHeaderIcons: HeaderIconItem[] = [
 const Header = () => {
   const [activeSection, setActiveSection] = useState<string>("homes");
   const [visible, setVisible] = useState<string | null>(null);
-  
   // 1. تصحيح نوع الـ Ref للـ Header
   const ref = useRef<HTMLDivElement | null>(null);
+  const activeDialog = visible && visible === "global" ? "active"  : "";
 
   // 2. إلغاء السيلكتور الخاطئ لكي يراقب الـ Header نفسه مباشرة
   useScrollVisibility(ref, undefined, { threshold: 0.1, triggerOnce: false });
@@ -57,13 +62,9 @@ const Header = () => {
     setActiveSection(label);
   };
 
-  const handleMainClick = (e: React.MouseEvent, label: string) => {
-    e.stopPropagation();
-    setVisible((prev) => (prev === label ? null : label));
-  };
-
+  console.log(visible);
   return (
-    <header   className="header">
+    <header className="header">
       <div ref={ref} className="header_container">
         {/* Website logo */}
         <div className="logo">
@@ -74,17 +75,17 @@ const Header = () => {
           return (
             <div
               key={item.type}
-              className={`${item.type} ${item.type === "list" ? activeSection : ""}`}
-            >
+              className={`${item.type} ${item.type === "list" ? activeSection : ""}`}>
               {/* Mid-Sections - Home Menu */}
               {item.type === "list" && item.labels && (
                 <ul>
                   {item.labels.map((label) => (
                     <li key={label.label}>
                       <a
-                        onClick={(e) => handleClickMenu(e, label.label.toLowerCase())}
-                        href="#"
-                      >
+                        onClick={(e) =>
+                          handleClickMenu(e, label.label.toLowerCase())
+                        }
+                        href="#">
                         {label.icon}
                         {label.label}
                       </a>
@@ -96,14 +97,12 @@ const Header = () => {
               {/* User interface elements */}
               {item.type === "menu" && item.labels && (
                 <>
-                  {item.labels.map((icon) => (
-                    <div
-                      onClick={(e) => handleMainClick(e, icon.label)}
-                      className="translate-last"
-                      key={icon.label}
-                    >
-                      {icon.icon}
-                    </div>
+                  {item.labels.map((item) => (
+                    <Menu
+                      item={item}
+                      key={item.label}
+                      Action={{ visible, setVisible }}
+                    />
                   ))}
                 </>
               )}
@@ -112,15 +111,16 @@ const Header = () => {
         })}
 
         {/* Dialog Menus */}
-        <Dialog
-          className={`drop-down-${!visible ? "" : visible}`}
-          visible={visible}
-          setVisible={setVisible}
-        />
+
+        <DilogCard className={`global ${activeDialog}`} visible={!!activeDialog} setVisible={setVisible}>
+         
+        </DilogCard>
+
+
       </div>
 
       {/* Search component */}
-      <Search visible={!!visible} />
+      <Search />
     </header>
   );
 };

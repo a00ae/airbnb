@@ -5,10 +5,6 @@ $drop-down: (
     "height": 500px,
     "transform": translateY(-40px),
   ),
-  "menu": (
-    "width": 330px,
-    "transform": translateY(10px),
-  ),
 );
 
 .dialog[class*="drop-down-"] {
