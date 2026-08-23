@@ -1,0 +1,9 @@
+@use "../../../styles/variables" as v;
+
+
+.global {
+    width: 80%;
+    height: 400px;
+    padding: var(--space-md);
+    background-color: var(--bg-color);
+}

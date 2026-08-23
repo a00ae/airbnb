@@ -8,6 +8,7 @@ const  LANGUAGES  = {
 
 
 type LanguageType = typeof LANGUAGES[keyof typeof LANGUAGES];
+
 type Props = {
   close: () => void;
 };

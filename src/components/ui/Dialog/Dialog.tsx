@@ -4,7 +4,7 @@ import GlobalLanguage from "../Card/Drop-Down/GlobalLanguage";
 import { RiQuestionLine } from "@remixicon/react";
 
 type Props = {
-  className?: string;
+  className: string;
   visible?: string | null;
   setVisible: (visible: string | null) => void;
   children?: React.ReactNode;
@@ -133,13 +133,13 @@ const Dialog = ({ className, visible, setVisible, children }: Props) => {
         style={{ backdropFilter: "blur(3px)" }} // Better way to blur just the background
       >
         {visible == "global" && <GlobalLanguage close={handleClose} />}
-        {visible == "menu" && (
+        {/* {visible == "menu" && (
           <>
             {menu.map((card, index) => (
               <MenuCard key={index} card={card} />
             ))}
           </>
-        )}
+        )} */}
         {children}
       </div>
     </div>
