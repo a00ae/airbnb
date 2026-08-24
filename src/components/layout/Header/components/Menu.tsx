@@ -1,8 +1,9 @@
+// components/Menu.tsx
+import { type ReactNode, type MouseEvent } from "react";
 
-
-type MenuProps = {
+export type MenuProps = {
   label: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 };
 
 interface SetAction {
@@ -11,23 +12,23 @@ interface SetAction {
 }
 
 const Menu = ({ item, Action }: { item: MenuProps; Action: SetAction }) => {
-  const handleClickMenu = (label: string) => {
-    if(label == "mode") {
+  const handleClickMenu = (e: MouseEvent, label: string) => {
+    e.stopPropagation(); // منع انتشار الحدث لعدم إغلاق القائمة بالخطأ
+    
+    if (label === "mode") {
       document.body.classList.toggle("dark");
       return;
     }
-   Action.setVisible((prev)=> (prev === label ? null : label));
+    Action.setVisible((prev) => (prev === label ? null : label));
   };
 
   return (
-    <>
-      <div
-        onClick={() => handleClickMenu(item.label)}
-        className="translate-last"
-        key={item.label}>
-        {item.icon}
-      </div>
-    </>
+    <div
+      onClick={(e) => handleClickMenu(e, item.label)}
+      className="translate-last"
+    >
+      {item.icon}
+    </div>
   );
 };
 
