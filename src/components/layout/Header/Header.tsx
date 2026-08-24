@@ -10,10 +10,9 @@ import "./header.scss";
 import Logo from "./Logo";
 import { type MouseEvent, useState, memo, useRef } from "react";
 import Search from "./Search";
-import Dialog from "../../ui/Dialog/Dialog";
 import { useScrollVisibility } from "../../../hook/useScrollVisibility";
 import Menu from "./components/Menu";
-import DropDown from "../../ui/Dialog/Drop-down";
+import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import DilogCard from "../../ui/Dialog/DilogCard";
 
 interface Labels {
@@ -52,7 +51,7 @@ const Header = () => {
   const [visible, setVisible] = useState<string | null>(null);
   // 1. تصحيح نوع الـ Ref للـ Header
   const ref = useRef<HTMLDivElement | null>(null);
-  const activeDialog = visible && visible === "global" ? "active"  : "";
+  const activeDialog: "active" | "" = visible && visible === "global" ? "active" : "";
 
   // 2. إلغاء السيلكتور الخاطئ لكي يراقب الـ Header نفسه مباشرة
   useScrollVisibility(ref, undefined, { threshold: 0.1, triggerOnce: false });
@@ -112,11 +111,15 @@ const Header = () => {
 
         {/* Dialog Menus */}
 
-        <DilogCard className={`global ${activeDialog}`} visible={!!activeDialog} setVisible={setVisible}>
-         
-        </DilogCard>
+        <DilogCard
+          className={`global ${activeDialog}`}
+          visible={!!activeDialog}
+          setVisible={setVisible}
+        />
 
-
+        <DropDown className={`${visible === "menu" ? "menu" : ""}`}>
+  {/* محتوى القائمة */}
+</DropDown>
       </div>
 
       {/* Search component */}

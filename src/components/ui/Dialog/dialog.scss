@@ -6,4 +6,81 @@
     height: 400px;
     padding: var(--space-md);
     background-color: var(--bg-color);
+    box-shadow: 0 0 10px -4px rgba(0 0 0 / 0.2);
+    transform: translateY(20px);
+    transition: transform 0.3s;
+    border-radius: 40px;
+
+    &.active {
+        transform: translateY(0);
+        transition: transform 0.3s;
+    }
+
+    .global-language {
+    @include v.flex-column(sm);
+    &_close {
+      @include v.flex-row(center, center);
+      cursor: pointer;
+      width: fit-content;
+      padding: var(--space-xs);
+      border-radius: 50%;
+      transition: background-color var(--transition-main);
+
+      &:hover {
+        background-color: var(--bg-color-selected);
+      }
+    }
+    &_btn {
+      @include v.flex-column(md);
+      padding: var(--space-xs);
+      .heading-title {
+        padding: 0 0 var(--space-xs);
+        position: relative;
+        @include v.flex-row(flex-start, center, md);
+        span[data-title-lang] {
+          @include v.typography-style(sm, main, bg-color-black);
+          text-transform: capitalize;
+          cursor: pointer;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 2px;
+          background-color: var(--bg-color-grey);
+          top: 100%;
+          left: 0;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: 90px;
+          height: 2px;
+          background-color: var(--bg-color-black);
+          top: 90%;
+          left: 0;
+          z-index: 1;
+          transition: transform var(--transition-main);
+        }
+
+        &.active::after {
+          transform: translateX(100px);
+        }
+      }
+      .btn-group {
+        @include v.flex-row(flex-start, center, xs);
+        .lang-btn {
+          @include v.typography-style(xs, main, bg-color-black);
+          padding: var(--space-xs) var(--space-sm);
+          border-radius: var(--border-radius-sm);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+
+
 }

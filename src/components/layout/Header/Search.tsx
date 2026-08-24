@@ -3,7 +3,7 @@ import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
-import DropDown from "../../ui/Dialog/Drop-down";
+import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartments } from "../../../hook/useApartments";
 
 type Props = {

@@ -1,11 +1,11 @@
 import { memo, useEffect, useRef } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
-import GlobalLanguage from "../Card/Drop-Down/GlobalLanguage";
+import GlobalLanguage from "./GlobalLanguage";
 import "./dialog.scss"
 
 type DialogProps = {
   className: string;
-  visible: boolean;
+  visible:  boolean;
   setVisible: React.Dispatch<React.SetStateAction<string | null>>
 };
 
@@ -32,7 +32,7 @@ const DilogCard = ({ className, visible, setVisible }: DialogProps) => {
       useOnclickOutSide({
         ref,
         handleDocumentClick: handleClose,
-        visible: visible,
+        visible: !!visible,
       });
 
 
@@ -56,7 +56,7 @@ const DilogCard = ({ className, visible, setVisible }: DialogProps) => {
         visibility: visible ? "visible" : "hidden",
         zIndex: 999,
       }}>
-      <div className={className}>
+      <div ref={ref} className={className}>
 
 
         <GlobalLanguage close={handleClose} />

@@ -1,5 +1,6 @@
 import { RiCloseLine } from "@remixicon/react";
-import "./global-language.scss";
+// import "./global-language.scss";
+import "./dialog.scss"
 import { useState } from "react";
 const  LANGUAGES  = {
   en: "english",
