@@ -14,7 +14,6 @@ $menu-items: (
   transition: transform 0.3s;
   z-index: 1;
   
-
   &_container {
     @include v.flex-row(space-between, center, md);
     .list {
