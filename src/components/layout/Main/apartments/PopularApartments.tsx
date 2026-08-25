@@ -43,7 +43,7 @@ export const PopularApartments = () => {
           <CityApartmentsRow
             key={cityData.id}
             cityData={cityData}
-            currencies={currentCurrency}
+            currencies={{ [currentCurrency]: currentCurrency }}
           />
         ))
       ) : (
