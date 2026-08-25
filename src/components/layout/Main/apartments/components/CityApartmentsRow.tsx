@@ -4,14 +4,14 @@ import {
   RiArrowRightLongLine,
   RiArrowRightSLine,
 } from "@remixicon/react";
-import type { CityData, Currencies } from "../types/apartment.types";
+import type { CityData, } from "../types/apartment.types";
 import ApartmentCard from "./ApartmentCard";
 
 const CARD_WIDTH = 241;
 
 interface CityApartmentsRowProps {
   cityData: CityData;
-  currencies?: Currencies;
+  currencies?: string;
 }
 
 export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowProps) => {
