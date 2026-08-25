@@ -1,27 +1,17 @@
 import React, { memo } from "react";
 import "./drop-down.scss";
+
 type Props = {
-  className: string;
+  className?: string;
   children?: React.ReactNode;
-  width?: number;
-  height?:  number;
+  style?: React.CSSProperties;
 };
-const DropDown = ({className, children, height = 430 ,width = 620}: Props) => {
-  
-  const dropDownClassName = className.toLowerCase().trim();
+
+const DropDown = ({ className = "", children, style }: Props) => {
   return (
-    <div
-      style={{
-        position: "absolute",
-        width: `${width}px`,
-        height: `${height}px`,
-        backgroundColor: "var(--card-bg)",
-        top: "110%",
-        zIndex: 3,
-        borderRadius: 40,
-        boxShadow: "0 0 10px -3px rgba(0 0 0 / 0.5 )",
-      }}
-      className={`drop-down ${dropDownClassName || ""}`}>{children}</div>
+    <div style={style} className={`drop-down ${className.toLowerCase().trim()}`}>
+      {children}
+    </div>
   );
 };
 
