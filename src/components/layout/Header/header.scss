@@ -8,7 +8,7 @@ $menu-items: (
   --padding-box: 5px 12px;
   padding: 20px 50px 80px;
   @include v.flex-column(md);
-  background: var(--bg-color-selected);
+  background: var(--bg-color-section);
   position: relative;
   transform: translateY(0);
   transition: transform 0.3s;

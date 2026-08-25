@@ -16,6 +16,7 @@ export const DestinationsSection: React.FC = () => {
 
   return (
     <section className="destinations-section">
+      <h2>Inspiration for future getaways</h2>
       {/* شريط التبويبات */}
       <div className="tabs-container">
         {categoriesData.map((tab: Category) => (

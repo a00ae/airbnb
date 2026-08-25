@@ -1,9 +1,0 @@
-@use "../../../../styles/variables" as v;
-
-
-.footer {
-    @include v.container-padding(bg-color-selected);
-    &_container {
-        @include v.flex-column(md);
-    }
-}
