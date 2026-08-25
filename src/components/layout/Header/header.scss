@@ -94,3 +94,96 @@ $menu-items: (
     transition: transform 0.3s;
   }
 }
+
+.menu-list {
+  width: 400px;
+  right: 10px;
+  top: calc(30% + 10px);
+  background-color: var(--card-bg);
+  border-radius: 20px;
+  
+  // 1. قص الأزرار لمنع خروج خلفيتها عند الـ Hover عن زوايا الأب
+  overflow: hidden; 
+
+  .menu_btn {
+    --padding-menu-btn: 22px 10%;
+    padding: var(--padding-menu-btn);
+    @include v.typography-style(sm, sm);
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    
+    // 2. تعديل الحواف لتتناسب مع محتوى القائمة بدلاً من 60px الحادة
+    border-radius: 0; 
+
+    &::after {
+      content: "";
+      position: absolute;
+      // 3. تثبيت الخط أسفل الزر تماماً بدلاً من 110% لمنع التداخل
+      bottom: 0; 
+      left: 10%;
+      width: 80%;
+      height: 1px;
+      // 4. جعل الخط يظهر فوق خلفية الـ Hover للزر نفسه
+      z-index: 2; 
+      pointer-events: none; // لمنع التأثير على الضغط
+    }
+
+    &.icon {
+      @include v.flex-row(flex-start, center, xs);
+      &::after {
+        background-color: var(--bg-color-grey);
+      }
+    }
+
+    &.description {
+      @include v.flex-column(xs);
+      &::after {
+        background-color: var(--bg-color-grey);
+      }
+    }
+
+    &.titles {
+      cursor: default;
+      @include v.flex-column(xxxs);
+      padding: 0;
+      .item-btn {
+        transition: inherit;
+        padding: 16px 10%;
+        cursor: pointer;
+        &:hover {
+          background-color: var(--bg-color-data-hover);
+        }
+      }
+    }
+
+    &.log-in {
+      &::after {
+        background-color: var(--bg-color-grey);
+        // إلغاء قيمة top السابقة وتثبيتها أعلى الزر
+        top: 0; 
+        bottom: auto;
+      }
+    }
+
+    // إخفاء الخط الفاصل للزر الأخير تلقائياً
+    &:last-child::after {
+      display: none;
+    }
+
+    &:not(.titles):hover {
+      background-color: var(--bg-color-data-hover);
+    }
+  }
+
+  @media (max-width: v.$width-md) {
+    top: calc(70px + 10px);
+  }
+}
+
+
+
+
+
+
