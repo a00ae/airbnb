@@ -43,8 +43,8 @@ const Search = ({ visible }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   // 🟢 جلب الفلاتر والمدن المتاحة من الهوك
-  const { cities, filters, filteredApartments, isLoading, error, currentCurrency } = useApartments();
-  const { selectedCity, setSelectedCity, searchQuery, setSearchQuery } = filters;
+  const { cities, filters, filteredApartments } = useApartments();
+  const {  setSelectedCity, searchQuery, setSearchQuery } = filters;
   
 
   // إغلاق الـ Dropdown عند الضغط بالخارج

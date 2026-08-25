@@ -23,10 +23,10 @@ body.dark {
   --card-bg: #1e1e1e;       /* أسود مائل للرمادي للأقسام والبطاقات */
   --text-color: #ffffff;    /* نصوص بيضاء */
   --border-color: #333333;  /* حدود داكنة */
-  --bg-color-selected: #1e1e1e;
+  --bg-color-section: #1e1e1e;
 }
 
- section, article, header, footer, nav, .card {
+ section, article, nav, .card {
   background-color: var(--card-bg);
   color: var(--text-color) ;
   border-color: var(--border-color);
