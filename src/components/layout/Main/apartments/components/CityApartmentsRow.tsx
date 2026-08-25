@@ -7,7 +7,7 @@ import {
 import type { CityData, Currencies } from "../types/apartment.types";
 import ApartmentCard from "./ApartmentCard";
 
-const CARD_WIDTH = 160;
+const CARD_WIDTH = 241;
 
 interface CityApartmentsRowProps {
   cityData: CityData;
@@ -39,7 +39,7 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
   }, []);
 
   const isPrevDisabled = currentIndex === 0;
-  const isNextDisabled = currentIndex + visibleCards >= (apartments?.length || 0);
+  const isNextDisabled = currentIndex + visibleCards  >= (apartments?.length || 0);
 
   const nextSlide = () => setCurrentIndex((prev) => prev + 1);
   const prevSlide = () => setCurrentIndex((prev) => prev - 1);
@@ -82,7 +82,7 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
           className="cards-track"
           style={{
             display: "flex",
-            transform: `translateX(${-currentIndex * CARD_WIDTH}px)`,
+            transform: `translateX(calc(${-currentIndex * CARD_WIDTH}px))`,
             transition: "transform 0.4s ease-out",
           }}
         >

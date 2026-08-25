@@ -58,14 +58,14 @@
     &_real-estate-cards {
       @include v.flex-column(xs);
       flex-shrink: 0; /* تمنع انضغاط الكرت أو انكماشه عند صغر الشاشة */
-      width: 210px; /* يجب أن تطابق القيمة المحددة في كود الـ JavaScript تماماً */
+      width: 300px; /* يجب أن تطابق القيمة المحددة في كود الـ JavaScript تماماً */
 
       .img-cards {
         width: 100%;
         height: auto;
         img {
           width: 100%;
-          height: 150px;
+          height: 210px;
           object-fit: cover;
           border-radius: 20px;
           display: block;
