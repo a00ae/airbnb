@@ -87,13 +87,13 @@ $width-xxl: 1400px;
 }
 
 @mixin container-padding($bg-color: "card-bg") {
-  padding: var(--space-xxl) var(--space-xl) var(--space-md) var(--space-md);
+  padding: var(--space-xxl)  var(--space-md) var(--space-xl) var(--space-md);
   width: 100%;
   @if $bg-color != null {
     background-color: var(--#{$bg-color});
   }
   @media (max-width: $width-md) {
-    padding: var(--space-lg) var(--space-md) var(--space-xs) var(--space-xs);
+    padding: var(--space-lg)  var(--space-xs) var(--space-md) var(--space-xs);
   }
 }
 

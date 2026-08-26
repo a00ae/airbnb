@@ -1,0 +1,45 @@
+@use "/src/styles/variables" as v;
+
+.footer-nav {
+  width: 100%;
+  background-color: var(--bg-color-section);
+  transition: background-color var(--transition-main), border-color var(--transition-main);
+
+  .footer-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+
+    @media (min-width: v.$width-sm) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+  }
+
+  .footer-column {
+    @include v.flex-column($gap: xs, $align: flex-start);
+
+    .column-title {
+      @include v.typography-style(xxs, bold, text-color);
+      margin-bottom: var(--space-xxs);
+    }
+
+    .links-list {
+      @include v.flex-column($gap: xs, $align: flex-start);
+      width: 100%;
+
+      .link-item {
+        a {
+          @include v.typography-style(xxs, sm, text-color);
+          transition: opacity var(--transition-main), text-decoration var(--transition-main);
+          opacity: 0.85;
+
+          &:hover {
+            opacity: 1;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

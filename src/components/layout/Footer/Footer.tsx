@@ -1,4 +1,5 @@
 import DestinationsSection from "./components/DestinationsSection"
+import { FooterNav } from "./components/FooterNav";
 import "./footer.scss";
 
 const Footer = () => {
@@ -7,7 +8,7 @@ const Footer = () => {
       <div className="footer_container">
         
         <DestinationsSection />
-
+        <FooterNav />
 
       </div>
     </footer>

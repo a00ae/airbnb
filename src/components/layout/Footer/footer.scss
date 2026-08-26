@@ -5,6 +5,6 @@
     padding: var(--space-md);
     background-color: var(--bg-color-section);
     &_container {
-        @include v.flex-column(md);
+        @include v.flex-column(xl);
     }
 }

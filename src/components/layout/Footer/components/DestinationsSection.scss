@@ -28,7 +28,7 @@
       background: transparent;
       border: none;
       padding-bottom: var(--space-xs);
-      @include v.typography-style(xxs, main, text-color);
+      @include v.typography-style(sm, main, text-color);
       opacity: 0.7;
       white-space: nowrap;
       cursor: pointer;
@@ -42,7 +42,7 @@
 
       &.active {
         opacity: 1;
-        @include v.typography-style(xxs, bold, text-color);
+        @include v.typography-style(sm, bold, text-color);
 
         &::after {
           content: '';
@@ -75,7 +75,7 @@
       @include v.flex-column($gap: xxxs, $align: flex-start);
 
       .city-name {
-        @include v.typography-style(xxs, bold, text-color);
+        @include v.typography-style(xs, main, text-color);
         line-height: 1.25;
       }
 
