@@ -2,7 +2,8 @@
 
 
 .footer {
-    @include v.container-padding(bg-color-section);
+    padding: var(--space-md);
+    background-color: var(--bg-color-section);
     &_container {
         @include v.flex-column(md);
     }
