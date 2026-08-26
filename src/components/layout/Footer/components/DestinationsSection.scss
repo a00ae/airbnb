@@ -1,112 +1,96 @@
 @use "/src/styles/variables" as v;
 
-// Variables
-$font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-$color-text-primary: #222222;
-$color-text-secondary: #717171;
-$color-border: #e0e0e0;
-$color-black: #000000;
-
 .destinations-section {
   width: 100%;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-  font-family: $font-family;
-  color: $color-text-primary;
+
+  background-color: var(--bg-color-section);
+  color: var(--text-color);
+  transition: background-color var(--transition-main), color var(--transition-main);
   @include v.flex-column(sm);
 
-  // شريط التبويبات (Tabs Bar)
+  h2 {
+    @include v.typography-style(md, main, text-color);
+  }
+
   .tabs-container {
-    display: flex;
-    gap: 2rem;
-    border-bottom: 1px solid $color-border;
-    margin-bottom: 1.5rem;
+    @include v.flex-row($justify: flex-start, $align: center, $gap: sm);
+    border-bottom: var(--space-xxxxs) solid var(--border-color);
+    margin-bottom: var(--space-sm);
     overflow-x: auto;
     
-    // إخفاء شريط التمرير (Scrollbar)
-    scrollbar-width: none; // Firefox
+    // إخفاء شريط التمرير
+    scrollbar-width: none;
     &::-webkit-scrollbar {
-      display: none; // Chrome, Safari
+      display: none;
     }
 
     .tab-button {
-      background: none;
+      background: transparent;
       border: none;
-      padding: 0 0 0.75rem 0;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: $color-text-secondary;
+      padding-bottom: var(--space-xs);
+      @include v.typography-style(xxs, main, text-color);
+      opacity: 0.7;
       white-space: nowrap;
       cursor: pointer;
       position: relative;
-      transition: color 0.2s ease;
+      transition: color var(--transition-main), opacity var(--transition-main);
 
       &:hover {
-        color: $color-black;
+        opacity: 1;
+        color: var(--text-color);
       }
 
       &.active {
-        color: $color-black;
-        font-weight: 600;
+        opacity: 1;
+        @include v.typography-style(xxs, bold, text-color);
 
         &::after {
           content: '';
           position: absolute;
-          bottom: -1px;
+          bottom: calc(-1 * var(--space-xxxxs));
           left: 0;
           right: 0;
-          height: 2px;
-          background-color: $color-black;
+          height: var(--space-xxxs);
+          background-color: var(--text-color);
         }
       }
     }
   }
 
-  // شبكة العرض (Grid Layout)
+  // شبكة عرض المدن والخدمات (Destinations Grid)
   .destinations-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); // 2 أعمدة للموبايل
-    gap: 1.5rem 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm) var(--space-xs);
 
-    @media (min-width: 640px) {
-      grid-template-columns: repeat(3, 1fr); // 3 أعمدة للشاشات المتوسطة
+    @media (min-width: v.$width-sm) {
+      grid-template-columns: repeat(3, 1fr);
     }
 
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(6, 1fr); // 6 أعمدة للشاشات الكبيرة (مثل الصورة)
+    @media (min-width: v.$width-md) {
+      grid-template-columns: repeat(6, 1fr);
     }
 
     .destination-item {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
+      @include v.flex-column($gap: xxxs, $align: flex-start);
 
       .city-name {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: $color-text-primary;
+        @include v.typography-style(xxs, bold, text-color);
         line-height: 1.25;
       }
 
       .rental-type {
-        font-size: 0.875rem;
-        font-weight: 400;
-        color: $color-text-secondary;
-        margin-top: 0.125rem;
+        @include v.typography-style(xxs, sm, bg-color-grey-description);
       }
     }
 
     // زر Show More / Show Less
     .show-more-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      background: none;
+      @include v.flex-row($justify: flex-start, $align: center, $gap: xxxs);
+      background: transparent;
       border: none;
       padding: 0;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: $color-black;
+      @include v.typography-style(xxs, bold, text-color);
       cursor: pointer;
       align-self: flex-start;
 
@@ -115,9 +99,10 @@ $color-black: #000000;
       }
 
       .arrow-icon {
-        width: 0.875rem;
-        height: 0.875rem;
-        transition: transform 0.2s ease;
+        width: var(--font-size-xxs);
+        height: var(--font-size-xxs);
+        stroke: var(--text-color);
+        transition: transform var(--transition-main);
 
         &.rotate {
           transform: rotate(180deg);
