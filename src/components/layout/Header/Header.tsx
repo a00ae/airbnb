@@ -16,6 +16,7 @@ import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import DilogCard from "../../ui/Dialog/DilogCard";
 import { menu } from "../../ui/Card/Drop-Down";
 import MenuCard from "../../ui/Card/MenuCard";
+import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
 
 interface Labels {
   label: string;
@@ -53,19 +54,28 @@ const Header = () => {
   const [visible, setVisible] = useState<string | null>(null);
   // 1. تصحيح نوع الـ Ref للـ Header
   const ref = useRef<HTMLDivElement | null>(null);
+  const dropDownRef = useRef<HTMLDivElement | null>(null);
   const activeDialog: "active" | "" =
     visible && visible === "global" ? "active" : "";
 
+  const handleClose = () => {
+    setVisible(null);
+  };
+
   // 2. إلغاء السيلكتور الخاطئ لكي يراقب الـ Header نفسه مباشرة
   useScrollVisibility(ref, undefined, { threshold: 0.1, triggerOnce: false });
+
+  useOnclickOutSide({
+    ref: dropDownRef,
+    handleDocumentClick: handleClose,
+    visible: !!visible,
+  });
 
   const handleClickMenu = (e: MouseEvent<HTMLAnchorElement>, label: string) => {
     e.preventDefault();
     setActiveSection(label);
   };
 
-
-    
   return (
     <header className="header">
       <div ref={ref} className="header_container">
@@ -121,15 +131,20 @@ const Header = () => {
           setVisible={setVisible}
         />
 
-        <DropDown className={`menu-list ${visible == "menu" ? "is-active" : ""}`}>
-          {menu.map((item) => (
-            <MenuCard card={item} key={item.title} />
+        <DropDown
+          ref={dropDownRef}
+          className={`menu-list ${visible == "menu" ? "is-active" : ""}`}>
+          {menu.map((item, index) => (
+            <MenuCard card={item} key={index} />
           ))}
         </DropDown>
       </div>
 
       {/* Search component */}
-      <Search />
+      <Search
+        activeLabel={visible}
+        onLabelChange={(label) => setVisible(label)}
+      />
     </header>
   );
 };

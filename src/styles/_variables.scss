@@ -10,7 +10,7 @@
   --bg-color-core: #ff385c;
   --bg-color-plus: #92174d;
   --bg-color-border: #2222223d;
-  --bg-color-btn: #e2e2e2;
+  --bg-color-btn: #dadada;
   --bg-color-btn-hover: #eeebeb;
   --bg-color-grey: #9e9e9e;
   --bg-color-grey-description: #6c6c6c;
@@ -58,8 +58,11 @@
   --box-shadow-main: 0 1px 1px 0 rgb(255 255 255 / 5%);
   --box-shadow-header:
     0 1px 10px -5px rgb(50 52 52 / 0%), 0 2px 44px -5px rgb(99 68 68 / 17%);
+
+    --box-shadow-tailwind : 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --transition-main: 0.3s;
   --transition-lg: 0.5s;
+
 }
 
 $width-sm: 700px;

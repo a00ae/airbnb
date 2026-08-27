@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, forwardRef } from "react";
 import "./drop-down.scss";
 
 type Props = {
@@ -7,12 +7,20 @@ type Props = {
   style?: React.CSSProperties;
 };
 
-const DropDown = ({ className = "", children, style }: Props) => {
+
+
+const DropDown = forwardRef<HTMLDivElement, Props>(({ className = "", children, style }, ref) => {
+
+ const customClass = className.toLowerCase().trim();
+  const combinedClasses = `drop-down ${customClass}`.trim();
+
   return (
-    <div style={style} className={`drop-down ${className.toLowerCase().trim()}`}>
+    <div ref={ref} style={style} className={combinedClasses}>
       {children}
     </div>
   );
-};
+});
+
+DropDown.displayName = "DropDown";
 
 export default memo(DropDown);

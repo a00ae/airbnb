@@ -1,13 +1,19 @@
-import { RiSearchLine, RiMapPinLine } from "@remixicon/react";
+import {
+  RiSearchLine,
+  RiMapPinLine,
+  RiAddLine,
+  RiSubtractLine,
+} from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartments } from "../../../hook/useApartments";
 
-type Props = {
-  visible?: boolean;
+type SearchProps = {
+  activeLabel: string | null;
+  onLabelChange: (label: string | null) => void;
 };
 
 // 1. Independent card component (contains its own counter)
@@ -21,35 +27,39 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
         <p>{who.descraptionDataWho}</p>
       </div>
       <div className="who-number">
-        <span
+        <button
+          type="button"
+          disabled={count == 0}
           onClick={() => setCount((prev) => Math.max(0, prev - 1))}
           className="discriment">
-          —
-        </span>
+          <RiSubtractLine />
+        </button>
         <span className="valued">{count}</span>
-        <span
+        <button
+          type="button"
           onClick={() => setCount((prev) => prev + 1)}
           className="increment">
-          +
-        </span>
+          <RiAddLine />
+        </button>
       </div>
     </div>
   );
 };
 
 /* Search Section Component */
-const Search = ({ visible }: Props) => {
-  const [activeLabel, setActiveLabel] = useState<string | null>(null);
+const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
+  // const [activeLabel, setActiveLabel] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
+
+  console.log(activeLabel);
 
   // 🟢 جلب الفلاتر والمدن المتاحة من الهوك
   const { cities, filters, filteredApartments } = useApartments();
-  const {  setSelectedCity, searchQuery, setSearchQuery } = filters;
-  
+  const { setSelectedCity, searchQuery, setSearchQuery } = filters;
 
   // إغلاق الـ Dropdown عند الضغط بالخارج
   const handleClicOutSide = () => {
-    setActiveLabel(null);
+    onLabelChange(null);
   };
 
   useOnclickOutSide({
@@ -58,14 +68,13 @@ const Search = ({ visible }: Props) => {
     visible: activeLabel,
   });
 
-  useEffect(() => {
-    if (visible) {
-      setActiveLabel(null);
-    }
-  }, [visible]);
+  const handleClickSearch = (e: React.MouseEvent, title: string) => {
+    e.stopPropagation();
+    const normalizedTitle = title.trim().toLowerCase(); // تحويل لـ where, when, who
+    const currentActive = activeLabel?.trim().toLowerCase();
 
-  const handleClickSearch = (label: string) => {
-    setActiveLabel((prev) => (prev === label ? null : label));
+    // إذا كان الحقل مفعلاً مسبقاً يتم إغلاقه (null)، وإلا يتم تفعيله
+    onLabelChange(currentActive === normalizedTitle ? null : normalizedTitle);
   };
 
   // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
@@ -77,20 +86,19 @@ const Search = ({ visible }: Props) => {
   // 🟢 الدالة الخاصة باختيار مدينة عند الضغط عليها في القائمة
   const handleSelectCity = (cityName: string) => {
     setSelectedCity(cityName);
-    setActiveLabel(null); // إغلاق الـ Dropdown بعد الاختيار
+    onLabelChange(null); // إغلاق الـ Dropdown بعد الاختيار
   };
-
-  if (!ref) return null;
 
   return (
     <div ref={ref} className="search">
       {itemButtonSearch.map(({ descraption, title }) => {
         const currentTitleLower: string = title.trim().toLowerCase();
-        const isCurrentActive: boolean = activeLabel === title;
+        const isCurrentActive: boolean =
+          activeLabel?.trim().toLowerCase() === currentTitleLower;
 
         return (
           <div
-            onClick={() => handleClickSearch(title)}
+            onClick={(e) => handleClickSearch(e, title)}
             key={title}
             className={`search_btn ${currentTitleLower} ${
               isCurrentActive ? "visible" : ""
@@ -111,7 +119,8 @@ const Search = ({ visible }: Props) => {
             )}
 
             {title === "Who" && (
-              <div className={`search_icon ${!activeLabel ? "" : "visible"}`}>
+              <div
+                className={`search_icon ${["where", "when", "who"].includes(activeLabel?.toLowerCase() ?? "") ? "visible" : ""}`}>
                 <RiSearchLine />
                 <span>Search</span>
               </div>
@@ -127,7 +136,7 @@ const Search = ({ visible }: Props) => {
       </div>
 
       {/* القائمة المنسدلة DropDown */}
-      <DropDown  className={!activeLabel ? "" : activeLabel}>
+      <DropDown className={activeLabel || ""}>
         {dataWhere
           .filter((item) => item.type === activeLabel?.toLowerCase().trim())
           .map((item, i) => {
@@ -135,9 +144,9 @@ const Search = ({ visible }: Props) => {
               <div key={i} className={`child-${item.type}`}>
                 {/* 🟢 قسم الوجهات - Where */}
 
-                {item.type === "where"  && (
+                {item.type === "where" && (
                   <>
-                    {filteredApartments.length > 0  ? (
+                    {filteredApartments.length > 0 ? (
                       <>
                         {/* عرض المدن القادمة من الـ API مباشرة */}
                         {uniqueCities.map((cityName) => (
