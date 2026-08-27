@@ -1,10 +1,72 @@
 @use "../../../styles/variables" as v;
 
-
 .footer {
-    padding: var(--space-md);
-    background-color: var(--bg-color-section);
-    &_container {
-        @include v.flex-column(xl);
+  padding: var(--space-md);
+  background-color: var(--bg-color-section);
+  border-top: 1px solid var(--border-color);
+
+  &_container {
+    @include v.flex-column(xl);
+  }
+
+  &_bottom {
+    @include v.flex-row(space-between, center, md);
+    &_nav_left {
+      @include v.flex-row(flex-start, center, xs);
+      flex-wrap: wrap;
+      @include v.typography-style(xxs, sm, text-color);
     }
+
+    &_copyright {
+      color: var(--text-color);
+    }
+
+    &_links {
+      @include v.flex-row(flex-start, center, xs);
+      flex-wrap: wrap;
+    }
+
+    &_link_item {
+      @include v.flex-row(flex-start, center, xs);
+
+      // إضافة النقطة الفاصلة قبل كل عنصر تلقائياً
+      &::before {
+        content: "·";
+        color: var(--text-color);
+      }
+    }
+
+    &_link {
+      @include v.typography-style(xxs, sm, text-color);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &_nav_right {
+      @include v.flex-row(flex-end, center, sm);
+    }
+
+    &_action_btn {
+      background: transparent;
+      cursor: pointer;
+      @include v.flex-row(center, center, xxs);
+      @include v.typography-style(xxs, bold, text-color);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &_socials {
+      @include v.flex-row(center, center, xs);
+
+      a {
+        @include v.typography-style(xxs, bold, text-color);
+      }
+    }
+  }
+
+  // التنسيقات الخاصة بـ FooterNav دون الحاجة لعنصر أب إضافي
 }
