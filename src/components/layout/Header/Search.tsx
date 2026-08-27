@@ -86,7 +86,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   // 🟢 الدالة الخاصة باختيار مدينة عند الضغط عليها في القائمة
   const handleSelectCity = (cityName: string) => {
     setSelectedCity(cityName);
-    onLabelChange(null); // إغلاق الـ Dropdown بعد الاختيار
+    // onLabelChange(null); // إغلاق الـ Dropdown بعد الاختيار
   };
 
   return (
