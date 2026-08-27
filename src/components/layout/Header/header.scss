@@ -17,7 +17,7 @@ $menu-items: (
   &_container {
     @include v.flex-row(space-between, center, md);
     .list {
-      @include v.typography-style(sm, main);
+      @include v.typography-style(sm, main, text-color);
       position: relative;
 
       ul {
@@ -40,7 +40,7 @@ $menu-items: (
       @each $name, $translate-value in $menu-items {
         &.#{$name}::before {
           transform: translateX($translate-value);
-          background-color: var(--bg-color-black);
+          background-color: var(--text-color);
         }
       }
     }
@@ -53,6 +53,8 @@ $menu-items: (
         border-radius: 50%;
         @include v.flex-row(center, center);
         transition: background-color var(--transition-main);
+        color: var(--text-color);
+        transition: color 0.3s, background-color 0.3s;
       }
     }
     
@@ -107,7 +109,7 @@ $menu-items: (
   .menu_btn {
     --padding-menu-btn: 22px 10%;
     padding: var(--padding-menu-btn);
-    @include v.typography-style(sm, sm);
+    @include v.typography-style(sm, sm, text-color);
     position: relative;
     z-index: 1;
     transition: background-color 0.3s;
