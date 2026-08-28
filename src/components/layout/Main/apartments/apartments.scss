@@ -16,7 +16,7 @@
         cursor: pointer;
         @include v.flex-row(flex-start, center, sm);
         h2 {
-          @include v.typography-style(md, bold);
+          @include v.typography-style(md, bold, text-color);
         }
       }
       .right {
@@ -28,9 +28,10 @@
       .arrow {
         @include v.flex-row(center, center);
         padding: var(--space-xxs);
-        background-color: var(--bg-color-selected);
+        background-color: var(--bg-color-data-hover);
         border-radius: 50%;
         cursor: pointer;
+        color: var(--text-color);
         border: none; // لضمان عدم وجود حدود افتراضية للزر
         
         &:disabled {
@@ -79,7 +80,7 @@
         @include v.typography-style(xs, sm, bg-color-grey-description);
         
         span[data-card-title] {
-          @include v.typography-style(sm, main);
+          @include v.typography-style(sm, main, text-color);
           text-transform: capitalize;
           white-space: nowrap; /* تمنع نزول عنوان الشقة لسطر جديد وتشوه الكرت */
           overflow: hidden;

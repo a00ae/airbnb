@@ -1,10 +1,11 @@
-import {Footer, Header, Main} from "./components"
+import {Footer, Header, Main, Apt} from "./components"
 function App() {
 
 
   return (
     <>
     <Header/>
+    <Apt />
     <Main/>
     <Footer />
     </>
