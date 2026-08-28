@@ -10,7 +10,6 @@ import "./header.scss";
 import Logo from "./Logo";
 import { type MouseEvent, useState, memo, useRef } from "react";
 import Search from "./Search";
-import { useScrollVisibility } from "../../../hook/useScrollVisibility";
 import Menu from "./components/Menu";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import DilogCard from "../../ui/Dialog/DilogCard";
