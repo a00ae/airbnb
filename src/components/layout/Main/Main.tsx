@@ -1,15 +1,8 @@
 import PopularApartments from "./apartments/PopularApartments"
-
-
-
-
+import "./main.scss";
 const Main = () => {
   return (
-    <div style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "var(--space-md)"
-    }} className="main">
+    <div  className="main">
         <PopularApartments />
 
     </div>

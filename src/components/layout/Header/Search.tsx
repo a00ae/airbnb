@@ -75,6 +75,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
 
     // إذا كان الحقل مفعلاً مسبقاً يتم إغلاقه (null)، وإلا يتم تفعيله
     onLabelChange(currentActive === normalizedTitle ? null : normalizedTitle);
+
   };
 
   // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"

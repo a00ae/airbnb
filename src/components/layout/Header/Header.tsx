@@ -53,7 +53,7 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState<string>("homes");
   const [visible, setVisible] = useState<string | null>(null);
   // 1. تصحيح نوع الـ Ref للـ Header
-  const ref = useRef<HTMLDivElement | null>(null);
+  // const ref = useRef<HTMLDivElement | null>(null);
   const dropDownRef = useRef<HTMLDivElement | null>(null);
   const activeDialog: "active" | "" =
     visible && visible === "global" ? "active" : "";
@@ -63,7 +63,6 @@ const Header = () => {
   };
 
   // 2. إلغاء السيلكتور الخاطئ لكي يراقب الـ Header نفسه مباشرة
-  useScrollVisibility(ref, undefined, { threshold: 0.1, triggerOnce: false });
 
   useOnclickOutSide({
     ref: dropDownRef,
@@ -75,10 +74,9 @@ const Header = () => {
     e.preventDefault();
     setActiveSection(label);
   };
-
   return (
     <header className="header">
-      <div ref={ref} className="header_container">
+      <div  className="header_container">
         {/* Website logo */}
         <div className="logo">
           <Logo />

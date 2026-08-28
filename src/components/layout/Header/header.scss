@@ -9,16 +9,31 @@ $menu-items: (
   padding: 20px 50px 80px;
   @include v.flex-column(md);
   background: var(--bg-color-section);
-  position: relative;
+  position: sticky;
+  top: 0;
   transform: translateY(0);
   transition: transform 0.3s;
   z-index: 1;
+
+  &:has(~ .apt.is-visible) {
+    .list {
+      transform: translateY(0);
+    }
+  }
+
+  
+  &:has(~ .apt.is-exiting) {
+    .list {
+      transform: translateY(-100px);
+    }
+  }
   
   &_container {
     @include v.flex-row(space-between, center, md);
     .list {
       @include v.typography-style(sm, main, text-color);
       position: relative;
+      transition: transform var(--transition-main);
 
       ul {
         @include v.flex-row(center, center, md);
@@ -82,19 +97,19 @@ $menu-items: (
 }
 
 
-.header_container.is-visible {
-  .list {
-    transform: translateY(0);
-    transition: transform 0.5s;
+// .header_container.is-visible {
+//   .list {
+//     transform: translateY(0);
+//     transition: transform 0.5s;
 
-  }
-}
-.header_container.is-exiting {
-  .list {
-    transform: translateY(-40px);
-    transition: transform 0.3s;
-  }
-}
+//   }
+// }
+// .header_container.is-exiting {
+//   .list {
+//     transform: translateY(-40px);
+//     transition: transform 0.3s;
+//   }
+// }
 
 .menu-list {
   width: 400px;

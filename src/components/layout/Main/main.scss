@@ -1,0 +1,6 @@
+@use "/src/styles/variables" as v;
+
+.main {
+  @include v.flex-column(md);
+}
+
