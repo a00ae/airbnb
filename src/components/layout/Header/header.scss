@@ -21,6 +21,7 @@ $menu-items: (
     }
   }
 
+  
   &:has(~ .apt.is-exiting) {
     .list {
       transform: translateY(-100px);
