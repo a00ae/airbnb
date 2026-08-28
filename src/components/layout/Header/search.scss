@@ -1,19 +1,21 @@
 @use "../../../styles/variables" as v;
 
 .search {
-  --padding-box: var(--space-sm) var(--space-md);
+  --padding-box: 12px 15px;
   width: 80%;
-  @include v.grid-main(300px, xxs);
+  @include v.flex-row(flex-start, center, xs);
   border: 1px solid var(--bg-color-border);
   box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.5);
   margin: auto;
-  border-radius: 40px;
+  border-radius: 35px;
   z-index: 1;
-  position: sticky;
-  top: 10px;
+  position: relative;
   background-color: var(--bg-color-selected);
+  transition: transform var(--transition-main), width var(--transition-main);
 
   &_btn {
+    flex: 1 1 0;
+    min-width: 0;
     padding: var(--padding-box);
     position: relative;
     border-radius: inherit;
@@ -26,10 +28,10 @@
     }
 
     p {
-      @include v.typography-style(sm, sm, text-color);
+      @include v.typography-style(xs, sm, text-color);
     }
     span {
-      @include v.typography-style(xs, sm, bg-color-grey);
+      @include v.typography-style(xxs, sm, bg-color-grey);
     }
 
     &.where .inp {
@@ -38,6 +40,7 @@
     }
 
     &.when {
+      
       &::before {
         content: "";
         position: absolute;
@@ -61,8 +64,8 @@
     &.who .search_icon {
       position: absolute;
       overflow: hidden;
-      right: 20px;
-      top: 10%;
+      right: 5px;
+      top: 0;
       @include v.flex-row(center, center,);
       padding: 20px;
       background-color: var(--bg-color-core);

@@ -20,7 +20,7 @@
   $dropdown-states: (
     "where": ( "translate": 0, "origin": left center, "width": null ),
     "when": ( "translate": calc(50% / 1.5), "origin": center center, "width": 750px ),
-    "who": ( "translate": calc(170%), "origin": right center, "width": null )
+    "who": ( "translate": calc(100%), "origin": right center, "width": null )
   );
 
   @each $state, $props in $dropdown-states {
