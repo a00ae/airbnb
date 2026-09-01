@@ -11,7 +11,7 @@ const Apt = () => {
       ref={ref}
       style={{
         width: "100%",
-        height: "20px",
+        height: "1px",
         backgroundColor: "var(--card-bg)",
       }}></div>
   );

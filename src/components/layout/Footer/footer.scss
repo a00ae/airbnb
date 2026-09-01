@@ -12,7 +12,8 @@
   &_bottom {
     @include v.flex-row(space-between, center, md);
     &_nav_left {
-      @include v.flex-row(flex-start, center, xs);
+      @include v.flex-column(xs);
+
       flex-wrap: wrap;
       @include v.typography-style(xxs, sm, text-color);
     }

@@ -51,11 +51,9 @@ const listHeaderIcons: HeaderIconItem[] = [
 const Header = () => {
   const [activeSection, setActiveSection] = useState<string>("homes");
   const [visible, setVisible] = useState<string | null>(null);
-  // 1. تصحيح نوع الـ Ref للـ Header
-  // const ref = useRef<HTMLDivElement | null>(null);
-  const dropDownRef = useRef<HTMLDivElement | null>(null);
-  const activeDialog: "active" | "" =
-    visible && visible === "global" ? "active" : "";
+  const headerRef = useRef<HTMLDivElement | null>(null);
+
+
 
   const handleClose = () => {
     setVisible(null);
@@ -64,7 +62,7 @@ const Header = () => {
   // 2. إلغاء السيلكتور الخاطئ لكي يراقب الـ Header نفسه مباشرة
 
   useOnclickOutSide({
-    ref: dropDownRef,
+    ref: headerRef,
     handleDocumentClick: handleClose,
     visible: !!visible,
   });
@@ -74,7 +72,7 @@ const Header = () => {
     setActiveSection(label);
   };
   return (
-    <header className="header">
+    <header ref={headerRef} className="header">
       <div  className="header_container">
         {/* Website logo */}
         <div className="logo">
@@ -123,14 +121,13 @@ const Header = () => {
         {/* Dialog Menus */}
 
         <DilogCard
-          className={`global ${activeDialog}`}
-          visible={!!activeDialog}
+          className={`global ${visible === "global" ? "active" : ""}`}
+          visible={visible === "global"}
           setVisible={setVisible}
         />
 
         <DropDown
-          ref={dropDownRef}
-          className={`menu-list ${visible == "menu" ? "is-active" : ""}`}>
+          className={`menu-list ${visible === "menu" ? "is-active" : ""}`}>
           {menu.map((item, index) => (
             <MenuCard card={item} key={index} />
           ))}
