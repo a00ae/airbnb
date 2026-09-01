@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import {
   RiArrowLeftSLine,
   RiArrowRightLongLine,
@@ -7,7 +7,8 @@ import {
 import type { CityData, } from "../types/apartment.types";
 import ApartmentCard from "./ApartmentCard";
 
-const CARD_WIDTH = 241;
+const CARD_WIDTH = 190;
+const CARD_GAP = 20; 
 
 interface CityApartmentsRowProps {
   cityData: CityData;
@@ -16,9 +17,9 @@ interface CityApartmentsRowProps {
 
 export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowProps) => {
   const { city, apartments, defaultCurrency } = cityData;
-
+  
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [visibleCards, setVisibleCards] = useState<number>(7);
+  const [visibleCards, setVisibleCards] = useState<number>(5);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   // تحديد رمز العملة للمدينة من كائن العملات
@@ -44,6 +45,10 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
   const nextSlide = () => setCurrentIndex((prev) => prev + 1);
   const prevSlide = () => setCurrentIndex((prev) => prev - 1);
 
+
+ const totalTransformXOffset = -currentIndex * (CARD_WIDTH + CARD_GAP);
+
+  console.log(totalTransformXOffset)
   return (
     <div className="apartments">
       <div className="apartments_heading-container">
@@ -76,13 +81,13 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
       <div
         ref={wrapperRef}
         className="apartments_real-estate-card"
-        style={{ overflow: "hidden", width: "100%" }}
+        style={{ overflow: "hidden", width: "100%", paddingLeft: "10px" }}
       >
         <div
           className="cards-track"
           style={{
             display: "flex",
-            transform: `translateX(calc(${-currentIndex * CARD_WIDTH}px))`,
+           transform: `translateX(calc(${totalTransformXOffset}px))`,
             transition: "transform 0.4s ease-out",
           }}
         >

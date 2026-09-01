@@ -53,3 +53,16 @@ input {
   border: none;
   outline: none;
 }
+
+h1, h2, h3 {
+  @media (max-width: v.$width-sm) {
+    font-size: var(--space-sm) !important ;
+  }
+}
+
+svg {
+  @media (max-width: v.$width-sm) {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}

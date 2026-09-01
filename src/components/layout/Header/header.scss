@@ -12,11 +12,13 @@ $menu-items: (
   position: sticky;
   top: 0;
   transform: translateY(0);
-  transition: transform 0.3s, height var(--transition-main);
+  transition:
+    transform 0.3s,
+    height var(--transition-main);
   z-index: 1;
+  width: 100%;
 
   &:has(~ .apt.is-visible) {
-
     .list {
       transform: translateY(0);
     }
@@ -24,7 +26,6 @@ $menu-items: (
       transform: translateY(0);
     }
   }
-
 
   &:has(~ .apt.is-exiting) {
     height: 100px;
@@ -37,7 +38,7 @@ $menu-items: (
       grid-template-columns: repeat(3, auto);
     }
   }
-  
+
   &_container {
     @include v.flex-row(space-between, center, md);
     .list {
@@ -79,11 +80,11 @@ $menu-items: (
         @include v.flex-row(center, center);
         transition: background-color var(--transition-main);
         color: var(--text-color);
-        transition: color 0.3s, background-color 0.3s;
+        transition:
+          color 0.3s,
+          background-color 0.3s;
       }
     }
-    
-    
   }
   &::after {
     content: "";
@@ -103,7 +104,6 @@ $menu-items: (
   .list {
     display: none;
   }
-  
 }
 
 .menu-list {
@@ -112,9 +112,9 @@ $menu-items: (
   top: calc(30% + 10px);
   background-color: var(--card-bg);
   border-radius: 20px;
-  
+
   // 1. قص الأزرار لمنع خروج خلفيتها عند الـ Hover عن زوايا الأب
-  overflow: hidden; 
+  overflow: hidden;
 
   .menu_btn {
     --padding-menu-btn: 22px 10%;
@@ -124,20 +124,20 @@ $menu-items: (
     z-index: 1;
     transition: background-color 0.3s;
     cursor: pointer;
-    
+
     // 2. تعديل الحواف لتتناسب مع محتوى القائمة بدلاً من 60px الحادة
-    border-radius: 0; 
+    border-radius: 0;
 
     &::after {
       content: "";
       position: absolute;
       // 3. تثبيت الخط أسفل الزر تماماً بدلاً من 110% لمنع التداخل
-      bottom: 0; 
+      bottom: 0;
       left: 10%;
       width: 80%;
       height: 1px;
       // 4. جعل الخط يظهر فوق خلفية الـ Hover للزر نفسه
-      z-index: 2; 
+      z-index: 2;
       pointer-events: none; // لمنع التأثير على الضغط
     }
 
@@ -173,7 +173,7 @@ $menu-items: (
       &::after {
         background-color: var(--bg-color-grey);
         // إلغاء قيمة top السابقة وتثبيتها أعلى الزر
-        top: 0; 
+        top: 0;
         bottom: auto;
       }
     }
@@ -193,8 +193,17 @@ $menu-items: (
   }
 }
 
-
-
-
-
-
+@media (max-width: v.$width-sm) {
+  .header {
+    &:has(~ .apt.is-exiting) {
+      height: 100px;
+      .search {
+        transform: translateY(0);
+        width: 80%;
+      }
+    }
+  }
+  .header_container {
+    display: none;
+  }
+}

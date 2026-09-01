@@ -120,8 +120,8 @@ $width-xxl: 1400px;
 }
 
 @mixin typography-style($size, $weight, $color: text-color ) {
-  font-size: var(--font-size-#{$size});
-  font-weight: var(--font-weight-#{$weight});
+  font-size: var(--font-size-#{$size}) ;
+  font-weight: var(--font-weight-#{$weight}) ;
   @if $color != null {
     color: var(--#{$color});
   }
