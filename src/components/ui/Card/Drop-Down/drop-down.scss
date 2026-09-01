@@ -3,7 +3,7 @@
 .drop-down {
   position: absolute;
   background-color: var(--card-bg);
-  border-radius: 40px;
+  border-radius: 35px;
   box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.5);
   z-index: 3;
     
@@ -19,8 +19,8 @@
 
   $dropdown-states: (
     "where": ( "translate": 0, "origin": left center, "width": null ),
-    "when": ( "translate": calc(50% / 1.5), "origin": center center, "width": 750px ),
-    "who": ( "translate": calc(170%), "origin": right center, "width": null )
+    "when": ( "translate": calc(50% / 1.5), "origin": center center, "width": 720px ),
+    "who": ( "translate": calc(100% + 400px), "origin": right center, "width": null )
   );
 
   @each $state, $props in $dropdown-states {
@@ -28,7 +28,7 @@
       opacity: 1;
       visibility: visible;
       top: 110%;
-      height: 430px;
+      height: 360px;
       transform: translateX(map-get($props, "translate")) scaleX(1);
       transform-origin: map-get($props, "origin");
 

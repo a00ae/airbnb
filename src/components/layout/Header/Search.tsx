@@ -6,7 +6,7 @@ import {
 } from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect, memo } from "react";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartments } from "../../../hook/useApartments";
@@ -48,34 +48,18 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
 
 /* Search Section Component */
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
-  // const [activeLabel, setActiveLabel] = useState<string | null>(null);
-  const ref = useRef<HTMLDivElement | null>(null);
-
-  console.log(activeLabel);
-
   // 🟢 جلب الفلاتر والمدن المتاحة من الهوك
   const { cities, filters, filteredApartments } = useApartments();
   const { setSelectedCity, searchQuery, setSearchQuery } = filters;
 
-  // إغلاق الـ Dropdown عند الضغط بالخارج
-  const handleClicOutSide = () => {
-    onLabelChange(null);
-  };
 
-  useOnclickOutSide({
-    ref: ref,
-    handleDocumentClick: handleClicOutSide,
-    visible: activeLabel,
-  });
 
-  const handleClickSearch = (e: React.MouseEvent, title: string) => {
-    e.stopPropagation();
+  const handleClickSearch = (title: string) => {
     const normalizedTitle = title.trim().toLowerCase(); // تحويل لـ where, when, who
     const currentActive = activeLabel?.trim().toLowerCase();
 
     // إذا كان الحقل مفعلاً مسبقاً يتم إغلاقه (null)، وإلا يتم تفعيله
     onLabelChange(currentActive === normalizedTitle ? null : normalizedTitle);
-
   };
 
   // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
@@ -91,7 +75,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   };
 
   return (
-    <div ref={ref} className="search">
+    <div  className="search">
       {itemButtonSearch.map(({ descraption, title }) => {
         const currentTitleLower: string = title.trim().toLowerCase();
         const isCurrentActive: boolean =
@@ -99,7 +83,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
 
         return (
           <div
-            onClick={(e) => handleClickSearch(e, title)}
+            onClick={() => handleClickSearch(title)}
             key={title}
             className={`search_btn ${currentTitleLower} ${
               isCurrentActive ? "visible" : ""
@@ -216,4 +200,4 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   );
 };
 
-export default Search;
+export default memo(Search);

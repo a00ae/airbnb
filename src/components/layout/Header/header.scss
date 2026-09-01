@@ -12,19 +12,29 @@ $menu-items: (
   position: sticky;
   top: 0;
   transform: translateY(0);
-  transition: transform 0.3s;
+  transition: transform 0.3s, height var(--transition-main);
   z-index: 1;
 
   &:has(~ .apt.is-visible) {
+
     .list {
+      transform: translateY(0);
+    }
+    .search {
       transform: translateY(0);
     }
   }
 
-  
+
   &:has(~ .apt.is-exiting) {
+    height: 100px;
     .list {
       transform: translateY(-100px);
+    }
+    .search {
+      transform: translateY(-100px);
+      width: 50%;
+      grid-template-columns: repeat(3, auto);
     }
   }
   
@@ -95,21 +105,6 @@ $menu-items: (
   }
   
 }
-
-
-// .header_container.is-visible {
-//   .list {
-//     transform: translateY(0);
-//     transition: transform 0.5s;
-
-//   }
-// }
-// .header_container.is-exiting {
-//   .list {
-//     transform: translateY(-40px);
-//     transition: transform 0.3s;
-//   }
-// }
 
 .menu-list {
   width: 400px;
