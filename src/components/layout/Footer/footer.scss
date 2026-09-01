@@ -11,6 +11,9 @@
 
   &_bottom {
     @include v.flex-row(space-between, center, md);
+    @media (max-width: v.$width-sm) {
+      flex-direction: column;
+    }
     &_nav_left {
       @include v.flex-column(xs);
 
