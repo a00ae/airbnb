@@ -23,8 +23,6 @@ export const useApartments = () => {
 
   const fetchApartments = async () => {
     try {
-      setLoading(true);
-      setError(null);
       const response = await fetch(API_URL);
 
       if (!response.ok) {

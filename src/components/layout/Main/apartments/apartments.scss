@@ -17,6 +17,7 @@
         @include v.flex-row(flex-start, center, sm);
         h2 {
           @include v.typography-style(md, bold, text-color);
+          
         }
       }
       .right {
@@ -59,17 +60,25 @@
     &_real-estate-cards {
       @include v.flex-column(xs);
       flex-shrink: 0; /* تمنع انضغاط الكرت أو انكماشه عند صغر الشاشة */
-      width: 300px; /* يجب أن تطابق القيمة المحددة في كود الـ JavaScript تماماً */
-
+      width: var(--card-width); /* يجب أن تطابق القيمة المحددة في كود الـ JavaScript تماماً */
       .img-cards {
         width: 100%;
-        height: auto;
+        position: relative;
         img {
           width: 100%;
-          height: 210px;
+          height:var(--card-img-height);
           object-fit: cover;
           border-radius: 20px;
           display: block;
+          @media (max-width: v.$width-sm ) {
+           --card-img-height: 170px !important;
+          }
+        }
+        .svg {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          cursor: pointer;
         }
       }
 
