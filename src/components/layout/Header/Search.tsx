@@ -1,14 +1,12 @@
 import {
   RiSearchLine,
-  RiMapPinLine,
   RiAddLine,
   RiSubtractLine,
 } from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import { useState, useMemo, memo } from "react";
+import { useState, memo } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
-import { useApartments } from "../../../hook/useApartments";
 
 type SearchProps = {
   activeLabel: string | null;
@@ -48,8 +46,8 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
 /* Search Section Component */
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   // 🟢 جلب الفلاتر والمدن المتاحة من الهوك
-  const { cities, filters, filteredApartments } = useApartments();
-  const { setSelectedCity, searchQuery, setSearchQuery } = filters;
+
+
 
 
 
@@ -62,16 +60,6 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   };
 
   // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
-  const uniqueCities = useMemo(() => {
-    if (!cities || cities.length === 0) return [];
-    return Array.from(new Set(cities.map((c) => c.city)));
-  }, [cities]);
-
-  // 🟢 الدالة الخاصة باختيار مدينة عند الضغط عليها في القائمة
-  const handleSelectCity = (cityName: string) => {
-    setSelectedCity(cityName);
-    // onLabelChange(null); // إغلاق الـ Dropdown بعد الاختيار
-  };
 
   return (
     <div  className="search">
@@ -94,8 +82,6 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
               <input
                 className="inp"
                 placeholder={descraption}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
                 onClick={(e) => e.stopPropagation()} // منع إغلاق القائمة عند الكتابة
               />
             ) : (
@@ -128,29 +114,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
               <div key={i} className={`child-${item.type}`}>
                 {/* 🟢 قسم الوجهات - Where */}
 
-                {item.type === "where" && (
-                  <>
-                    {filteredApartments.length > 0 ? (
-                      <>
-                        {/* عرض المدن القادمة من الـ API مباشرة */}
-                        {uniqueCities.map((cityName) => (
-                          <div
-                            key={cityName}
-                            className="where_card-btn"
-                            onClick={() => handleSelectCity(cityName)}>
-                            <div
-                              style={{ backgroundColor: "var(--bg-color-btn)" }}
-                              className="svg">
-                              <RiMapPinLine />
-                            </div>
-                            <div className="card_descraption">
-                              <span>{}</span>
-                              <p>Popular destination</p>
-                            </div>
-                          </div>
-                        ))}
-                      </>
-                    ) : (
+                {item.type === "where"  && (
                       <>
                         <span>Suggested destinations</span>
 
@@ -179,8 +143,8 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                           ),
                         )}
                       </>
-                    )}
-                  </>
+
+
                 )}
 
                 {/* قسم الأشخاص - Who */}

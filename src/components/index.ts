@@ -4,5 +4,4 @@ export { default as Footer } from "./layout/Footer/Footer";
 export { default as Apt } from "./layout/Header/components/Apt";
 
 // ui
-
 export { default as Loader } from "./ui/Loader/Loader";

@@ -1,57 +1,26 @@
-import Loader from "../../../ui/Loader/Loader";
-import { CityApartmentsRow } from "./components/CityApartmentsRow";
-import "./apartments.scss";
 import { useApartments } from "../../../../hook/useApartments";
+import NotFoundPage from "../../../ui/Error/NotFoundPage";
+import Loader from "../../../ui/Loader/Loader";
+import "./apartments.scss";
+import { CityApartmentsRow } from "./components/CityApartmentsRow";
 
 export const PopularApartments = () => {
-  const {
-    fetchApartments,
-    isLoading,
-    error,
-    currentCurrency,
-    cities,
-    filters, // 🟢 جلب الفلاتر من الهوك
-  } = useApartments();
+  const { cities, error, loading, fatchData } = useApartments();
 
-  const { selectedCity } = filters;
 
-  if (isLoading) return <Loader />;
+  if (loading) return <Loader />;
 
-  if (error) {
-    return (
-      <div className="error-box">
-        <p>❌ فشل التحميل: {error}</p>
-        <button onClick={fetchApartments}>إعادة المحاولة</button>
-      </div>
-    );
-  }
-
-  // 🟢 فلترة المدن بناءً على بحث المستخدم
-  // إذا لم يبحث المستخدم عن شيء (فارغ أو "all") يعرض جميع المدن كما هي
-  const displayedCities = cities.filter((cityData) => {
-    if (!selectedCity || selectedCity.trim() === "" || selectedCity === "all") {
-      return true; // إظهار الكل
-    }
-    // المطابقة بغض النظر عن حالة الأحرف (Case-insensitive)
-    return cityData.city
-      .toLowerCase()
-      .includes(selectedCity.trim().toLowerCase());
-  });
+  if (error) return <NotFoundPage errorMessage={error} fatchData={fatchData} />;
 
   return (
     <section className="card">
-      {displayedCities.length > 0 ? (
-        displayedCities.map((cityData) => (
+      {cities.map((cityData, index) =>
+        cityData.cities.map((city, cityIndex) => (
           <CityApartmentsRow
-            key={cityData.id}
-            cityData={cityData}
-            currencies={{ [currentCurrency]: currentCurrency }}
+            cityData={city}
+            key={`${index}-${cityIndex}`}
           />
         ))
-      ) : (
-        <div className="no-results">
-          <p>لا توجد نتائج تطابق المدينة: "{selectedCity}"</p>
-        </div>
       )}
     </section>
   );

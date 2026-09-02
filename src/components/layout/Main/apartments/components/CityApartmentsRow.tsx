@@ -1,14 +1,15 @@
-import  { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   RiArrowLeftSLine,
   RiArrowRightLongLine,
   RiArrowRightSLine,
 } from "@remixicon/react";
-import type { CityData, } from "../types/apartment.types";
+import type { CityData } from "../types/apartment.types";
 import ApartmentCard from "./ApartmentCard";
+import { useWindowSize } from "../../../../../hook/useWindowSize"; // 🟢 استيراد الهوك
 
 const CARD_WIDTH = 210;
-const CARD_GAP = 20; 
+const CARD_GAP = 20;
 
 interface CityApartmentsRowProps {
   cityData: CityData;
@@ -16,41 +17,55 @@ interface CityApartmentsRowProps {
 }
 
 export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowProps) => {
-  const { city, apartments, defaultCurrency } = cityData;
-  
+  const { city, apartments, defaultCurrency} = cityData;
+
+
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [visibleCards, setVisibleCards] = useState<number>(5);
+  const [visibleCards, setVisibleCards] = useState<number>(1);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  // تحديد رمز العملة للمدينة من كائن العملات
+  const { width: windowWidth, screenSize } = useWindowSize();
   const cityCurrencySymbol = currencies?.[defaultCurrency] ?? "$";
 
+  // 🟢 حساب دقيق للبطاقات الظاهرة بالكامل
   useEffect(() => {
-    const handleResize = () => {
-      if (wrapperRef.current) {
-        const wrapperWidth = wrapperRef.current.offsetWidth;
-        const count = Math.floor(wrapperWidth / CARD_WIDTH);
-        setVisibleCards(count > 0 ? count : 1);
-      }
-    };
+    if (wrapperRef.current) {
+      const wrapperWidth = wrapperRef.current.offsetWidth;
+      // المعادلة المحدثة لاحتساب الفجوات بين العناصر
+      const count = Math.floor((wrapperWidth + CARD_GAP) / (CARD_WIDTH + CARD_GAP));
+      setVisibleCards(count > 0 ? count : 1);
+    }
+  }, [windowWidth]);
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // إرجاع المؤشر للصفر عند تغيير اتجاه/حجم الشاشة
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [screenSize]);
 
+  const totalItems = apartments?.length || 0;
+
+  // 🟢 حماية الزر من النقرة الإضافية في النهاية
   const isPrevDisabled = currentIndex === 0;
-  const isNextDisabled = currentIndex + visibleCards  >= (apartments?.length || 0);
+  const isNextDisabled = totalItems <= visibleCards || currentIndex >= totalItems - visibleCards;
 
-  const nextSlide = () => setCurrentIndex((prev) => prev + 1);
-  const prevSlide = () => setCurrentIndex((prev) => prev - 1);
+  // 🟢 دالة التمرير مع حماية إضافية تمنع تجاوز الحد الأقصى
+  const nextSlide = () => {
+    if (!isNextDisabled) {
+      setCurrentIndex((prev) => Math.min(prev + 1, totalItems - visibleCards));
+    }
+  };
 
+  const prevSlide = () => {
+    if (!isPrevDisabled) {
+      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    }
+  };
 
- const totalTransformXOffset = -currentIndex * (CARD_WIDTH + CARD_GAP);
+  const totalTransformXOffset = -currentIndex * (CARD_WIDTH + CARD_GAP);
 
-  console.log(totalTransformXOffset)
   return (
     <div className="apartments">
+      {/* ... الجزء العلوي للعناوين والأزرار يظل كما هو ... */}
       <div className="apartments_heading-container">
         <div className="left">
           <h2>Popular homes in {city}</h2>
@@ -87,12 +102,12 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
           className="cards-track"
           style={{
             display: "flex",
-           transform: `translateX(calc(${totalTransformXOffset}px))`,
+            gap: `${CARD_GAP}px`,
+            transform: `translateX(${totalTransformXOffset}px)`,
             transition: "transform 0.4s ease-out",
           }}
         >
           {(apartments || []).map((item) => {
-            // استخدام عملة الشقة إن وجدت وإلا استخدام عملة المدينة الافتراضية
             const currencySymbol = item.currencyKey 
               ? currencies && currencies[item.currencyKey] || cityCurrencySymbol 
               : cityCurrencySymbol;
