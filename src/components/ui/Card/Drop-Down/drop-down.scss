@@ -1,46 +1,62 @@
-@use "../../../../styles/variables" as v;
-
 .drop-down {
   position: absolute;
   background-color: var(--card-bg);
   border-radius: 35px;
   box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.5);
-  z-index: 3;
-    
+  z-index: 10;
+
   opacity: 0;
   visibility: hidden;
-  transform: translateX(0) scaleX(0.9); 
-  
+  transform: scale(0.95);
+
   transition:
     width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.2s ease,
-    visibility 0.3s;
+    visibility 0.3s,
+    left 0.3s,
+    right 0.3s;
 
-  $dropdown-states: (
-    "where": ( "translate": 0, "origin": left center, "width": null ),
-    "when": ( "translate": calc(50% / 1.5), "origin": center center, "width": 720px ),
-    "who": ( "translate": calc(100% + 400px), "origin": right center, "width": null )
-  );
+  &.where {
+    opacity: 1;
+    visibility: visible;
+    top: 110%;
+    left: 0;
+    right: auto;
+    height: 360px;
+    width: 350px;
+    transform: scale(1);
+    transform-origin: top left;
+  }
 
-  @each $state, $props in $dropdown-states {
-    &.#{$state} {
-      opacity: 1;
-      visibility: visible;
-      top: 110%;
-      height: 360px;
-      transform: translateX(map-get($props, "translate")) scaleX(1);
-      transform-origin: map-get($props, "origin");
+  &.when {
+    opacity: 1;
+    visibility: visible;
+    top: 110%;
+    left: 50%;
+    right: auto;
+    height: 360px;
+    width: 720px;
+    transform: translateX(-50%) scale(1);
 
-      @if map-get($props, "width") != null {
-        width: map-get($props, "width");
-      }
-    }
+    transform-origin: top center;
+  }
+
+  &.who {
+    opacity: 1;
+    visibility: visible;
+    top: 110%;
+    right: 0;
+    left: auto;
+    height: 360px;
+    width: 400px;
+    transform: scale(1);
+    transform-origin: top right;
   }
 
   &.is-active {
     opacity: 1;
     visibility: visible;
-    transform: scaleX(1);
+    transform: scale(1);
   }
 }
