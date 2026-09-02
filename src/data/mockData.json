@@ -74,6 +74,15 @@
             "month": "jul",
             "price": 110,
             "rating": 4.2
+          },
+          {
+            "id": 8,
+            "img": "images/section-istanbul/istanbul-08.avif",
+            "title": "cozy room in sisli",
+            "history": "14–18",
+            "month": "sup",
+            "price": 120,
+            "rating": 4.5
           }
         ]
       },
@@ -144,6 +153,15 @@
             "month": "dec",
             "price": 1200,
             "rating": 4.95
+          },
+          {
+            "id": 8,
+            "img": "images/section-izmir/izmir-08.avif",
+            "title": "stone house in alacati",
+            "history": "4–9",
+            "month": "oct",
+            "price": 1200,
+            "rating": 4.5
           }
         ]
       },
@@ -214,6 +232,15 @@
             "month": "dec",
             "price": 210,
             "rating": 4.85
+          },
+          {
+            "id": 8,
+            "img": "images/section-antalya/antalya-08.avif",
+            "title": "flat in kepez",
+            "history": "20–25",
+            "month": "oct",
+            "price": 80,
+            "rating": 3.5
           }
         ]
       },
@@ -238,7 +265,7 @@
             "history": "8–12",
             "month": "feb",
             "price": 300,
-            "rating": 4.0
+            "rating": 4
           },
           {
             "id": 3,
@@ -284,6 +311,15 @@
             "month": "jul",
             "price": 280,
             "rating": 4.1
+          },
+          {
+            "id": 8,
+            "img": "images/section-ankara/ankara-08.avif",
+            "title": "studio in kizilay",
+            "history": "8–12",
+            "month": "feb",
+            "price": 300,
+            "rating": 4
           }
         ]
       }

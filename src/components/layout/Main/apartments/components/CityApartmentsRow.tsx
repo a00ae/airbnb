@@ -7,7 +7,7 @@ import {
 import type { CityData, } from "../types/apartment.types";
 import ApartmentCard from "./ApartmentCard";
 
-const CARD_WIDTH = 190;
+const CARD_WIDTH = 210;
 const CARD_GAP = 20; 
 
 interface CityApartmentsRowProps {

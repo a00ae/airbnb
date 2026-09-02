@@ -1,4 +1,4 @@
-import Loader from "../../../ui/Loder/Loader";
+import Loader from "../../../ui/Loader/Loader";
 import { CityApartmentsRow } from "./components/CityApartmentsRow";
 import "./apartments.scss";
 import { useApartments } from "../../../../hook/useApartments";
@@ -33,7 +33,9 @@ export const PopularApartments = () => {
       return true; // إظهار الكل
     }
     // المطابقة بغض النظر عن حالة الأحرف (Case-insensitive)
-    return cityData.city.toLowerCase().includes(selectedCity.trim().toLowerCase());
+    return cityData.city
+      .toLowerCase()
+      .includes(selectedCity.trim().toLowerCase());
   });
 
   return (
