@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type {
   ApiResponse,
-  Currencies,
 } from "../components/layout/Main/apartments/types/apartment.types";
 
 const API_URL = "https://6a78f2ae674f43f4db10f4cd.mockapi.io/apartments/cities";
