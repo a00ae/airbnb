@@ -1,8 +1,8 @@
 :root {
-  --bg-color: #ffffff;      /* خلفية الصفحة والأقسام */
-  --card-bg: #f5f5f5;       /* خلفية الأقسام والبطاقات الفرعية */
-  --text-color: #222222;    /* لون النصوص */
-  --border-color: #c4c4c4;  /* لون الحدود */
+  --bg-color: #ffffff; /* خلفية الصفحة والأقسام */
+  --card-bg: #f5f5f5; /* خلفية الأقسام والبطاقات الفرعية */
+  --text-color: #222222; /* لون النصوص */
+  --border-color: #c4c4c4; /* لون الحدود */
   --bg-color-white: #ffffff;
   --bg-color-black: #121212;
   --bg-color-selected: #f7f7f7;
@@ -20,7 +20,9 @@
   --palette-bg-primary-hover: #f7f7f7;
   --palette-bg-primary-error: #fff8f6;
   --palette-bg-primary-luxe: #460479;
-
+  // active
+  --bg-color-active: #e0e0e0;
+  --bg-color-btn-active-hover: #bdbdbd;
 
   --font-size-xxl: 5rem; // 80px
   --font-size-xl: 2.5rem; // 40px
@@ -59,10 +61,10 @@
   --box-shadow-header:
     0 1px 10px -5px rgb(50 52 52 / 0%), 0 2px 44px -5px rgb(99 68 68 / 17%);
 
-    --box-shadow-tailwind : 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --box-shadow-tailwind:
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --transition-main: 0.3s;
   --transition-lg: 0.5s;
-
 }
 
 $width-sm: 700px;
@@ -90,13 +92,13 @@ $width-xxl: 1400px;
 }
 
 @mixin container-padding($bg-color: "card-bg") {
-  padding: var(--space-xxl)  var(--space-md) var(--space-xl) var(--space-md);
+  padding: var(--space-xxl) var(--space-md) var(--space-xl) var(--space-md);
   width: 100%;
   @if $bg-color != null {
     background-color: var(--#{$bg-color});
   }
   @media (max-width: $width-md) {
-    padding: var(--space-lg)  var(--space-xs) var(--space-md) var(--space-xs);
+    padding: var(--space-lg) var(--space-xs) var(--space-md) var(--space-xs);
   }
 }
 
@@ -119,9 +121,9 @@ $width-xxl: 1400px;
   }
 }
 
-@mixin typography-style($size, $weight, $color: text-color ) {
-  font-size: var(--font-size-#{$size}) ;
-  font-weight: var(--font-weight-#{$weight}) ;
+@mixin typography-style($size, $weight, $color: text-color) {
+  font-size: var(--font-size-#{$size});
+  font-weight: var(--font-weight-#{$weight});
   @if $color != null {
     color: var(--#{$color});
   }

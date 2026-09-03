@@ -2,11 +2,14 @@ import {
   RiSearchLine,
   RiAddLine,
   RiSubtractLine,
+  RiMapPinLine,
+  RiCloseLine,
 } from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import { useState, memo } from "react";
+import React, { useState, memo, useMemo } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
+import { useApartments } from "../../../hook/useApartments";
 
 type SearchProps = {
   activeLabel: string | null;
@@ -45,24 +48,44 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
 
 /* Search Section Component */
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
-  // 🟢 جلب الفلاتر والمدن المتاحة من الهوك
+  const {search, cities} = useApartments();
+  const {searchQuery, setSearchQuery} = search;
+
+  const handleChangeSearchValue = (value: string) => {
+    setSearchQuery(value);
+  }
+
+const citySearchFilter = useMemo(() => {
+  if (!cities) return [];
+
+  return cities
+    .flatMap((ele) => ele.cities || [])
+    .filter((cityObj) =>
+      cityObj.city.toLowerCase().includes(searchQuery.trim().toLowerCase())
+    );
+}, [cities, searchQuery]);
 
 
-
+  console.log(citySearchFilter)
 
 
   const handleClickSearch = (title: string) => {
     const normalizedTitle = title.trim().toLowerCase(); // تحويل لـ where, when, who
     const currentActive = activeLabel?.trim().toLowerCase();
 
-    // إذا كان الحقل مفعلاً مسبقاً يتم إغلاقه (null)، وإلا يتم تفعيله
     onLabelChange(currentActive === normalizedTitle ? null : normalizedTitle);
   };
 
   // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
 
+  const handleSelectCity = (city: string) => {
+    console.log(city);
+  }
+
   return (
-    <div  className="search">
+    <div  className={`search ${activeLabel ? "active" : ""}`}
+    data-active={activeLabel?.trim().toLowerCase() || ""}
+    >
       {itemButtonSearch.map(({ descraption, title }) => {
         const currentTitleLower: string = title.trim().toLowerCase();
         const isCurrentActive: boolean =
@@ -79,11 +102,20 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
 
             {/* 🟢 ربط حقل الإدخال بالـ State القادمة من الهوك */}
             {title === "Where" ? (
-              <input
-                className="inp"
-                placeholder={descraption}
-                onClick={(e) => e.stopPropagation()} // منع إغلاق القائمة عند الكتابة
-              />
+              <div className="inp-box">
+                <input
+                  className="inp"
+                  value={searchQuery}
+                  onChange={(e) => handleChangeSearchValue(e.target.value)}
+                  placeholder={descraption}
+                  onClick={(e) => e.stopPropagation()} // منع إغلاق القائمة عند الكتابة
+                />
+                
+              <button className="close" type="button">
+                {searchQuery && <RiCloseLine />}
+                
+              </button>
+              </div>
             ) : (
               <span>{descraption}</span>
             )}
@@ -117,8 +149,22 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                 {item.type === "where"  && (
                       <>
                         <span>Suggested destinations</span>
-
-                        {item.whereData?.map(
+                        {searchQuery.length > 2 ? citySearchFilter.map((ele) => (
+                                                      <div
+                              key={ele.id}
+                              className="where_card-btn search-city"
+                              onClick={() => handleSelectCity(ele.city)}>
+                              <div
+                                style={{ backgroundColor: "#23322" }}
+                                className="svg">
+                                <RiMapPinLine />
+                              </div>
+                              <div className="card_descraption">
+                                <span>{ele.city}</span>
+                              </div>
+                            </div>
+                        )) :
+                        item.whereData?.map(
                           ({
                             id,
                             iconDataWhere,
@@ -141,7 +187,10 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                               </div>
                             </div>
                           ),
-                        )}
+                         )
+                        
+                      
+                      }
                       </>
 
 
