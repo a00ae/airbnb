@@ -7,7 +7,7 @@ import {
 } from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import React, { useState, memo, useMemo } from "react";
+import { useState, memo, useMemo } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartments } from "../../../hook/useApartments";
 
@@ -37,6 +37,7 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
         <span className="valued">{count}</span>
         <button
           type="button"
+          disabled={count >= 100}
           onClick={() => setCount((prev) => prev + 1)}
           className="increment">
           <RiAddLine />
