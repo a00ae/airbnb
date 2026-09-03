@@ -43,12 +43,18 @@ export const useApartments = () => {
     Promise.resolve().then(fatchData);
   } , []);
 
+
+  
   
   return {
     cities,
     loading,
     error,
     fatchData,
+    search: {
+      searchQuery,
+      setSearchQuery
+    }
     
   }
 

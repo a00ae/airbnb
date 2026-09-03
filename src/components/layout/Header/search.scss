@@ -3,7 +3,7 @@
 .search {
   --padding-box: 12px 15px;
   width: 80%;
-  @include v.flex-row(flex-start, center, xs);
+  @include v.flex-row(flex-start, stretch);
   border: 1px solid var(--bg-color-border);
   box-shadow: 0 0 10px -4px rgba(0, 0, 0, 0.5);
   margin: auto;
@@ -11,10 +11,58 @@
   z-index: 1;
   position: relative;
   background-color: var(--bg-color-selected);
-  transition: transform var(--transition-main), width var(--transition-main);
+  transition:
+    transform var(--transition-main),
+    width var(--transition-main);
+  &.active {
+    background-color: var(--bg-color-active);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0px;
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--bg-color-selected);
+    opacity: 0;
+    visibility: hidden;
+    
+
+    transition:
+      width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.1s ease,
+      visibility 0.3s,
+      left 0.3s,
+      right 0.3s;
+  }
+
+  &[data-active="where"]::before {
+    width: calc(100% / 3);
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0%);
+  }
+
+  &[data-active="when"]::before {
+    width: calc(100% / 3);
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(100%);
+  }
+
+  &[data-active="who"]::before {
+    width: calc(100% / 3);
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(200%);
+  }
 
   &_btn {
-    flex: 1 1 0;
+    flex: 1;
     min-width: 0;
     padding: var(--padding-box);
     position: relative;
@@ -24,28 +72,39 @@
     @include v.flex-column(xxs);
 
     &:hover {
-      background-color: var(--bg-color-btn);
+      background-color: var(--bg-color-btn-active-hover)
     }
 
     p {
-      @include v.typography-style(xs, sm, text-color);
+      @include v.typography-style(sm, sm, text-color);
     }
     span {
-      @include v.typography-style(xxs, sm, bg-color-grey);
+      @include v.typography-style(xs, sm, bg-color-grey);
     }
 
-    &.where .inp {
-      background-color: transparent;
-      @include v.typography-style(sm, main, bg-color-black);
+    &.where .inp-box {
+      @include v.flex-row(space-between, center, md);
+
+      .inp {
+        background-color: transparent;
+        @include v.typography-style(xs, sm, text-color);
+        width: 75%;
+      }
+      .close {
+        background-color: transparent;
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
     }
 
     &.when {
-      
       &::before {
         content: "";
         position: absolute;
         top: 30%;
-        left: -4px;
+        left: 0;
         height: calc(100% - 60%);
         width: 2px;
         background-color: var(--bg-color-btn);
@@ -54,7 +113,7 @@
         content: "";
         position: absolute;
         top: 30%;
-        right: -4px;
+        right: 0;
         height: calc(100% - 60%);
         width: 2px;
         background-color: var(--bg-color-btn);
@@ -65,40 +124,35 @@
       position: absolute;
       overflow: hidden;
       right: 5px;
-      top: 0;
-      @include v.flex-row(center, center,);
+      top: 3px;
+      @include v.flex-row(center, center);
       padding: 20px;
       background-color: var(--bg-color-core);
       border-radius: 50%;
       color: var(--bg-color-white);
-      // أضفنا الـ transition هنا لتشمل التغيرات الأخرى للـ border-radius والأبعاد
       transition: all 0.3s ease-in-out;
 
-      // الحالة عند الظهور
       &.visible {
         border-radius: 40px;
         gap: var(--space-xs);
 
         span {
-
           transform: translateX(0);
           opacity: 1;
           visibility: visible;
-          max-width: 100px; /* يعطي مساحة للنص ليظهر بسلاسة */
+          max-width: 100px; 
         }
       }
 
-      // الحالة الافتراضية المخفية
       span {
         @include v.typography-style(sm, main, bg-color-white);
-        display: inline-block; /* نثبتها هنا ولا نغيرها أبداً */
+        display: inline-block; 
         transform: translateX(50px);
         opacity: 0;
         visibility: hidden;
-        max-width: 0; /* لجعل النص لا يأخذ مساحة وهو مخفي */
+        max-width: 0; 
         overflow: hidden;
 
-        // تأكد أن المتغير --transition-main يحتوي على وقت مناسب (مثلاً 0.3s)
         transition:
           transform var(--transition-main),
           opacity var(--transition-main),
@@ -126,7 +180,6 @@
       max-height: 100%;
       scrollbar-width: thin;
       scrollbar-color: var(--bg-color-border) transparent;
-  
 
       &::-webkit-scrollbar {
         width: 4px;
@@ -168,6 +221,9 @@
             @include v.typography-style(xs, sm, bg-color-grey);
           }
         }
+        &.search-city {
+          align-items: center;
+        }
 
         &:hover {
           background-color: var(--bg-color-btn);
@@ -198,9 +254,11 @@
             cursor: pointer;
             -webkit-user-select: none;
             user-select: none;
-            svg {width: 20px; height: 20px; color: var(--text-color)}
-
-            
+            svg {
+              width: 20px;
+              height: 20px;
+              color: var(--text-color);
+            }
           }
           .valued {
             @include v.flex-row(center, center);
@@ -211,19 +269,6 @@
   }
 }
 
-
-.header_container.is-visible ~ .search {
-  transform: translateY(20px);
-  // position: fixed;
-  transition: transform 0.3s, width 0.3s ;
-  
-} 
-
-.header_container.is-exiting  ~ .search {
-  transform: translateY(0);
-  transition: transform 0.3s;
-  width: 70%;
-}
 
 @media (max-width: v.$width-xxl) {
   .search {
@@ -237,6 +282,3 @@
     }
   }
 }
-
-
-
