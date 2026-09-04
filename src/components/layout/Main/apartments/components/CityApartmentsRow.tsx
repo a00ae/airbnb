@@ -7,7 +7,6 @@ import {
 import type { CityData } from "../types/apartment.types";
 import ApartmentCard from "./ApartmentCard";
 import { useWindowSize } from "../../../../../hook/useWindowSize"; // 🟢 استيراد الهوك
-import { useApartmentsContext } from "../../../../../context/ApartmentsContext";
 
 const CARD_WIDTH = 210;
 const CARD_GAP = 20;
