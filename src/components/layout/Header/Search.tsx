@@ -9,7 +9,6 @@ import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
 import { useState, memo, useMemo } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
-import { useApartments } from "../../../hook/useApartments";
 import { useApartmentsContext } from "../../../context/ApartmentsContext";
 
 type SearchProps = {
@@ -51,7 +50,7 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
 /* Search Section Component */
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   const {search, cities} = useApartmentsContext();
-  const {searchQuery, setSearchQuery, selectedCity, setSelectedCity} = search;
+  const {searchQuery, setSearchQuery, setSelectedCity} = search;
 
   const handleChangeSearchValue = (value: string) => {
     setSearchQuery(value);
@@ -81,7 +80,7 @@ const citySearchFilter = useMemo(() => {
 
   const handleSelectCity = (city: string) => {
     setSelectedCity(city);
-    // onLabelChange(null);
+    onLabelChange(null);
   }
   /*=============== remove data search ===============*/ 
   const removeDataSearch = () => setSearchQuery("");
