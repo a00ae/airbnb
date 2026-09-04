@@ -98,6 +98,8 @@ export const useApartments = () => {
       setSearchQuery,
       selectedCity,
       setSelectedCity,
+      setMaxPrice,
+      setMinRating
     },
   };
 };
