@@ -88,13 +88,15 @@
       .inp {
         background-color: transparent;
         @include v.typography-style(xs, sm, text-color);
-        width: 75%;
+        width: 90%;
       }
       .close {
         background-color: transparent;
+        cursor: pointer;
+        color: var(--text-color);
         svg {
-          width: 15px;
-          height: 15px;
+          width: 20px;
+          height: 20px;
         }
       }
     }
