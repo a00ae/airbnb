@@ -7,6 +7,7 @@ import {
 import type { CityData } from "../types/apartment.types";
 import ApartmentCard from "./ApartmentCard";
 import { useWindowSize } from "../../../../../hook/useWindowSize"; // 🟢 استيراد الهوك
+import { useApartmentsContext } from "../../../../../context/ApartmentsContext";
 
 const CARD_WIDTH = 210;
 const CARD_GAP = 20;
@@ -16,8 +17,11 @@ interface CityApartmentsRowProps {
   currencies?: Record<string, string>;
 }
 
-export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowProps) => {
-  const { city, apartments, defaultCurrency} = cityData;
+export const CityApartmentsRow = ({
+  cityData,
+  currencies,
+}: CityApartmentsRowProps) => {
+  const { city, apartments, defaultCurrency } = cityData;
 
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -32,7 +36,9 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
     if (wrapperRef.current) {
       const wrapperWidth = wrapperRef.current.offsetWidth;
       // المعادلة المحدثة لاحتساب الفجوات بين العناصر
-      const count = Math.floor((wrapperWidth + CARD_GAP) / (CARD_WIDTH + CARD_GAP));
+      const count = Math.floor(
+        (wrapperWidth + CARD_GAP) / (CARD_WIDTH + CARD_GAP),
+      );
       setVisibleCards(count > 0 ? count : 1);
     }
   }, [windowWidth]);
@@ -46,7 +52,8 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
 
   // 🟢 حماية الزر من النقرة الإضافية في النهاية
   const isPrevDisabled = currentIndex === 0;
-  const isNextDisabled = totalItems <= visibleCards || currentIndex >= totalItems - visibleCards;
+  const isNextDisabled =
+    totalItems <= visibleCards || currentIndex >= totalItems - visibleCards;
 
   // 🟢 دالة التمرير مع حماية إضافية تمنع تجاوز الحد الأقصى
   const nextSlide = () => {
@@ -66,6 +73,7 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
   return (
     <div className="apartments">
       {/* ... الجزء العلوي للعناوين والأزرار يظل كما هو ... */}
+
       <div className="apartments_heading-container">
         <div className="left">
           <h2>Popular homes in {city}</h2>
@@ -78,16 +86,14 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
             onClick={prevSlide}
             disabled={isPrevDisabled}
             className="arrow"
-            aria-label="Previous Slide"
-          >
+            aria-label="Previous Slide">
             <RiArrowLeftSLine />
           </button>
           <button
             onClick={nextSlide}
             disabled={isNextDisabled}
             className="arrow"
-            aria-label="Next Slide"
-          >
+            aria-label="Next Slide">
             <RiArrowRightSLine />
           </button>
         </div>
@@ -96,8 +102,7 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
       <div
         ref={wrapperRef}
         className="apartments_real-estate-card"
-        style={{ overflow: "hidden", width: "100%", paddingLeft: "10px" }}
-      >
+        style={{ overflow: "hidden", width: "100%", paddingLeft: "10px" }}>
         <div
           className="cards-track"
           style={{
@@ -105,19 +110,19 @@ export const CityApartmentsRow = ({ cityData, currencies }: CityApartmentsRowPro
             gap: `${CARD_GAP}px`,
             transform: `translateX(${totalTransformXOffset}px)`,
             transition: "transform 0.4s ease-out",
-          }}
-        >
+          }}>
           {(apartments || []).map((item) => {
-            const currencySymbol = item.currencyKey 
-              ? currencies && currencies[item.currencyKey] || cityCurrencySymbol 
+            const currencySymbol = item.currencyKey
+              ? (currencies && currencies[item.currencyKey]) ||
+                cityCurrencySymbol
               : cityCurrencySymbol;
 
             return (
-              <ApartmentCard 
-                key={item.id} 
-                item={item} 
-                width_card={CARD_WIDTH} 
-                currencySymbol={currencySymbol} 
+              <ApartmentCard
+                key={item.id}
+                item={item}
+                width_card={CARD_WIDTH}
+                currencySymbol={currencySymbol}
               />
             );
           })}

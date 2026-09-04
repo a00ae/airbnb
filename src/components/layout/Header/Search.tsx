@@ -10,6 +10,7 @@ import "./search.scss";
 import { useState, memo, useMemo } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartments } from "../../../hook/useApartments";
+import { useApartmentsContext } from "../../../context/ApartmentsContext";
 
 type SearchProps = {
   activeLabel: string | null;
@@ -49,8 +50,8 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
 
 /* Search Section Component */
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
-  const {search, cities} = useApartments();
-  const {searchQuery, setSearchQuery} = search;
+  const {search, cities} = useApartmentsContext();
+  const {searchQuery, setSearchQuery, selectedCity, setSelectedCity} = search;
 
   const handleChangeSearchValue = (value: string) => {
     setSearchQuery(value);
@@ -67,7 +68,6 @@ const citySearchFilter = useMemo(() => {
 }, [cities, searchQuery]);
 
 
-  console.log(citySearchFilter)
 
 
   const handleClickSearch = (title: string) => {
@@ -80,8 +80,11 @@ const citySearchFilter = useMemo(() => {
   // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
 
   const handleSelectCity = (city: string) => {
-    console.log(city);
+    setSelectedCity(city);
+    // onLabelChange(null);
   }
+  /*=============== remove data search ===============*/ 
+  const removeDataSearch = () => setSearchQuery("");
 
   return (
     <div  className={`search ${activeLabel ? "active" : ""}`}
@@ -112,7 +115,7 @@ const citySearchFilter = useMemo(() => {
                   onClick={(e) => e.stopPropagation()} // منع إغلاق القائمة عند الكتابة
                 />
                 
-              <button className="close" type="button">
+              <button onClick={removeDataSearch} className="close" type="button">
                 {searchQuery && <RiCloseLine />}
                 
               </button>

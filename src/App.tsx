@@ -1,15 +1,14 @@
-import {Footer, Header, Main, Apt} from "./components"
+import { Footer, Header, Main, Apt } from "./components";
+import { ApartmentsProvider } from "./context/ApartmentsContext";
 function App() {
-
-
   return (
-    <>
-    <Header/>
-    <Apt />
-    <Main/>
-    <Footer />
-    </>
-  )
+    <ApartmentsProvider>
+      <Header />
+      <Apt />
+      <Main />
+      <Footer />
+    </ApartmentsProvider>
+  );
 }
 
-export default App
+export default App;
