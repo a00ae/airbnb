@@ -66,12 +66,13 @@ cd airbnb
 Open your browser and navigate to: `http://localhost:3000/airbnb`
 
 ## 📜 Available Scripts
-Script | Description
-npm run start | Runs the local development server with Vite
-npm run preview | Previews the production build locally
-npm run deploy | Deploys the built application directly to GitHub Pages
-npm run lint | Lints and formats the codebase using ESLint
+| Script | Description |
+| :--- | :--- |
+| `npm run start` | Runs the local development server with Vite |
+| `npm run preview` | Previews the production build locally |
+| `npm run deploy` | Deploys the built application directly to GitHub Pages |
+| `npm run lint` | Lints and formats the codebase using ESLint |
 
 
-⚠️ Disclaimer: `This project is purely an experimental prototype created for demonstration and educational purposes. It is not a commercial product and is not affiliated with or endorsed by Airbnb, Inc.`
+> ⚠️ **Disclaimer:** This project is purely an experimental prototype created for demonstration and educational purposes. It is not a commercial product and is not affiliated with or endorsed by Airbnb, Inc.
 
