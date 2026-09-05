@@ -5,20 +5,26 @@ import "./apartments.scss";
 import { CityApartmentsRow } from "./components/CityApartmentsRow";
 
 export const PopularApartments = () => {
-  const { cities, error, loading, fatchData } = useApartmentsContext();
-
-  
+  const { fliterCityData, error, loading, fatchData,search, filter  } = useApartmentsContext();
+  const {selectedCity, setSelectedCity} = search
   if (loading) return <Loader />;
 
   if (error) return <NotFoundPage errorMessage={error} fatchData={fatchData} />;
 
+  if(filter.length === 0) return <div className="card">
+
+  <p>its city {selectedCity} not found</p>
+  <button type="button" onClick={() => setSelectedCity("")}>Restart</button>
+  </div>
+
+
   return (
     <section className="card">
-      {cities.map((cityData, index) =>
-        cityData.cities.map((city, cityIndex) => (
+      {fliterCityData.map((group, index) =>
+        group.cities.map((city, cityIndex) => (
           <CityApartmentsRow
             cityData={city}
-            key={`${index}-${cityIndex}`}
+            key={`${index}-${cityIndex}-${city.city}`}
           />
         ))
       )}

@@ -3,6 +3,7 @@ import type { Apartment } from "../types/apartment.types";
 import type React from "react";
 import { useState } from "react";
 
+
 type Props = {
   width_card: number;
   item: Apartment;
