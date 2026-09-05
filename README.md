@@ -74,5 +74,8 @@ Open your browser and navigate to: `http://localhost:3000/airbnb`
 | `npm run lint` | Lints and formats the codebase using ESLint |
 
 
+
+
+
 > ⚠️ **Disclaimer:** This project is purely an experimental prototype created for demonstration and educational purposes. It is not a commercial product and is not affiliated with or endorsed by Airbnb, Inc.
 
