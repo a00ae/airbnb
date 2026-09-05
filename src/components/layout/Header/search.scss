@@ -11,13 +11,11 @@
   z-index: 1;
   position: relative;
   background-color: var(--bg-color-selected);
-  clip-path: inset(0 round var(--border-radius-box));
   transition:
     transform var(--transition-main),
     width var(--transition-main);
   &.active {
     background-color: var(--bg-color-active);
-    overflow: hidden;
   }
 
   &::before {

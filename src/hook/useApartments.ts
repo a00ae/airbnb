@@ -12,8 +12,8 @@ export const useApartments = () => {
   // الفلاتر
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("all");
-  const [maxPrice, setMaxPrice] = useState<number>(500);
-  const [minRating, setMinRating] = useState<number>(0);
+  // const [maxPrice, setMaxPrice] = useState<number>(500);
+  // const [minRating, setMinRating] = useState<number>(0);
 
   const fatchData = async () => {
     try {
@@ -35,71 +35,66 @@ export const useApartments = () => {
     Promise.resolve().then(fatchData);
   }, []);
 
-  const allApartments = useMemo(() => {
-    if (!cities || cities.length == 0) return [];
 
-    return cities
-      .flatMap((city) => city.cities || [])
-      .flatMap((city) =>
-        city.apartments.map((apt) => ({
-          ...apt,
-          cityName: city.city,
-          defaultCurrencyKey: city.defaultCurrency,
-        })),
-      );
-  }, [cities]);
-
-  const filterApartments = useMemo(() => {
-    return allApartments.filter((apt) => {
-      // 🟢 1. التحقق من المدينة: استثناء حالة "all" أو القيمة الفارغة
-      if (
-        selectedCity &&
-        selectedCity !== "all" &&
-        apt.cityName.toLowerCase() !== selectedCity.toLowerCase()
-      ) {
-        return false;
-      }
-
-      // 🟢 2. دمج البحث بالنص (searchQuery) إذا وُجد
-      if (searchQuery.trim() !== "") {
-        const query = searchQuery.toLowerCase().trim();
-        const matchCity = apt.cityName.toLowerCase().includes(query);
-        const matchTitle = apt.title?.toLowerCase().includes(query); // إن وجد عنوان للشقة
-        if (!matchCity && !matchTitle) return false;
-      }
-
-      // 🟢 3. الأسعار والتقييمات
-      if (maxPrice && apt.price > maxPrice) return false;
-      if (minRating && apt.rating < minRating) return false;
-
-      return true;
-    });
-  }, [allApartments, maxPrice, minRating, searchQuery, selectedCity]);
-
-  const fliterCityData = useMemo(() => {
+    const citySearchFilter = useMemo(() => {
     if (!cities) return [];
 
     return cities
-      .flatMap((city) => city.cities || [])
+      .flatMap((ele) => ele.cities || [])
       .filter((cityObj) =>
-        cityObj.city.toLowerCase().includes(selectedCity.toLowerCase().trim()),
+        cityObj.city.toLowerCase().includes(searchQuery.trim().toLowerCase()),
       );
-  }, [cities, selectedCity]);
+  }, [cities, searchQuery]);
+
+
+const fliterCityData = useMemo(() => {
+  if (!cities || cities.length === 0) return [];
+
+  const cityFilter = selectedCity.trim().toLowerCase();
+
+  // 🟢 1. في حال لم يحدد المستخدم أي مدينة (أو كانت القيمة "all")
+  // نرجع البيانات كما هي مباشرة دون إجراء أي عمليات فلترة معقدة
+  if (!cityFilter || cityFilter === "all") {
+    return cities;
+  }
+
+  // 🟢 2. تقوم بالفلترة فقط عند تحديد مدينة معينة بالنقر عليها
+  return cities
+    .map((group) => ({
+      ...group,
+      cities: (group.cities || []).filter(
+        (cityObj) => cityObj.city.toLowerCase() === cityFilter
+      ),
+    }))
+    .filter((group) => group.cities && group.cities.length > 0);
+}, [cities, selectedCity]);
+
+
+  const filter = useMemo(()=> {
+
+    return fliterCityData
+      .flatMap((ele) => ele.cities || [])
+      .filter((city) => city.city !== selectedCity)
+
+
+  }, [fliterCityData, selectedCity]);
 
   return {
     cities,
     loading,
+    setLoading,
     error,
     fatchData,
     fliterCityData,
-    filterApartments,
+    citySearchFilter,
+    filter,
     search: {
       searchQuery,
       setSearchQuery,
       selectedCity,
       setSelectedCity,
-      setMaxPrice,
-      setMinRating
+      // setMaxPrice,
+      // setMinRating
     },
   };
 };
