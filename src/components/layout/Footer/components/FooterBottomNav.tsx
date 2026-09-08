@@ -4,6 +4,8 @@ import {
   RiInstagramLine,
   RiTwitterXFill,
 } from "@remixicon/react";
+import { useState } from "react";
+import DialogCard from "../../../ui/Dialog/DialogCard";
 
 // 1. مصفوفة الروابط القانونية
 const LEGAL_LINKS = [
@@ -19,6 +21,13 @@ const LEGAL_LINKS = [
 ];
 
 export const FooterBottomNav = () => {
+  const [active, setActive] = useState<string | null>(null);
+
+  const handleClickLunguage = (visible: string) => {
+    console.log(visible)
+    c
+    setActive((prev) => prev === visible  ? visible : null );
+  };
   return (
     <div className="footer_bottom">
       {/* القسم الأيسر: الحقوق والروابط */}
@@ -39,8 +48,10 @@ export const FooterBottomNav = () => {
       {/* القسم الأيمن: اللغة والعملة والتواصل الاجتماعي */}
       <div className="footer_bottom_nav_right">
         <button className="footer_bottom_action_btn">
-          <span className="icon_globe"><RiGlobalLine /></span>
-          <span>English (GB)</span>
+          <span className="icon_globe">
+            <RiGlobalLine />
+          </span>
+          <span onClick={() => handleClickLunguage("global")}>English (GB)</span>
         </button>
 
         <button className="footer_bottom_action_btn">
@@ -59,6 +70,11 @@ export const FooterBottomNav = () => {
           </a>
         </div>
       </div>
+      <DialogCard
+        className={`global ${active === "global" ? "active" : ""}`}
+        setVisible={setActive}
+        visible={!!active}
+      />
     </div>
   );
 };
