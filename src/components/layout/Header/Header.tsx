@@ -12,7 +12,7 @@ import { type MouseEvent, useState, memo, useRef } from "react";
 import Search from "./Search";
 import Menu from "./components/Menu";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
-import DilogCard from "../../ui/Dialog/DilogCard";
+import DialogCard from "../../ui/Dialog/DialogCard";
 import { menu } from "../../ui/Card/Drop-Down";
 import MenuCard from "../../ui/Card/MenuCard";
 import { useOnclickOutSide } from "../../../hook/useOnclickOutSide";
@@ -120,7 +120,7 @@ const Header = () => {
 
         {/* Dialog Menus */}
 
-        <DilogCard
+        <DialogCard
           className={`global ${visible === "global" ? "active" : ""}`}
           visible={visible === "global"}
           setVisible={setVisible}

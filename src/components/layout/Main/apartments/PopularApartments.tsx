@@ -5,18 +5,24 @@ import "./apartments.scss";
 import { CityApartmentsRow } from "./components/CityApartmentsRow";
 
 export const PopularApartments = () => {
-  const { fliterCityData, error, loading, fatchData,search, filter  } = useApartmentsContext();
-  const {selectedCity, setSelectedCity} = search
+  const { fliterCityData, error, loading, fatchData, search, filter } =
+    useApartmentsContext();
+  const { selectedCity, setSelectedCity } = search;
   if (loading) return <Loader />;
 
   if (error) return <NotFoundPage errorMessage={error} fatchData={fatchData} />;
 
-  if(filter.length === 0) return <div className="card">
-
-  <p>its city {selectedCity} not found</p>
-  <button type="button" onClick={() => setSelectedCity("")}>Restart</button>
-  </div>
-
+  if (filter.length === 0)
+    return (
+      <section className="card not-found">
+        <div className="container">
+          <p>its city {selectedCity} not found</p>
+          <button className="restart" type="button" onClick={() => setSelectedCity("")}>
+            Restart
+          </button>
+        </div>
+      </section>
+    );
 
   return (
     <section className="card">
@@ -26,7 +32,7 @@ export const PopularApartments = () => {
             cityData={city}
             key={`${index}-${cityIndex}-${city.city}`}
           />
-        ))
+        )),
       )}
     </section>
   );

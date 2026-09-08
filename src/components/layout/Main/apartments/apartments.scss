@@ -2,12 +2,50 @@
 
 .card {
   @include v.container-padding();
-   @include v.flex-column(xxl);
-   overflow: hidden;
+  @include v.flex-column(xxl);
+  overflow: hidden;
+  &.not-found {
+    @include v.flex-row(center, center);
+    .container {
+      @include v.flex-column(sm);
+      @include v.typography-style(sm, main, text-color);
+      .restart {
+        padding: var(--space-xs) var(--space-sm);
+        cursor: pointer;
+        border-radius: 20px;
+        @include v.typography-style(sm, main, text-color);
+        background-color: var(--bg-color-btn);
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+        &::after {
+          content: "";
+          z-index: 1;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          transform: translateY(100%);
+          background-color: var(--bg-color-btn);
+          transition:
+            transform calc(1 * var(--transition-main)),
+            background-color var(--transition-main);
+          border-radius: inherit;
+        }
+        &:hover {
+          &::after {
+            transform: translateY(0);
+            background-color: #424242a3;
+          }
+        }
+      }
+    }
+  }
 
   .apartments {
     @include v.flex-column(md);
-    
+
     // heading
     &_heading-container {
       @include v.flex-row(space-between, center, sm);
@@ -17,7 +55,6 @@
         @include v.flex-row(flex-start, center, sm);
         h2 {
           @include v.typography-style(md, bold, text-color);
-          
         }
       }
       .right {
@@ -34,7 +71,7 @@
         cursor: pointer;
         color: var(--text-color);
         border: none; // لضمان عدم وجود حدود افتراضية للزر
-        
+
         &:disabled {
           opacity: 0.3;
           cursor: not-allowed;
@@ -60,18 +97,20 @@
     &_real-estate-cards {
       @include v.flex-column(xs);
       flex-shrink: 0; /* تمنع انضغاط الكرت أو انكماشه عند صغر الشاشة */
-      width: var(--card-width); /* يجب أن تطابق القيمة المحددة في كود الـ JavaScript تماماً */
+      width: var(
+        --card-width
+      ); /* يجب أن تطابق القيمة المحددة في كود الـ JavaScript تماماً */
       .img-cards {
         width: 100%;
         position: relative;
         img {
           width: 100%;
-          height:var(--card-img-height);
+          height: var(--card-img-height);
           object-fit: cover;
           border-radius: 20px;
           display: block;
-          @media (max-width: v.$width-sm ) {
-           --card-img-height: 170px !important;
+          @media (max-width: v.$width-sm) {
+            --card-img-height: 170px !important;
           }
         }
         .svg {
@@ -87,7 +126,7 @@
         padding: var(--space-xxs);
         @include v.flex-column(xxxs);
         @include v.typography-style(xs, sm, bg-color-grey-description);
-        
+
         span[data-card-title] {
           @include v.typography-style(sm, main, text-color);
           text-transform: capitalize;
@@ -95,7 +134,7 @@
           overflow: hidden;
           text-overflow: ellipsis; /* تضع نقاط (...) إذا كان العنوان طويلاً جداً */
         }
-        
+
         &_price {
           @include v.flex-row(flex-start, center, sm);
           .rating {
