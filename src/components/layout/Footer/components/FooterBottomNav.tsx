@@ -24,8 +24,7 @@ export const FooterBottomNav = () => {
   const [active, setActive] = useState<string | null>(null);
 
   const handleClickLunguage = (visible: string) => {
-    console.log(visible)
-    c
+
     setActive((prev) => prev === visible  ? visible : null );
   };
   return (
