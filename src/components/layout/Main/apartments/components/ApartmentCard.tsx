@@ -12,8 +12,14 @@ type Props = {
 
 const ApartmentCard = ({ width_card, item, currencySymbol }: Props) => {
   const [isLike, setIsLike] = useState<boolean>(false);
+
+  const handleClickCard = (number: number | string) => {
+    console.log(number);
+  }
   return (
-    <div
+    <a
+    // href={`/${item.id}`}
+    onClick={() => handleClickCard(item.id)}
       className="apartments_real-estate-cards"
       style={
         {
@@ -48,7 +54,7 @@ const ApartmentCard = ({ width_card, item, currencySymbol }: Props) => {
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 
