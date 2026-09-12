@@ -1,19 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ApiResponse } from "../components/layout/Main/apartments/types/apartment.types";
 
-const API_URL = "https://6a78f2ae674f43f4db10f4cd.mockapi.io/apartments/cities";
+const API_URL = "https://api.npoint.io/4593405b89d26a12ebdb";
 
 export const useApartments = () => {
-  const [cities, setCities] = useState<ApiResponse[]>([]);
-  // const [currencies, setCurrencies] = useState<Currencies>({});
+  const [cities, setCities] = useState<ApiResponse>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   // الفلاتر
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("all");
-  // const [maxPrice, setMaxPrice] = useState<number>(500);
-  // const [minRating, setMinRating] = useState<number>(0);
 
   const fatchData = async () => {
     try {
@@ -21,7 +18,7 @@ export const useApartments = () => {
       if (!response.ok) {
         throw Error("massing data not Found!!");
       }
-      const data = await response.json();
+      const data: ApiResponse = await response.json();
 
       setCities(data);
     } catch (error) {
@@ -35,48 +32,49 @@ export const useApartments = () => {
     Promise.resolve().then(fatchData);
   }, []);
 
+  // البحث في أسماء المدن
+  const citySearchFilter = useMemo(() => {
+    if (!cities?.cities) return [];
 
-    const citySearchFilter = useMemo(() => {
-    if (!cities) return [];
-
-    return cities
-      .flatMap((ele) => ele.cities || [])
-      .filter((cityObj) =>
-        cityObj.city.toLowerCase().includes(searchQuery.trim().toLowerCase()),
-      );
+    return Object.entries(cities.cities)
+      .filter(([cityName]) =>
+        cityName.toLowerCase().includes(searchQuery.trim().toLowerCase())
+      )
+      .map(([cityName, cityData]) => ({
+        cityName,
+        ...cityData,
+      }));
   }, [cities, searchQuery]);
 
+  // فلترة المدن المحددة
+  const fliterCityData = useMemo(() => {
+    if (!cities?.cities) return {};
 
-const fliterCityData = useMemo(() => {
-  if (!cities || cities.length === 0) return [];
+    const cityFilter = selectedCity.trim().toLowerCase();
 
-  const cityFilter = selectedCity.trim().toLowerCase();
+    if (!cityFilter || cityFilter === "all") {
+      return cities.cities;
+    }
 
-  // 🟢 1. في حال لم يحدد المستخدم أي مدينة (أو كانت القيمة "all")
-  // نرجع البيانات كما هي مباشرة دون إجراء أي عمليات فلترة معقدة
-  if (!cityFilter || cityFilter === "all") {
-    return cities;
-  }
+    if (cities.cities[cityFilter]) {
+      return {
+        [cityFilter]: cities.cities[cityFilter],
+      };
+    }
 
-  // 🟢 2. تقوم بالفلترة فقط عند تحديد مدينة معينة بالنقر عليها
-  return cities
-    .map((group) => ({
-      ...group,
-      cities: (group.cities || []).filter(
-        (cityObj) => cityObj.city.toLowerCase() === cityFilter
-      ),
-    }))
-    .filter((group) => group.cities && group.cities.length > 0);
-}, [cities, selectedCity]);
+    return {};
+  }, [cities, selectedCity]);
 
+  // استخراج المدن التي لا تطابق المدينة المحددة
+  const filter = useMemo(() => {
+    if (!fliterCityData) return [];
 
-  const filter = useMemo(()=> {
-
-    return fliterCityData
-      .flatMap((ele) => ele.cities || [])
-      .filter((city) => city.city !== selectedCity)
-
-
+    return Object.entries(fliterCityData)
+      .filter(([cityName]) => cityName.toLowerCase() !== selectedCity.trim().toLowerCase())
+      .map(([cityName, cityData]) => ({
+        cityName,
+        ...cityData,
+      }));
   }, [fliterCityData, selectedCity]);
 
   return {
@@ -93,8 +91,6 @@ const fliterCityData = useMemo(() => {
       setSearchQuery,
       selectedCity,
       setSelectedCity,
-      // setMaxPrice,
-      // setMinRating
     },
   };
 };

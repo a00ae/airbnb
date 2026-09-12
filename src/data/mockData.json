@@ -1,327 +1,353 @@
-[
-  {
-    "currencies": {
-      "EUR": "€",
-      "TRY": "TL",
-      "USD": "$"
+{
+  "currencies": {
+    "EUR": "€",
+    "TRY": "TL",
+    "USD": "$"
+  },
+  "cities": {
+    "istanbul": {
+      "id": 1,
+      "defaultCurrency": "EUR",
+      "apartments": [
+        {
+          "id": 1,
+          "district": "fatih",
+          "title": "flat in fatih",
+          "img": "images/section-istanbul/istanbul-01.avif",
+          "history": "5–10",
+          "month": "jan",
+          "price": 150,
+          "rating": 4.1
+        },
+        {
+          "id": 2,
+          "district": "taksim",
+          "title": "studio in taksim",
+          "img": "images/section-istanbul/istanbul-02.avif",
+          "history": "12–15",
+          "month": "feb",
+          "price": 180,
+          "rating": 4.5
+        },
+        {
+          "id": 3,
+          "district": "kadikoy",
+          "title": "loft in kadikoy",
+          "img": "images/section-istanbul/istanbul-03.avif",
+          "history": "1–3",
+          "month": "mar",
+          "price": 220,
+          "rating": 4.8
+        },
+        {
+          "id": 4,
+          "district": "besiktas",
+          "title": "room in besiktas",
+          "img": "images/section-istanbul/istanbul-04.avif",
+          "history": "20–25",
+          "month": "apr",
+          "price": 90,
+          "rating": 3.9
+        },
+        {
+          "id": 5,
+          "district": "sisli",
+          "title": "penthouse in sisli",
+          "img": "images/section-istanbul/istanbul-05.avif",
+          "history": "10–12",
+          "month": "may",
+          "price": 450,
+          "rating": 4.9
+        },
+        {
+          "id": 6,
+          "district": "bebek",
+          "title": "luxury flat in bebek",
+          "img": "images/section-istanbul/istanbul-06.avif",
+          "history": "2–6",
+          "month": "jun",
+          "price": 500,
+          "rating": 4.95
+        },
+        {
+          "id": 7,
+          "district": "beyoglu",
+          "title": "cozy room in beyoglu",
+          "img": "images/section-istanbul/istanbul-07.avif",
+          "history": "14–18",
+          "month": "jul",
+          "price": 110,
+          "rating": 4.2
+        },
+        {
+          "id": 8,
+          "district": "sisli",
+          "title": "cozy room in sisli",
+          "img": "images/section-istanbul/istanbul-08.avif",
+          "history": "14–18",
+          "month": "sup",
+          "price": 120,
+          "rating": 4.5
+        }
+      ]
     },
-    "cities": [
-      {
-        "id": 1,
-        "city": "istanbul",
-        "defaultCurrency": "EUR",
-        "apartments": [
-          {
-            "id": 1,
-            "img": "images/section-istanbul/istanbul-01.avif",
-            "title": "flat in fatih",
-            "history": "5–10",
-            "month": "jan",
-            "price": 150,
-            "rating": 4.1
-          },
-          {
-            "id": 2,
-            "img": "images/section-istanbul/istanbul-02.avif",
-            "title": "studio in taksim",
-            "history": "12–15",
-            "month": "feb",
-            "price": 180,
-            "rating": 4.5
-          },
-          {
-            "id": 3,
-            "img": "images/section-istanbul/istanbul-03.avif",
-            "title": "loft in kadikoy",
-            "history": "1–3",
-            "month": "mar",
-            "price": 220,
-            "rating": 4.8
-          },
-          {
-            "id": 4,
-            "img": "images/section-istanbul/istanbul-04.avif",
-            "title": "room in besiktas",
-            "history": "20–25",
-            "month": "apr",
-            "price": 90,
-            "rating": 3.9
-          },
-          {
-            "id": 5,
-            "img": "images/section-istanbul/istanbul-05.avif",
-            "title": "penthouse in sisli",
-            "history": "10–12",
-            "month": "may",
-            "price": 450,
-            "rating": 4.9
-          },
-          {
-            "id": 6,
-            "img": "images/section-istanbul/istanbul-06.avif",
-            "title": "luxury flat in bebek",
-            "history": "2–6",
-            "month": "jun",
-            "price": 500,
-            "rating": 4.95
-          },
-          {
-            "id": 7,
-            "img": "images/section-istanbul/istanbul-07.avif",
-            "title": "cozy room in beyoglu",
-            "history": "14–18",
-            "month": "jul",
-            "price": 110,
-            "rating": 4.2
-          },
-          {
-            "id": 8,
-            "img": "images/section-istanbul/istanbul-08.avif",
-            "title": "cozy room in sisli",
-            "history": "14–18",
-            "month": "sup",
-            "price": 120,
-            "rating": 4.5
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "city": "izmir",
-        "defaultCurrency": "TRY",
-        "apartments": [
-          {
-            "id": 1,
-            "img": "images/section-izmir/izmir-01.avif",
-            "title": "flat in alsancak",
-            "history": "1–5",
-            "month": "jun",
-            "price": 350,
-            "rating": 4.3
-          },
-          {
-            "id": 2,
-            "img": "images/section-izmir/izmir-02.avif",
-            "title": "villa in cesme",
-            "history": "15–20",
-            "month": "jul",
-            "price": 1500,
-            "rating": 4.9
-          },
-          {
-            "id": 3,
-            "img": "images/section-izmir/izmir-03.avif",
-            "title": "studio in bornova",
-            "history": "5–9",
-            "month": "aug",
-            "price": 200,
-            "rating": 3.8
-          },
-          {
-            "id": 4,
-            "img": "images/section-izmir/izmir-04.avif",
-            "title": "flat in karsiyaka",
-            "history": "10–14",
-            "month": "sep",
-            "price": 280,
-            "rating": 4.6
-          },
-          {
-            "id": 5,
-            "img": "images/section-izmir/izmir-05.avif",
-            "title": "room in buca",
-            "history": "22–28",
-            "month": "oct",
-            "price": 120,
-            "rating": 3.5
-          },
-          {
-            "id": 6,
-            "img": "images/section-izmir/izmir-06.avif",
-            "title": "seaview flat in goztepe",
-            "history": "2–6",
-            "month": "nov",
-            "price": 420,
-            "rating": 4.7
-          },
-          {
-            "id": 7,
-            "img": "images/section-izmir/izmir-07.avif",
-            "title": "stone house in alacati",
-            "history": "11–16",
-            "month": "dec",
-            "price": 1200,
-            "rating": 4.95
-          },
-          {
-            "id": 8,
-            "img": "images/section-izmir/izmir-08.avif",
-            "title": "stone house in alacati",
-            "history": "4–9",
-            "month": "oct",
-            "price": 1200,
-            "rating": 4.5
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "city": "antalya",
-        "defaultCurrency": "EUR",
-        "apartments": [
-          {
-            "id": 1,
-            "img": "images/section-antalya/antalya-01.avif",
-            "title": "villa in belek",
-            "history": "1–5",
-            "month": "jun",
-            "price": 850,
-            "rating": 4.9
-          },
-          {
-            "id": 2,
-            "img": "images/section-antalya/antalya-02.avif",
-            "title": "flat in muratpasa",
-            "history": "10–14",
-            "month": "aug",
-            "price": 120,
-            "rating": 4.1
-          },
-          {
-            "id": 3,
-            "img": "images/section-antalya/antalya-03.avif",
-            "title": "studio in konyaalti",
-            "history": "15–20",
-            "month": "sep",
-            "price": 95,
-            "rating": 4.5
-          },
-          {
-            "id": 4,
-            "img": "images/section-antalya/antalya-04.avif",
-            "title": "penthouse in lara",
-            "history": "5–10",
-            "month": "jul",
-            "price": 600,
-            "rating": 4.8
-          },
-          {
-            "id": 5,
-            "img": "images/section-antalya/antalya-05.avif",
-            "title": "flat in kepez",
-            "history": "20–25",
-            "month": "oct",
-            "price": 80,
-            "rating": 3.5
-          },
-          {
-            "id": 6,
-            "img": "images/section-antalya/antalya-06.avif",
-            "title": "resort villa in alanya",
-            "history": "3–8",
-            "month": "nov",
-            "price": 450,
-            "rating": 4.7
-          },
-          {
-            "id": 7,
-            "img": "images/section-antalya/antalya-07.avif",
-            "title": "historic house in kaleici",
-            "history": "12–16",
-            "month": "dec",
-            "price": 210,
-            "rating": 4.85
-          },
-          {
-            "id": 8,
-            "img": "images/section-antalya/antalya-08.avif",
-            "title": "flat in kepez",
-            "history": "20–25",
-            "month": "oct",
-            "price": 80,
-            "rating": 3.5
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "city": "ankara",
-        "defaultCurrency": "TRY",
-        "apartments": [
-          {
-            "id": 1,
-            "img": "images/section-ankara/ankara-01.avif",
-            "title": "flat in cankaya",
-            "history": "4–7",
-            "month": "jan",
-            "price": 450,
-            "rating": 4.6
-          },
-          {
-            "id": 2,
-            "img": "images/section-ankara/ankara-02.avif",
-            "title": "studio in kizilay",
-            "history": "8–12",
-            "month": "feb",
-            "price": 300,
-            "rating": 4
-          },
-          {
-            "id": 3,
-            "img": "images/section-ankara/ankara-03.avif",
-            "title": "flat in yenimahalle",
-            "history": "14–18",
-            "month": "mar",
-            "price": 380,
-            "rating": 4.3
-          },
-          {
-            "id": 4,
-            "img": "images/section-ankara/ankara-04.avif",
-            "title": "loft in bahcelievler",
-            "history": "1–5",
-            "month": "apr",
-            "price": 550,
-            "rating": 4.7
-          },
-          {
-            "id": 5,
-            "img": "images/section-ankara/ankara-05.avif",
-            "title": "room in cebeci",
-            "history": "20–25",
-            "month": "may",
-            "price": 150,
-            "rating": 3.4
-          },
-          {
-            "id": 6,
-            "img": "images/section-ankara/ankara-06.avif",
-            "title": "luxury flat in gop",
-            "history": "2–6",
-            "month": "jun",
-            "price": 700,
-            "rating": 4.85
-          },
-          {
-            "id": 7,
-            "img": "images/section-ankara/ankara-07.avif",
-            "title": "modern studio in batikent",
-            "history": "9–13",
-            "month": "jul",
-            "price": 280,
-            "rating": 4.1
-          },
-          {
-            "id": 8,
-            "img": "images/section-ankara/ankara-08.avif",
-            "title": "studio in kizilay",
-            "history": "8–12",
-            "month": "feb",
-            "price": 300,
-            "rating": 4
-          }
-        ]
-      }
-    ]
+    "izmir": {
+      "id": 2,
+      "defaultCurrency": "TRY",
+      "apartments": [
+        {
+          "id": 1,
+          "district": "alsancak",
+          "title": "flat in alsancak",
+          "img": "images/section-izmir/izmir-01.avif",
+          "history": "1–5",
+          "month": "jun",
+          "price": 350,
+          "rating": 4.3
+        },
+        {
+          "id": 2,
+          "district": "cesme",
+          "title": "villa in cesme",
+          "img": "images/section-izmir/izmir-02.avif",
+          "history": "15–20",
+          "month": "jul",
+          "price": 1500,
+          "rating": 4.9
+        },
+        {
+          "id": 3,
+          "district": "bornova",
+          "title": "studio in bornova",
+          "img": "images/section-izmir/izmir-03.avif",
+          "history": "5–9",
+          "month": "aug",
+          "price": 200,
+          "rating": 3.8
+        },
+        {
+          "id": 4,
+          "district": "karsiyaka",
+          "title": "flat in karsiyaka",
+          "img": "images/section-izmir/izmir-04.avif",
+          "history": "10–14",
+          "month": "sep",
+          "price": 280,
+          "rating": 4.6
+        },
+        {
+          "id": 5,
+          "district": "buca",
+          "title": "room in buca",
+          "img": "images/section-izmir/izmir-05.avif",
+          "history": "22–28",
+          "month": "oct",
+          "price": 120,
+          "rating": 3.5
+        },
+        {
+          "id": 6,
+          "district": "goztepe",
+          "title": "seaview flat in goztepe",
+          "img": "images/section-izmir/izmir-06.avif",
+          "history": "2–6",
+          "month": "nov",
+          "price": 420,
+          "rating": 4.7
+        },
+        {
+          "id": 7,
+          "district": "alacati",
+          "title": "stone house in alacati",
+          "img": "images/section-izmir/izmir-07.avif",
+          "history": "11–16",
+          "month": "dec",
+          "price": 1200,
+          "rating": 4.95
+        },
+        {
+          "id": 8,
+          "district": "alacati",
+          "title": "stone house in alacati",
+          "img": "images/section-izmir/izmir-08.avif",
+          "history": "4–9",
+          "month": "oct",
+          "price": 1200,
+          "rating": 4.5
+        }
+      ]
+    },
+    "antalya": {
+      "id": 3,
+      "defaultCurrency": "EUR",
+      "apartments": [
+        {
+          "id": 1,
+          "district": "belek",
+          "title": "villa in belek",
+          "img": "images/section-antalya/antalya-01.avif",
+          "history": "1–5",
+          "month": "jun",
+          "price": 850,
+          "rating": 4.9
+        },
+        {
+          "id": 2,
+          "district": "muratpasa",
+          "title": "flat in muratpasa",
+          "img": "images/section-antalya/antalya-02.avif",
+          "history": "10–14",
+          "month": "aug",
+          "price": 120,
+          "rating": 4.1
+        },
+        {
+          "id": 3,
+          "district": "konyaalti",
+          "title": "studio in konyaalti",
+          "img": "images/section-antalya/antalya-03.avif",
+          "history": "15–20",
+          "month": "sep",
+          "price": 95,
+          "rating": 4.5
+        },
+        {
+          "id": 4,
+          "district": "lara",
+          "title": "penthouse in lara",
+          "img": "images/section-antalya/antalya-04.avif",
+          "history": "5–10",
+          "month": "jul",
+          "price": 600,
+          "rating": 4.8
+        },
+        {
+          "id": 5,
+          "district": "kepez",
+          "title": "flat in kepez",
+          "img": "images/section-antalya/antalya-05.avif",
+          "history": "20–25",
+          "month": "oct",
+          "price": 80,
+          "rating": 3.5
+        },
+        {
+          "id": 6,
+          "district": "alanya",
+          "title": "resort villa in alanya",
+          "img": "images/section-antalya/antalya-06.avif",
+          "history": "3–8",
+          "month": "nov",
+          "price": 450,
+          "rating": 4.7
+        },
+        {
+          "id": 7,
+          "district": "kaleici",
+          "title": "historic house in kaleici",
+          "img": "images/section-antalya/antalya-07.avif",
+          "history": "12–16",
+          "month": "dec",
+          "price": 210,
+          "rating": 4.85
+        },
+        {
+          "id": 8,
+          "district": "kepez",
+          "title": "flat in kepez",
+          "img": "images/section-antalya/antalya-08.avif",
+          "history": "20–25",
+          "month": "oct",
+          "price": 80,
+          "rating": 3.5
+        }
+      ]
+    },
+    "ankara": {
+      "id": 4,
+      "defaultCurrency": "TRY",
+      "apartments": [
+        {
+          "id": 1,
+          "district": "cankaya",
+          "title": "flat in cankaya",
+          "img": "images/section-ankara/ankara-01.avif",
+          "history": "4–7",
+          "month": "jan",
+          "price": 450,
+          "rating": 4.6
+        },
+        {
+          "id": 2,
+          "district": "kizilay",
+          "title": "studio in kizilay",
+          "img": "images/section-ankara/ankara-02.avif",
+          "history": "8–12",
+          "month": "feb",
+          "price": 300,
+          "rating": 4
+        },
+        {
+          "id": 3,
+          "district": "yenimahalle",
+          "title": "flat in yenimahalle",
+          "img": "images/section-ankara/ankara-03.avif",
+          "history": "14–18",
+          "month": "mar",
+          "price": 380,
+          "rating": 4.3
+        },
+        {
+          "id": 4,
+          "district": "bahcelievler",
+          "title": "loft in bahcelievler",
+          "img": "images/section-ankara/ankara-04.avif",
+          "history": "1–5",
+          "month": "apr",
+          "price": 550,
+          "rating": 4.7
+        },
+        {
+          "id": 5,
+          "district": "cebeci",
+          "title": "room in cebeci",
+          "img": "images/section-ankara/ankara-05.avif",
+          "history": "20–25",
+          "month": "may",
+          "price": 150,
+          "rating": 3.4
+        },
+        {
+          "id": 6,
+          "district": "gop",
+          "title": "luxury flat in gop",
+          "img": "images/section-ankara/ankara-06.avif",
+          "history": "2–6",
+          "month": "jun",
+          "price": 700,
+          "rating": 4.85
+        },
+        {
+          "id": 7,
+          "district": "batikent",
+          "title": "modern studio in batikent",
+          "img": "images/section-ankara/ankara-07.avif",
+          "history": "9–13",
+          "month": "jul",
+          "price": 280,
+          "rating": 4.1
+        },
+        {
+          "id": 8,
+          "district": "kizilay",
+          "title": "studio in kizilay",
+          "img": "images/section-ankara/ankara-08.avif",
+          "history": "8–12",
+          "month": "feb",
+          "price": 300,
+          "rating": 4
+        }
+      ]
+    }
   }
-]
+}
