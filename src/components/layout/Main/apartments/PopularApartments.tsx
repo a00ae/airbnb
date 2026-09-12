@@ -7,6 +7,8 @@ import { CityApartmentsRow } from "./components/CityApartmentsRow";
 export const PopularApartments = () => {
   const { fliterCityData, error, loading, fatchData, search, filter } =
     useApartmentsContext();
+
+    console.log(fliterCityData)
   const { selectedCity, setSelectedCity } = search;
   if (loading) return <Loader />;
 
@@ -17,7 +19,10 @@ export const PopularApartments = () => {
       <section className="card not-found">
         <div className="container">
           <p>its city {selectedCity} not found</p>
-          <button className="restart" type="button" onClick={() => setSelectedCity("")}>
+          <button
+            className="restart"
+            type="button"
+            onClick={() => setSelectedCity("")}>
             Restart
           </button>
         </div>
@@ -26,14 +31,9 @@ export const PopularApartments = () => {
 
   return (
     <section className="card">
-      {fliterCityData.map((group, index) =>
-        group.cities.map((city, cityIndex) => (
-          <CityApartmentsRow
-            cityData={city}
-            key={`${index}-${cityIndex}-${city.city}`}
-          />
-        )),
-      )}
+      {Object.entries(fliterCityData).map(([cityName, cityData]) => (
+        <CityApartmentsRow cityData={{city: cityName, ...cityData}} key={cityName} />
+      ))}
     </section>
   );
 };

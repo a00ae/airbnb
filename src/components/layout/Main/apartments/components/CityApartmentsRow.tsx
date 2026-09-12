@@ -11,17 +11,16 @@ import { useWindowSize } from "../../../../../hook/useWindowSize"; // 🟢 اس�
 const CARD_WIDTH = 210;
 const CARD_GAP = 20;
 
+
 interface CityApartmentsRowProps {
   cityData: CityData;
   currencies?: Record<string, string>;
 }
 
-export const CityApartmentsRow = ({
-  cityData,
-  currencies,
-}: CityApartmentsRowProps) => {
-  const { city, apartments, defaultCurrency } = cityData;
-
+export const CityApartmentsRow = (
+  { cityData, currencies }: CityApartmentsRowProps,
+) => {
+  const {city ,apartments, defaultCurrency } = cityData;
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [visibleCards, setVisibleCards] = useState<number>(1);
