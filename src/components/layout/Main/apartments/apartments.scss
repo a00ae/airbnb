@@ -9,6 +9,7 @@
     .container {
       @include v.flex-column(sm);
       @include v.typography-style(sm, main, text-color);
+      z-index: 0;
       .restart {
         padding: var(--space-xs) var(--space-sm);
         cursor: pointer;

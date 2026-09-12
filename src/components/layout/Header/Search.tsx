@@ -7,7 +7,7 @@ import {
 } from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import { useState, memo, useRef, useEffect} from "react";
+import { useState, memo, useRef, useEffect } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartmentsContext } from "../../../context/ApartmentsContext";
 
@@ -49,15 +49,14 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
 
 /* Search Section Component */
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
-  const { search, citySearchFilter,  setLoading, loading } = useApartmentsContext();
+  const { search, citySearchFilter, setLoading, loading } =
+    useApartmentsContext();
   const { searchQuery, setSearchQuery, setSelectedCity } = search;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleChangeSearchValue = (value: string) => {
     setSearchQuery(value);
   };
-
-
 
   const handleClickSearch = (title: string) => {
     const normalizedTitle = title.trim().toLowerCase(); // تحويل لـ where, when, who
@@ -68,52 +67,52 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
 
   // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
 
-const handleSelectCity = (city: string) => {
-  console.log("🚀 [1] تم الضغط على المدينة:", city);
+  const handleSelectCity = (city: string) => {
+    console.log("🚀 [1] تم الضغط على المدينة:", city);
 
-  // التأكد من إلغاء أي مؤقت سابق إن وجد
-  if (timerRef.current) {
-    console.log("⚠️ [2] تم إلغاء مؤقت سابق كان يعلم في الخلفية:", timerRef.current);
-    clearTimeout(timerRef.current);
-  }
-
-  // 1. تشغيل حالة التحميل
-  console.log("⏳ [3] تغيير حالة loading إلى: true");
-  setLoading(true);
-
-  // 2. معالجة النص والتحديثات
-  const activeCity = city.split(",")[0].trim();
-  console.log("✂️ [4] المدينة بعد القاطع والـ Trim:", activeCity);
-
-  setSelectedCity(activeCity);
-  onLabelChange(null);
-  setSearchQuery("");
-
-  // 3. ضبط المؤقت في الخلفية
-  timerRef.current = setTimeout(() => {
-    console.log("✅ [5] انقضت 500ms - تغيير حالة loading إلى: false");
-    setLoading(false);
-    timerRef.current = null; // إعادة تعيين المرجع
-  }, 500);
-
-  console.log("📌 [6] تم جدولة المؤقت برقم ID:", timerRef.current);
-};
-
-// متابعة تنظيف المؤقت عند إغلاق المكون (Unmount)
-useEffect(() => {
-  // نحفظ المرجع الحالي داخل المتغير لتجنب تحذيرات ESLint
-  const currentTimer = timerRef.current;
-
-  return () => {
-    if (currentTimer) {
-      console.log("🧹 [Cleanup] تم إلغاء المؤقت بنجاح:", currentTimer);
-      clearTimeout(currentTimer);
+    // التأكد من إلغاء أي مؤقت سابق إن وجد
+    if (timerRef.current) {
+      console.log(
+        "⚠️ [2] تم إلغاء مؤقت سابق كان يعلم في الخلفية:",
+        timerRef.current,
+      );
+      clearTimeout(timerRef.current);
     }
+
+    // 1. تشغيل حالة التحميل
+    console.log("⏳ [3] تغيير حالة loading إلى: true");
+    setLoading(true);
+
+    // 2. معالجة النص والتحديثات
+    const activeCity = city.split(",")[0].trim().toLowerCase();
+    console.log("✂️ [4] المدينة بعد القاطع والـ Trim:", activeCity);
+
+    setSelectedCity(activeCity);
+    onLabelChange(null);
+    setSearchQuery("");
+
+    // 3. ضبط المؤقت في الخلفية
+    timerRef.current = setTimeout(() => {
+      console.log("✅ [5] انقضت 500ms - تغيير حالة loading إلى: false");
+      setLoading(false);
+      timerRef.current = null; // إعادة تعيين المرجع
+    }, 500);
+
+    console.log("📌 [6] تم جدولة المؤقت برقم ID:", timerRef.current);
   };
-}, [loading]); // سيتنفّذ التنظيف كلما تغيرت حالة loading
 
+  // متابعة تنظيف المؤقت عند إغلاق المكون (Unmount)
+  useEffect(() => {
+    // نحفظ المرجع الحالي داخل المتغير لتجنب تحذيرات ESLint
+    const currentTimer = timerRef.current;
 
-
+    return () => {
+      if (currentTimer) {
+        console.log("🧹 [Cleanup] تم إلغاء المؤقت بنجاح:", currentTimer);
+        clearTimeout(currentTimer);
+      }
+    };
+  }, [loading]); // سيتنفّذ التنظيف كلما تغيرت حالة loading
 
   /*=============== remove data search ===============*/
   const removeDataSearch = () => setSearchQuery("");
@@ -192,14 +191,14 @@ useEffect(() => {
                           <div
                             key={ele.id}
                             className="where_card-btn search-city"
-                            onClick={() => handleSelectCity(ele.city)}>
+                            onClick={() => handleSelectCity(ele.cityName)}>
                             <div
                               style={{ backgroundColor: "#23322" }}
                               className="svg">
                               <RiMapPinLine />
                             </div>
                             <div className="card_descraption">
-                              <span>{ele.city}</span>
+                              <span>{ele.cityName}</span>
                             </div>
                           </div>
                         ))
