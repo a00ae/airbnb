@@ -43,7 +43,7 @@ export interface Apartment {
 
 export interface CityData {
   id: number;
-  city?: string;
+  city: string;
   defaultCurrency: string;
   apartments: Apartment[];
 }

@@ -7,8 +7,7 @@ import { CityApartmentsRow } from "./components/CityApartmentsRow";
 export const PopularApartments = () => {
   const { fliterCityData, error, loading, fatchData, search, filter } =
     useApartmentsContext();
-
-    console.log(fliterCityData)
+    console.log(filter)
   const { selectedCity, setSelectedCity } = search;
   if (loading) return <Loader />;
 
@@ -32,7 +31,7 @@ export const PopularApartments = () => {
   return (
     <section className="card">
       {Object.entries(fliterCityData).map(([cityName, cityData]) => (
-        <CityApartmentsRow cityData={{city: cityName, ...cityData}} key={cityName} />
+        <CityApartmentsRow cityData={{ ...cityData, city: cityName }} key={cityName} />
       ))}
     </section>
   );
