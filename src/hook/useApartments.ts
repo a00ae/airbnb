@@ -19,7 +19,7 @@ export const useApartments = () => {
         throw Error("massing data not Found!!");
       }
       const data: ApiResponse = await response.json();
-
+      console.log(data);
       setCities(data);
     } catch (error) {
       setError("404" + error);

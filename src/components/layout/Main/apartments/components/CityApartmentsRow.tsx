@@ -110,8 +110,8 @@ export const CityApartmentsRow = (
             transition: "transform 0.4s ease-out",
           }}>
           {(apartments || []).map((item) => {
-            const currencySymbol = item.currencyKey
-              ? (currencies && currencies[item.currencyKey]) ||
+            const currencySymbol = item.district
+              ? (currencies && currencies[item.district]) ||
                 cityCurrencySymbol
               : cityCurrencySymbol;
 

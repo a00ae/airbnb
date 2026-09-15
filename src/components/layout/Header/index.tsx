@@ -53,6 +53,7 @@ export const dataWhere: SerachType[] = [
         titleDataWhere: "Nearby",
         descraptionDataWhere: "Find what’s around you",
         bgColor: "#e1f5fe",
+        
       },
       {
         id: 2,

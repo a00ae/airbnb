@@ -19,7 +19,6 @@ type SearchProps = {
 // 1. Independent card component (contains its own counter)
 const WhoCard = ({ who }: { who: DataSearchWho }) => {
   const [count, setCount] = useState(0);
-
   return (
     <div className="who_card-btn">
       <div className="who-descraption">
@@ -68,37 +67,41 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
 
   const handleSelectCity = (city: string) => {
+    const activeCity = city.split(",")[0].trim().toLowerCase();
     console.log("🚀 [1] تم الضغط على المدينة:", city);
 
-    // التأكد من إلغاء أي مؤقت سابق إن وجد
-    if (timerRef.current) {
-      console.log(
-        "⚠️ [2] تم إلغاء مؤقت سابق كان يعلم في الخلفية:",
-        timerRef.current,
-      );
-      clearTimeout(timerRef.current);
+    if (activeCity === "nearby") {
+      setSelectedCity("");
+    } else {
+      // التأكد من إلغاء أي مؤقت سابق إن وجد
+      if (timerRef.current) {
+        console.log(
+          "⚠️ [2] تم إلغاء مؤقت سابق كان يعلم في الخلفية:",
+          timerRef.current,
+        );
+        clearTimeout(timerRef.current);
+      }
+
+      // 1. تشغيل حالة التحميل
+      console.log("⏳ [3] تغيير حالة loading إلى: true");
+      setLoading(true);
+
+      // 2. معالجة النص والتحديثات
+      console.log("✂️ [4] المدينة بعد القاطع والـ Trim:", activeCity);
+
+      setSelectedCity(activeCity);
+      onLabelChange(null);
+      setSearchQuery("");
+
+      // 3. ضبط المؤقت في الخلفية
+      timerRef.current = setTimeout(() => {
+        console.log("✅ [5] انقضت 500ms - تغيير حالة loading إلى: false");
+        setLoading(false);
+        timerRef.current = null; // إعادة تعيين المرجع
+      }, 500);
+
+      console.log("📌 [6] تم جدولة المؤقت برقم ID:", timerRef.current);
     }
-
-    // 1. تشغيل حالة التحميل
-    console.log("⏳ [3] تغيير حالة loading إلى: true");
-    setLoading(true);
-
-    // 2. معالجة النص والتحديثات
-    const activeCity = city.split(",")[0].trim().toLowerCase();
-    console.log("✂️ [4] المدينة بعد القاطع والـ Trim:", activeCity);
-
-    setSelectedCity(activeCity);
-    onLabelChange(null);
-    setSearchQuery("");
-
-    // 3. ضبط المؤقت في الخلفية
-    timerRef.current = setTimeout(() => {
-      console.log("✅ [5] انقضت 500ms - تغيير حالة loading إلى: false");
-      setLoading(false);
-      timerRef.current = null; // إعادة تعيين المرجع
-    }, 500);
-
-    console.log("📌 [6] تم جدولة المؤقت برقم ID:", timerRef.current);
   };
 
   // متابعة تنظيف المؤقت عند إغلاق المكون (Unmount)
@@ -183,10 +186,12 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
               <div key={i} className={`child-${item.type}`}>
                 {/* 🟢 قسم الوجهات - Where */}
 
+                
+
                 {item.type === "where" && (
                   <>
                     <span>Suggested destinations</span>
-                    {searchQuery.length > 2
+                    {searchQuery.length > 2 
                       ? citySearchFilter.map((ele) => (
                           <div
                             key={ele.id}
@@ -202,14 +207,25 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                             </div>
                           </div>
                         ))
-                      : item.whereData?.map(
+
+
+                      : 
+
+
+                      
+                      item.whereData?.map(
                           ({
                             id,
                             iconDataWhere,
                             titleDataWhere,
                             descraptionDataWhere,
                             bgColor,
-                          }) => (
+                          }) => {
+
+                           
+
+                            return (
+
                             <div
                               key={id}
                               className="where_card-btn"
@@ -224,7 +240,9 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                                 <p>{descraptionDataWhere}</p>
                               </div>
                             </div>
-                          ),
+                            )
+                              
+                          },
                         )}
                   </>
                 )}
