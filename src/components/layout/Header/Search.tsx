@@ -51,7 +51,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   console.log("Re-render");
   const [nearby, setNearby] = useState<boolean>(false);
   const curentRef = useRef<string | null>(null);
-  const { search, citySearchFilter, filter, setLoading, cityNames } =
+  const { search, citySearchFilter, setLoading, cityNames } =
     useApartmentsContext();
   const { searchQuery, setSearchQuery, setSelectedCity } = search;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
