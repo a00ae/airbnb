@@ -72,7 +72,7 @@
     @include v.flex-column(xxs);
 
     &:hover {
-      background-color: var(--bg-color-btn-active-hover)
+      background-color: var(--bg-color-btn-active-hover);
     }
 
     p {
@@ -121,46 +121,47 @@
         background-color: var(--bg-color-btn);
       }
     }
+  }
 
-    &.who .search_icon {
-      position: absolute;
-      overflow: hidden;
-      right: 5px;
-      top: 3px;
-      @include v.flex-row(center, center);
-      padding: 20px;
-      background-color: var(--bg-color-core);
-      border-radius: 50%;
-      color: var(--bg-color-white);
-      transition: all 0.3s ease-in-out;
+  .search_icon {
+    position: absolute;
+    overflow: hidden;
+    right: 5px;
+    top: 3px;
+    @include v.flex-row(center, center);
+    padding: 20px;
+    background-color: var(--bg-color-core);
+    border-radius: 50%;
+    color: var(--bg-color-white);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
 
-      &.visible {
-        border-radius: 40px;
-        gap: var(--space-xs);
-
-        span {
-          transform: translateX(0);
-          opacity: 1;
-          visibility: visible;
-          max-width: 100px; 
-        }
-      }
+    &.visible {
+      border-radius: 40px;
+      gap: var(--space-xs);
 
       span {
-        @include v.typography-style(sm, main, bg-color-white);
-        display: inline-block; 
-        transform: translateX(50px);
-        opacity: 0;
-        visibility: hidden;
-        max-width: 0; 
-        overflow: hidden;
-
-        transition:
-          transform var(--transition-main),
-          opacity var(--transition-main),
-          max-width var(--transition-main),
-          visibility var(--transition-main);
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+        max-width: 100px;
       }
+    }
+
+    span {
+      @include v.typography-style(sm, main, bg-color-white);
+      display: inline-block;
+      transform: translateX(50px);
+      opacity: 0;
+      visibility: hidden;
+      max-width: 0;
+      overflow: hidden;
+
+      transition:
+        transform var(--transition-main),
+        opacity var(--transition-main),
+        max-width var(--transition-main),
+        visibility var(--transition-main);
     }
   }
 
@@ -266,7 +267,7 @@
               cursor: not-allowed;
               background-color: var(--bg-color-btn);
               svg {
-                color: #fbf7f7a8
+                color: #fbf7f7a8;
               }
             }
           }
@@ -279,12 +280,14 @@
   }
 }
 
-
 @media (max-width: v.$width-xxl) {
   .search {
     width: 90%;
     @include v.flex-row(center, center);
     &_btn {
+      display: none;
+    }
+    .search_icon {
       display: none;
     }
     &_input {

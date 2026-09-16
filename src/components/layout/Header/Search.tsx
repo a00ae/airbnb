@@ -48,76 +48,67 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
 
 /* Search Section Component */
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
-  const { search, citySearchFilter, setLoading, loading } =
+  console.log("Re-render");
+  const [nearby, setNearby] = useState<boolean>(false);
+  const curentRef = useRef<string | null>(null);
+  const { search, citySearchFilter, filter, setLoading, cityNames } =
     useApartmentsContext();
   const { searchQuery, setSearchQuery, setSelectedCity } = search;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+
+  console.log(cityNames);
 
   const handleChangeSearchValue = (value: string) => {
     setSearchQuery(value);
   };
 
   const handleClickSearch = (title: string) => {
-    const normalizedTitle = title.trim().toLowerCase(); // تحويل لـ where, when, who
+    const normalizedTitle = title.trim().toLowerCase();
     const currentActive = activeLabel?.trim().toLowerCase();
 
     onLabelChange(currentActive === normalizedTitle ? null : normalizedTitle);
   };
 
-  // 🟢 استخراج أسماء المدن بدون تكرار لـ "Suggested Destinations"
-
   const handleSelectCity = (city: string) => {
-    const activeCity = city.split(",")[0].trim().toLowerCase();
+    curentRef.current = city.split(",")[0].trim().toLowerCase();
     console.log("🚀 [1] تم الضغط على المدينة:", city);
 
-    if (activeCity === "nearby") {
-      setSelectedCity("");
-    } else {
-      // التأكد من إلغاء أي مؤقت سابق إن وجد
-      if (timerRef.current) {
-        console.log(
-          "⚠️ [2] تم إلغاء مؤقت سابق كان يعلم في الخلفية:",
-          timerRef.current,
-        );
-        clearTimeout(timerRef.current);
-      }
-
-      // 1. تشغيل حالة التحميل
-      console.log("⏳ [3] تغيير حالة loading إلى: true");
-      setLoading(true);
-
-      // 2. معالجة النص والتحديثات
-      console.log("✂️ [4] المدينة بعد القاطع والـ Trim:", activeCity);
-
-      setSelectedCity(activeCity);
-      onLabelChange(null);
-      setSearchQuery("");
-
-      // 3. ضبط المؤقت في الخلفية
-      timerRef.current = setTimeout(() => {
-        console.log("✅ [5] انقضت 500ms - تغيير حالة loading إلى: false");
-        setLoading(false);
-        timerRef.current = null; // إعادة تعيين المرجع
-      }, 500);
-
-      console.log("📌 [6] تم جدولة المؤقت برقم ID:", timerRef.current);
+    if (curentRef.current === "nearby") {
+      console.log("Nearby Clicked");
+      // تبديل حالة القريبة وتفادي مسح الوسم النشط
+      setNearby((prev) => !prev);
+      return;
     }
+
+    setNearby(false);
+
+    // إلغاء أي مؤقت سابق مفعل
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    setLoading(true);
+    setSelectedCity(curentRef.current);
+    setSearchQuery("");
+    onLabelChange("");
+
+    // جدولة إيقاف التحميل
+    timerRef.current = setTimeout(() => {
+      setLoading(false);
+      timerRef.current = null;
+    }, 500);
   };
 
-  // متابعة تنظيف المؤقت عند إغلاق المكون (Unmount)
+  // تنظيف المؤقت فقط عند خروج المكون من الشاشة (Unmount)
   useEffect(() => {
-    // نحفظ المرجع الحالي داخل المتغير لتجنب تحذيرات ESLint
-    const currentTimer = timerRef.current;
-
     return () => {
-      if (currentTimer) {
-        console.log("🧹 [Cleanup] تم إلغاء المؤقت بنجاح:", currentTimer);
-        clearTimeout(currentTimer);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
       }
     };
-  }, [loading]); // سيتنفّذ التنظيف كلما تغيرت حالة loading
+  }, []); // مصفوفة فارغة للتأكد من التنظيف عند Unmount فقط
 
-  /*=============== remove data search ===============*/
   const removeDataSearch = () => setSearchQuery("");
 
   return (
@@ -138,7 +129,6 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
             }`}>
             <p>{title}</p>
 
-            {/* 🟢 ربط حقل الإدخال بالـ State القادمة من الهوك */}
             {title === "Where" ? (
               <div className="inp-box">
                 <input
@@ -146,7 +136,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                   value={searchQuery}
                   onChange={(e) => handleChangeSearchValue(e.target.value)}
                   placeholder={descraption}
-                  onClick={(e) => e.stopPropagation()} // منع إغلاق القائمة عند الكتابة
+                  onClick={(e) => e.stopPropagation()}
                 />
 
                 <button
@@ -159,20 +149,24 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
             ) : (
               <span>{descraption}</span>
             )}
-
-            {title === "Who" && (
-              <div
-                className={`search_icon ${["where", "when", "who"].includes(activeLabel?.toLowerCase() ?? "") ? "visible" : ""}`}>
-                <RiSearchLine />
-                <span>Search</span>
-              </div>
-            )}
           </div>
         );
       })}
 
-      {/* شريط البحث الخاص بالشاشات الصغيرة */}
-      <div className="search_input">
+      <div
+        onClick={() => console.log("Search Clicked")}
+        className={`search_icon ${
+          ["where", "when", "who"].includes(activeLabel?.toLowerCase() ?? "")
+            ? "visible"
+            : ""
+        }`}>
+        <RiSearchLine />
+        <span>Search</span>
+      </div>
+
+      <div
+        onClick={() => console.log("Search Clicked")}
+        className="search_input">
         <RiSearchLine />
         <span data-search>Start your search</span>
       </div>
@@ -184,70 +178,75 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
           .map((item, i) => {
             return (
               <div key={i} className={`child-${item.type}`}>
-                {/* 🟢 قسم الوجهات - Where */}
-
-                
-
                 {item.type === "where" && (
                   <>
                     <span>Suggested destinations</span>
-                    {searchQuery.length > 2 
-                      ? citySearchFilter.map((ele) => (
+                    {searchQuery.length > 2 ? (
+                      citySearchFilter.map((ele) => (
+                        <div
+                          key={ele.id}
+                          className="where_card-btn search-city"
+                          onClick={() => handleSelectCity(ele.cityName)}>
                           <div
-                            key={ele.id}
-                            className="where_card-btn search-city"
-                            onClick={() => handleSelectCity(ele.cityName)}>
-                            <div
-                              style={{ backgroundColor: "#23322" }}
-                              className="svg">
-                              <RiMapPinLine />
-                            </div>
-                            <div className="card_descraption">
-                              <span>{ele.cityName}</span>
-                            </div>
+                            style={{ backgroundColor: "#23322" }}
+                            className="svg">
+                            <RiMapPinLine />
                           </div>
-                        ))
-
-
-                      : 
-
-
-                      
-                      item.whereData?.map(
-                          ({
-                            id,
-                            iconDataWhere,
-                            titleDataWhere,
-                            descraptionDataWhere,
-                            bgColor,
-                          }) => {
-
-                           
-
-                            return (
-
-                            <div
-                              key={id}
-                              className="where_card-btn"
-                              onClick={() => handleSelectCity(titleDataWhere)}>
-                              <div
-                                style={{ backgroundColor: bgColor }}
-                                className="svg">
-                                {iconDataWhere}
-                              </div>
-                              <div className="card_descraption">
-                                <span>{titleDataWhere}</span>
-                                <p>{descraptionDataWhere}</p>
-                              </div>
-                            </div>
+                          <div className="card_descraption">
+                            <span>{ele.cityName}</span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <>
+                        {!nearby
+                          ? item.whereData?.map(
+                              ({
+                                id,
+                                iconDataWhere,
+                                titleDataWhere,
+                                descraptionDataWhere,
+                                bgColor,
+                              }) => (
+                                <div
+                                  key={id}
+                                  className="where_card-btn"
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // منع إغلاق الـ Dropdown عند الضغط على الكارت
+                                    handleSelectCity(titleDataWhere);
+                                  }}>
+                                  <div
+                                    style={{ backgroundColor: bgColor }}
+                                    className="svg">
+                                    {iconDataWhere}
+                                  </div>
+                                  <div className="card_descraption">
+                                    <span>{titleDataWhere}</span>
+                                    <p>{descraptionDataWhere}</p>
+                                  </div>
+                                </div>
+                              ),
                             )
-                              
-                          },
-                        )}
+                          : cityNames.map((ele) => (
+                              <div
+                                key={ele.id}
+                                className="where_card-btn search-city"
+                                onClick={() => handleSelectCity(ele.cityName)}>
+                                <div
+                                  style={{ backgroundColor: "#23322" }}
+                                  className="svg">
+                                  <RiMapPinLine />
+                                </div>
+                                <div className="card_descraption">
+                                  <span>{ele.cityName}</span>
+                                </div>
+                              </div>
+                            ))}
+                      </>
+                    )}
                   </>
                 )}
 
-                {/* قسم الأشخاص - Who */}
                 {item.type === "who" && (
                   <>
                     {item.whoData?.map((who) => (
