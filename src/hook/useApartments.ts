@@ -89,8 +89,23 @@ const filter = useMemo(() => {
   );
 }, [cities, selectedCity]);
 
+
+// 3. ارجاع مصفوفة للمدن الموجودة فقط 
+  const cityNames = useMemo(() => {
+    if(!cities?.cities) return [];
+    
+    return Object.entries(cities.cities).map(([key, cityData]) => ({
+      cityName: key,
+      ...cityData,
+    }));
+
+  }, [cities]);
+
+
+
+
   return {
-    cities,
+    cityNames,
     loading,
     setLoading,
     error,
