@@ -10,6 +10,7 @@ import "./search.scss";
 import { useState, memo, useRef, useEffect } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartmentsContext } from "../../../context/ApartmentsContext";
+import { useNavigate, useParams } from 'react-router';
 
 type SearchProps = {
   activeLabel: string | null;
@@ -48,7 +49,8 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
 
 /* Search Section Component */
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
-  console.log("Re-render");
+  const navigate = useNavigate();
+  const { cityName } = useParams();
   const [nearby, setNearby] = useState<boolean>(false);
   const curentRef = useRef<string | null>(null);
   const { search, citySearchFilter, setLoading, cityNames } =
@@ -56,8 +58,15 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   const { searchQuery, setSearchQuery, setSelectedCity } = search;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-
-  console.log(cityNames);
+  // 1. مزامنة المدينة المحددة مع الـ URL عند التخصيص/التحديث
+  useEffect(() => {
+    if (cityName) {
+      const decodedCity = decodeURIComponent(cityName).toLowerCase();
+      setSelectedCity(decodedCity);
+    } else {
+      setSelectedCity("all");
+    }
+  }, [cityName, setSelectedCity]);
 
   const handleChangeSearchValue = (value: string) => {
     setSearchQuery(value);
@@ -70,20 +79,18 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
     onLabelChange(currentActive === normalizedTitle ? null : normalizedTitle);
   };
 
+  // 2. التعامل مع اختيار المدينة وتغيير الرابط الـ URL
   const handleSelectCity = (city: string) => {
-    curentRef.current = city.split(",")[0].trim().toLowerCase();
-    console.log("🚀 [1] تم الضغط على المدينة:", city);
+    const rawCity = city.split(",")[0].trim();
+    curentRef.current = rawCity.toLowerCase();
 
     if (curentRef.current === "nearby") {
-      console.log("Nearby Clicked");
-      // تبديل حالة القريبة وتفادي مسح الوسم النشط
       setNearby((prev) => !prev);
       return;
     }
 
     setNearby(false);
 
-    // إلغاء أي مؤقت سابق مفعل
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
@@ -91,25 +98,38 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
     setLoading(true);
     setSelectedCity(curentRef.current);
     setSearchQuery("");
-    onLabelChange("");
+    onLabelChange(null);
 
-    // جدولة إيقاف التحميل
+    // 🚀 الانتقال للمسار الجديد بناءً على المدينة المختارة
+    if (curentRef.current === "all" || curentRef.current === "I'm flexible" || curentRef.current === "im flexible") {
+      navigate("/airbnb");
+    } else {
+      navigate(`/airbnb/city/${encodeURIComponent(rawCity)}`);
+    }
+
     timerRef.current = setTimeout(() => {
       setLoading(false);
       timerRef.current = null;
-    }, 500);
+    }, 300);
   };
 
-  // تنظيف المؤقت فقط عند خروج المكون من الشاشة (Unmount)
   useEffect(() => {
     return () => {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
     };
-  }, []); // مصفوفة فارغة للتأكد من التنظيف عند Unmount فقط
+  }, []);
 
   const removeDataSearch = () => setSearchQuery("");
+
+  // 3. التنفيذ عند الضغط على أيقونة Search
+  const handleExecuteSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/airbnb/city/${encodeURIComponent(searchQuery.trim())}`);
+      onLabelChange(null);
+    }
+  };
 
   return (
     <div
@@ -154,7 +174,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
       })}
 
       <div
-        onClick={() => console.log("Search Clicked")}
+        onClick={handleExecuteSearch}
         className={`search_icon ${
           ["where", "when", "who"].includes(activeLabel?.toLowerCase() ?? "")
             ? "visible"
@@ -165,13 +185,13 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
       </div>
 
       <div
-        onClick={() => console.log("Search Clicked")}
+        onClick={handleExecuteSearch}
         className="search_input">
         <RiSearchLine />
         <span data-search>Start your search</span>
       </div>
 
-      {/* القائمة المنسدلة DropDown */}
+      {/* DropDown */}
       <DropDown className={activeLabel || ""}>
         {dataWhere
           .filter((item) => item.type === activeLabel?.toLowerCase().trim())
@@ -212,7 +232,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                                   key={id}
                                   className="where_card-btn"
                                   onClick={(e) => {
-                                    e.stopPropagation(); // منع إغلاق الـ Dropdown عند الضغط على الكارت
+                                    e.stopPropagation();
                                     handleSelectCity(titleDataWhere);
                                   }}>
                                   <div
