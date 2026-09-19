@@ -1,14 +1,7 @@
-import { Footer, Header, Main, Apt } from "./components";
-import { ApartmentsProvider } from "./context/ApartmentsContext";
+import { RouterProvider } from "react-router";
+import { router } from "./routes";
 function App() {
-  return (
-    <ApartmentsProvider>
-      <Header />
-      <Apt />
-      <Main />
-      <Footer />
-    </ApartmentsProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
