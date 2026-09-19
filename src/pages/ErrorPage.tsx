@@ -14,7 +14,7 @@ export default function ErrorPage() {
     <div className="error-container">
       <h1>عفواً! حدث خطأ ما</h1>
       <p>{errorMessage}</p>
-      <Link to="/" replace>
+      <Link to="/airbnb/" replace>
         العودة إلى الصفحة الرئيسية
       </Link>
     </div>
