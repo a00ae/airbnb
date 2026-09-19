@@ -1,17 +1,17 @@
 import { useApartmentsContext } from "../../../../context/ApartmentsContext";
-import NotFoundPage from "../../../ui/Error/NotFoundPage";
+import NotFoundPage from "../../../../pages/NotFoundPage";
 import Loader from "../../../ui/Loader/Loader";
 import "./apartments.scss";
 import { CityApartmentsRow } from "./components/CityApartmentsRow";
 
 export const PopularApartments = () => {
-  const { fliterCityData, error, loading, fatchData, search, filter } =
+  const { fliterCityData, error, loading, search, filter } =
     useApartmentsContext();
     console.log(filter)
   const { selectedCity, setSelectedCity } = search;
   if (loading) return <Loader />;
 
-  if (error) return <NotFoundPage errorMessage={error} fatchData={fatchData} />;
+  if (error) return <NotFoundPage />;
 
   if (filter.length === 0)
     return (
