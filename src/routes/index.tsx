@@ -6,6 +6,7 @@ import HomePage from '../pages/HomePage';
 // import ProfilePage from '../pages/ProfilePage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ErrorPage from '../pages/ErrorPage';
+import { PopularApartments } from '../components/layout/Main/apartments/PopularApartments';
 
 export const router = createBrowserRouter([
   {
@@ -17,14 +18,8 @@ export const router = createBrowserRouter([
         index: true, // يعني الصفحة الرئيسية عند المسار "/"
         element: <HomePage />,
       },
-    //   {
-    //     path: 'rooms/:id', // المسار الديناميكي للعقار "/rooms/123"
-    //     element: <RoomDetailPage />,
-    //   },
-    //   {
-    //     path: 'profile', // مسار الملف الشخصي "/profile"
-    //     element: <ProfilePage />,
-    //   },
+      { path: 'city/:cityName', element: <PopularApartments /> },
+      { path: '*', element: <NotFoundPage /> },
       {
         path: '*', // يطابق أي رابط خاطئ داخل الـ Layout
         element: <NotFoundPage />,

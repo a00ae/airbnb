@@ -12,7 +12,7 @@ export const useApartments = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("all");
 
-  const fatchData = async () => {
+  const fetchData = async () => {
     try {
       const response = await fetch(API_URL);
       if (!response.ok) {
@@ -22,14 +22,14 @@ export const useApartments = () => {
       console.log(data);
       setCities(data);
     } catch (error) {
-      setError("404" + error);
+      setError(error instanceof Error ? error.message : "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    Promise.resolve().then(fatchData);
+    Promise.resolve().then(fetchData);
   }, []);
 
   // البحث في أسماء المدن
@@ -48,7 +48,7 @@ export const useApartments = () => {
 
   // فلترة المدن المحددة
 // فلترة المدن المحددة داخل useApartments
-const fliterCityData = useMemo(() => {
+const filterCityData = useMemo(() => {
   if (!cities?.cities) return {};
 
   const cityFilter = selectedCity.trim().toLowerCase();
@@ -67,27 +67,27 @@ const fliterCityData = useMemo(() => {
   return {};
 }, [cities, selectedCity]);
   // استخراج المدن التي لا تطابق المدينة المحددة
-const filter = useMemo(() => {
-  if (!cities?.cities) return [];
+// const filter = useMemo(() => {
+//   if (!cities?.cities) return [];
 
-  const currentSelected = selectedCity.trim().toLowerCase();
+//   const currentSelected = selectedCity.trim().toLowerCase();
 
-  // تحويل كائن المدن بالكامل إلى مصفوفة
-  const allCitiesArray = Object.entries(cities.cities).map(([cityName, cityData]) => ({
-    cityName,
-    ...cityData,
-  }));
+//   // تحويل كائن المدن بالكامل إلى مصفوفة
+//   const allCitiesArray = Object.entries(cities.cities).map(([cityName, cityData]) => ({
+//     cityName,
+//     ...cityData,
+//   }));
 
-  // 1. إذا كانت الحالة "all" أو غير محدودة، ارجع جميع المدن
-  if (!currentSelected || currentSelected === "all") {
-    return allCitiesArray;
-  }
+//   // 1. إذا كانت الحالة "all" أو غير محدودة، ارجع جميع المدن
+//   if (!currentSelected || currentSelected === "all") {
+//     return allCitiesArray;
+//   }
 
-  // 2. عند اختيار مدينة معينة، ابقِ عليها فقط واحذف الباقي من المصفوفة
-  return allCitiesArray.filter(
-    (item) => item.cityName.toLowerCase() === currentSelected
-  );
-}, [cities, selectedCity]);
+//   // 2. عند اختيار مدينة معينة، ابقِ عليها فقط واحذف الباقي من المصفوفة
+//   return allCitiesArray.filter(
+//     (item) => item.cityName.toLowerCase() === currentSelected
+//   );
+// }, [cities, selectedCity]);
 
 
 // 3. ارجاع مصفوفة للمدن الموجودة فقط 
@@ -109,10 +109,10 @@ const filter = useMemo(() => {
     loading,
     setLoading,
     error,
-    fatchData,
-    fliterCityData,
+    fetchData,
+    filterCityData,
     citySearchFilter,
-    filter,
+    // filter,
     search: {
       searchQuery,
       setSearchQuery,
