@@ -5,12 +5,13 @@ import HomePage from '../pages/HomePage';
 // import RoomDetailPage from '../pages/RoomDetailPage';
 // import ProfilePage from '../pages/ProfilePage';
 import NotFoundPage from '../pages/NotFoundPage';
+import ErrorPage from '../pages/ErrorPage';
 
 export const router = createBrowserRouter([
   {
     path: '/airbnb/',
     element: <RootLayout />, // التخطيط الرئيسي الحاوي للهيدر والفوتر
-    errorElement: <NotFoundPage />, // في حال حدوث خطأ أثناء التحميل
+    errorElement: <ErrorPage />, // في حال حدوث خطأ أثناء التحميل
     children: [
       {
         index: true, // يعني الصفحة الرئيسية عند المسار "/"
