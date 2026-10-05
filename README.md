@@ -68,10 +68,10 @@ Open your browser and navigate to: `http://localhost:3000/airbnb`
 ## 📜 Available Scripts
 | Script | Description |
 | :--- | :--- |
-| `npm run start` | Runs the local development server with Vite |
-| `npm run preview` | Previews the production build locally |
-| `npm run deploy` | Deploys the built application directly to GitHub Pages |
-| `npm run lint` | Lints and formats the codebase using ESLint |
+| `pnpm run start` | Runs the local development server with Vite |
+| `pnpm run preview` | Previews the production build locally |
+| `pnpm run deploy` | Deploys the built application directly to GitHub Pages |
+| `pnpm run lint` | Lints and formats the codebase using ESLint |
 
 
 
