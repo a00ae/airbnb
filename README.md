@@ -55,13 +55,13 @@ cd airbnb
 ### 2. Install Dependencies
 
 ```bash
-    npm install
+    pnpm install
 ```
 
 ### 3. Run the Development Server
 
 ```bash
-    npm run start
+    pnpm run start
 ```
 Open your browser and navigate to: `http://localhost:3000/airbnb`
 
