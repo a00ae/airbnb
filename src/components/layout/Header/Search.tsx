@@ -7,14 +7,51 @@ import {
 } from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import { useState, memo, useRef, useEffect } from "react";
+import { useState, memo, useRef, useEffect, type ReactNode } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartmentsContext } from "../../../context/ApartmentsContext";
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from "react-router";
 
 type SearchProps = {
   activeLabel: string | null;
   onLabelChange: (label: string | null) => void;
+};
+
+type CityRecord = {
+  id: string | number;
+  cityName: string;
+};
+
+type DestinationData = {
+  id: string | number;
+  iconDataWhere: ReactNode;
+  titleDataWhere: string;
+  descraptionDataWhere: string;
+  bgColor: string;
+};
+
+type WhereSectionItem = {
+  type: string;
+  whereData?: DestinationData[];
+};
+
+type CityItemProps = {
+  cityName: string;
+  onSelect: (city: string) => void;
+};
+
+type DestinationItemProps = {
+  item: DestinationData;
+  onSelect: (city: string) => void;
+};
+
+type WhereSectionProps = {
+  item: WhereSectionItem;
+  searchQuery: string;
+  citySearchFilter: CityRecord[];
+  cityNames: CityRecord[];
+  nearby: boolean;
+  handleSelectCity: (city: string) => void;
 };
 
 // 1. Independent card component (contains its own counter)
@@ -44,6 +81,121 @@ const WhoCard = ({ who }: { who: DataSearchWho }) => {
         </button>
       </div>
     </div>
+  );
+};
+
+// 1. مكون فرعي لبطاقات المدن البسيطة
+const CityItem = ({ cityName, onSelect }: CityItemProps) => (
+  <div
+    className="where_card-btn search-city"
+    onClick={() => onSelect(cityName)}>
+    <div style={{ backgroundColor: "#23322" }} className="svg">
+      <RiMapPinLine />
+    </div>
+    <div className="card_descraption">
+      <span>{cityName}</span>
+    </div>
+  </div>
+);
+
+// 2. مكون فرعي للوجهات المخصصة
+const DestinationItem = ({ item, onSelect }: DestinationItemProps) => {
+  const { id, iconDataWhere, titleDataWhere, descraptionDataWhere, bgColor } =
+    item;
+
+  return (
+    <div
+      key={id}
+      className="where_card-btn"
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect(titleDataWhere);
+      }}>
+      <div style={{ backgroundColor: bgColor }} className="svg">
+        {iconDataWhere}
+      </div>
+      <div className="card_descraption">
+        <span>{titleDataWhere}</span>
+        <p>{descraptionDataWhere}</p>
+      </div>
+    </div>
+  );
+};
+
+// 3. مكون فرعي يعبر عن عدم وجود نتائج بحث (Empty State)
+const NoResultsFound = () => (
+  <div
+    className="no_results-container"
+    style={{ padding: "16px", textAlign: "center" }}>
+    <div
+      className="svg"
+      style={{ margin: "0 auto 8px auto", width: "fit-content" }}>
+      <RiSearchLine size={24} color="#888" />
+    </div>
+    <span style={{ fontWeight: "bold", display: "block" }}>
+      The city does not exist{" "}
+    </span>
+    <p style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>
+      Try searching for another city or make sure you spelled the name
+      correctly.{" "}
+    </p>
+  </div>
+);
+
+// 4. المكون الرئيسي
+const WhereSection = ({
+  item,
+  searchQuery,
+  citySearchFilter,
+  cityNames,
+  nearby,
+  handleSelectCity,
+}: WhereSectionProps) => {
+  if (item.type !== "where") return null;
+
+  const renderContent = () => {
+    // حالة البحث (أكثر من حرفين)
+    if (searchQuery.length > 2) {
+      // إما عرض المدن المطابقة أو عرض رسالة لا توجد نتائج
+      if (citySearchFilter.length > 0) {
+        return citySearchFilter.map((ele) => (
+          <CityItem
+            key={ele.id}
+            cityName={ele.cityName}
+            onSelect={handleSelectCity}
+          />
+        ));
+      }
+
+      return <NoResultsFound />;
+    }
+
+    // حالة عدم البحث + عدم تفعيل خيار القريب (عرض الوجهات المخصصة)
+    if (!nearby) {
+      return item.whereData?.map((data) => (
+        <DestinationItem
+          key={data.id}
+          item={data}
+          onSelect={handleSelectCity}
+        />
+      ));
+    }
+
+    // حالة عدم البحث + تفعيل خيار القريب (عرض قائمة المدن الافتراضية)
+    return cityNames.map((ele) => (
+      <CityItem
+        key={ele.id}
+        cityName={ele.cityName}
+        onSelect={handleSelectCity}
+      />
+    ));
+  };
+
+  return (
+    <>
+      <span>Suggested destinations</span>
+      {renderContent()}
+    </>
   );
 };
 
@@ -101,7 +253,11 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
     onLabelChange(null);
 
     // 🚀 الانتقال للمسار الجديد بناءً على المدينة المختارة
-    if (curentRef.current === "all" || curentRef.current === "I'm flexible" || curentRef.current === "im flexible") {
+    if (
+      curentRef.current === "all" ||
+      curentRef.current === "I'm flexible" ||
+      curentRef.current === "im flexible"
+    ) {
       navigate("/airbnb");
     } else {
       navigate(`/airbnb/city/${encodeURIComponent(rawCity)}`);
@@ -184,9 +340,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
         <span>Search</span>
       </div>
 
-      <div
-        onClick={handleExecuteSearch}
-        className="search_input">
+      <div onClick={handleExecuteSearch} className="search_input">
         <RiSearchLine />
         <span data-search>Start your search</span>
       </div>
@@ -200,71 +354,87 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
               <div key={i} className={`child-${item.type}`}>
                 {item.type === "where" && (
                   <>
-                    <span>Suggested destinations</span>
-                    {searchQuery.length > 2 ? (
-                      citySearchFilter.map((ele) => (
-                        <div
-                          key={ele.id}
-                          className="where_card-btn search-city"
-                          onClick={() => handleSelectCity(ele.cityName)}>
-                          <div
-                            style={{ backgroundColor: "#23322" }}
-                            className="svg">
-                            <RiMapPinLine />
-                          </div>
-                          <div className="card_descraption">
-                            <span>{ele.cityName}</span>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <>
-                        {!nearby
-                          ? item.whereData?.map(
-                              ({
-                                id,
-                                iconDataWhere,
-                                titleDataWhere,
-                                descraptionDataWhere,
-                                bgColor,
-                              }) => (
-                                <div
-                                  key={id}
-                                  className="where_card-btn"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleSelectCity(titleDataWhere);
-                                  }}>
-                                  <div
-                                    style={{ backgroundColor: bgColor }}
-                                    className="svg">
-                                    {iconDataWhere}
-                                  </div>
-                                  <div className="card_descraption">
-                                    <span>{titleDataWhere}</span>
-                                    <p>{descraptionDataWhere}</p>
-                                  </div>
-                                </div>
-                              ),
-                            )
-                          : cityNames.map((ele) => (
-                              <div
-                                key={ele.id}
-                                className="where_card-btn search-city"
-                                onClick={() => handleSelectCity(ele.cityName)}>
-                                <div
-                                  style={{ backgroundColor: "#23322" }}
-                                  className="svg">
-                                  <RiMapPinLine />
-                                </div>
-                                <div className="card_descraption">
-                                  <span>{ele.cityName}</span>
-                                </div>
-                              </div>
-                            ))}
-                      </>
-                    )}
+                    <WhereSection
+                      cityNames={cityNames}
+                      citySearchFilter={citySearchFilter}
+                      handleSelectCity={handleSelectCity}
+                      item={item}
+                      nearby={nearby}
+                      searchQuery={searchQuery}
+                      key={item.type}
+                    />
                   </>
+
+                  // <>
+
+                  //   <span>Suggested destinations</span>
+
+                  //   {searchQuery.length > 2 ? (
+                  //     citySearchFilter.map((ele) => (
+                  //       <div
+                  //         key={ele.id}
+                  //         className="where_card-btn search-city"
+                  //         onClick={() => handleSelectCity(ele.cityName)}>
+                  //         <div
+                  //           style={{ backgroundColor: "#23322" }}
+                  //           className="svg">
+                  //           <RiMapPinLine />
+                  //         </div>
+                  //         <div className="card_descraption">
+                  //           <span>{ele.cityName}</span>
+                  //         </div>
+                  //       </div>
+                  //     ))
+                  //   ) : (
+                  //     <>
+                  //       {!nearby
+                  //         ? item.whereData?.map(
+                  //             ({
+                  //               id,
+                  //               iconDataWhere,
+                  //               titleDataWhere,
+                  //               descraptionDataWhere,
+                  //               bgColor,
+                  //             }) => (
+                  //               <div
+                  //                 key={id}
+                  //                 className="where_card-btn"
+                  //                 onClick={(e) => {
+                  //                   e.stopPropagation();
+                  //                   handleSelectCity(titleDataWhere);
+                  //                 }}>
+                  //                 <div
+                  //                   style={{ backgroundColor: bgColor }}
+                  //                   className="svg">
+                  //                   {iconDataWhere}
+                  //                 </div>
+                  //                 <div className="card_descraption">
+                  //                   <span>{titleDataWhere}</span>
+                  //                   <p>{descraptionDataWhere}</p>
+                  //                 </div>
+                  //               </div>
+                  //             ),
+                  //           )
+                  //         :
+
+                  //         cityNames.map((ele) => (
+                  //             <div
+                  //               key={ele.id}
+                  //               className="where_card-btn search-city"
+                  //               onClick={() => handleSelectCity(ele.cityName)}>
+                  //               <div
+                  //                 style={{ backgroundColor: "#23322" }}
+                  //                 className="svg">
+                  //                 <RiMapPinLine />
+                  //               </div>
+                  //               <div className="card_descraption">
+                  //                 <span>{ele.cityName}</span>
+                  //               </div>
+                  //             </div>
+                  //           ))}
+                  //     </>
+                  //   )}
+                  // </>
                 )}
 
                 {item.type === "who" && (
