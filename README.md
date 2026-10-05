@@ -48,7 +48,7 @@ The primary functionality focuses on precise accommodation filtering and real-ti
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/a00ae/airbnb.git](https://github.com/a00ae/airbnb.git)
+git clone https://github.com/a00ae/airbnb.git
 cd airbnb 
 ```
 
