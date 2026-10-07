@@ -7,52 +7,12 @@ import {
 } from "@remixicon/react";
 import { dataWhere, itemButtonSearch, type DataSearchWho } from "./index";
 import "./search.scss";
-import { useState, memo, useRef, useEffect, type ReactNode } from "react";
+import { useState, memo, useRef, useEffect } from "react";
 import DropDown from "../../ui/Card/Drop-Down/Drop-down";
 import { useApartmentsContext } from "../../../context/ApartmentsContext";
 import { useNavigate, useParams } from "react-router";
-
-type SearchProps = {
-  activeLabel: string | null;
-  onLabelChange: (label: string | null) => void;
-};
-
-type CityRecord = {
-  id: string | number;
-  cityName: string;
-};
-
-type DestinationData = {
-  id: string | number;
-  iconDataWhere: ReactNode;
-  titleDataWhere: string;
-  descraptionDataWhere: string;
-  bgColor: string;
-};
-
-type WhereSectionItem = {
-  type: string;
-  whereData?: DestinationData[];
-};
-
-type CityItemProps = {
-  cityName: string;
-  onSelect: (city: string) => void;
-};
-
-type DestinationItemProps = {
-  item: DestinationData;
-  onSelect: (city: string) => void;
-};
-
-type WhereSectionProps = {
-  item: WhereSectionItem;
-  searchQuery: string;
-  citySearchFilter: CityRecord[];
-  cityNames: CityRecord[];
-  nearby: boolean;
-  handleSelectCity: (city: string) => void;
-};
+import type{CityItemProps,  DestinationItemProps, SearchProps, WhereSectionProps, } from "./index";
+ 
 
 // 1. Independent card component (contains its own counter)
 const WhoCard = ({ who }: { who: DataSearchWho }) => {
@@ -204,10 +164,10 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   const navigate = useNavigate();
   const { cityName } = useParams();
   const [nearby, setNearby] = useState<boolean>(false);
-  const curentRef = useRef<string | null>(null);
-  const { search, citySearchFilter, setLoading, cityNames } =
+  
+  const { search, citySearchFilter, setLoading, cityNames, curentRef } =
     useApartmentsContext();
-  const { searchQuery, setSearchQuery, setSelectedCity } = search;
+  const { searchQuery, setSearchQuery, setSelectedCity,  } = search;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 1. مزامنة المدينة المحددة مع الـ URL عند التخصيص/التحديث
@@ -220,6 +180,9 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
     }
   }, [cityName, setSelectedCity]);
 
+
+
+  
   const handleChangeSearchValue = (value: string) => {
     setSearchQuery(value);
   };
@@ -230,6 +193,8 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
 
     onLabelChange(currentActive === normalizedTitle ? null : normalizedTitle);
   };
+
+
 
   // 2. التعامل مع اختيار المدينة وتغيير الرابط الـ URL
   const handleSelectCity = (city: string) => {
@@ -258,9 +223,9 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
       curentRef.current === "I'm flexible" ||
       curentRef.current === "im flexible"
     ) {
-      navigate("/airbnb");
+      navigate("/");
     } else {
-      navigate(`/airbnb/city/${encodeURIComponent(rawCity)}`);
+      navigate(`/city/${encodeURIComponent(rawCity)}`);
     }
 
     timerRef.current = setTimeout(() => {
@@ -364,77 +329,6 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                       key={item.type}
                     />
                   </>
-
-                  // <>
-
-                  //   <span>Suggested destinations</span>
-
-                  //   {searchQuery.length > 2 ? (
-                  //     citySearchFilter.map((ele) => (
-                  //       <div
-                  //         key={ele.id}
-                  //         className="where_card-btn search-city"
-                  //         onClick={() => handleSelectCity(ele.cityName)}>
-                  //         <div
-                  //           style={{ backgroundColor: "#23322" }}
-                  //           className="svg">
-                  //           <RiMapPinLine />
-                  //         </div>
-                  //         <div className="card_descraption">
-                  //           <span>{ele.cityName}</span>
-                  //         </div>
-                  //       </div>
-                  //     ))
-                  //   ) : (
-                  //     <>
-                  //       {!nearby
-                  //         ? item.whereData?.map(
-                  //             ({
-                  //               id,
-                  //               iconDataWhere,
-                  //               titleDataWhere,
-                  //               descraptionDataWhere,
-                  //               bgColor,
-                  //             }) => (
-                  //               <div
-                  //                 key={id}
-                  //                 className="where_card-btn"
-                  //                 onClick={(e) => {
-                  //                   e.stopPropagation();
-                  //                   handleSelectCity(titleDataWhere);
-                  //                 }}>
-                  //                 <div
-                  //                   style={{ backgroundColor: bgColor }}
-                  //                   className="svg">
-                  //                   {iconDataWhere}
-                  //                 </div>
-                  //                 <div className="card_descraption">
-                  //                   <span>{titleDataWhere}</span>
-                  //                   <p>{descraptionDataWhere}</p>
-                  //                 </div>
-                  //               </div>
-                  //             ),
-                  //           )
-                  //         :
-
-                  //         cityNames.map((ele) => (
-                  //             <div
-                  //               key={ele.id}
-                  //               className="where_card-btn search-city"
-                  //               onClick={() => handleSelectCity(ele.cityName)}>
-                  //               <div
-                  //                 style={{ backgroundColor: "#23322" }}
-                  //                 className="svg">
-                  //                 <RiMapPinLine />
-                  //               </div>
-                  //               <div className="card_descraption">
-                  //                 <span>{ele.cityName}</span>
-                  //               </div>
-                  //             </div>
-                  //           ))}
-                  //     </>
-                  //   )}
-                  // </>
                 )}
 
                 {item.type === "who" && (
