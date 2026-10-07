@@ -2,14 +2,15 @@ import { RiSearchLine } from "@remixicon/react";
 import { useApartmentsContext } from "../../../../../context/ApartmentsContext";
 import "./list-search.scss";
 
-const ListSearch = () => {
-  const { filterCityData, curentRef } = useApartmentsContext();
 
+const ListSearch = () => {
+  const { filterCityData, search } = useApartmentsContext();
+  const {selectedCity} = search;
   const searchDate = Object.entries(filterCityData);
-  const isVisble =  curentRef.current
+
 
   return (
-    <section className={`list_search ${isVisble   ?  "visible" : ""}`}>
+    <section className={`list_search ${selectedCity !== "all" ?  "visible" : ""}`}>
 
       {/*  */}
       <div className="container">
