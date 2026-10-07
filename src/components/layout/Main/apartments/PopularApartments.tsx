@@ -35,7 +35,7 @@ export const PopularApartments = () => {
             type="button"
             onClick={() => {
               setSelectedCity("all");
-              navigate("/airbnb"); // التوجيه للرئيسية ومسار الرابط الأصلي
+              navigate("/"); // التوجيه للرئيسية ومسار الرابط الأصلي
             }}>
             Restart Search
           </button>
