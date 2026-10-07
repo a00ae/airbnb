@@ -165,9 +165,9 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   const { cityName } = useParams();
   const [nearby, setNearby] = useState<boolean>(false);
   
-  const { search, citySearchFilter, setLoading, cityNames, curentRef } =
+  const { search, citySearchFilter, setLoading, cityNames } =
     useApartmentsContext();
-  const { searchQuery, setSearchQuery, setSelectedCity,  } = search;
+  const { searchQuery, setSearchQuery, setSelectedCity} = search;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 1. مزامنة المدينة المحددة مع الـ URL عند التخصيص/التحديث
@@ -179,8 +179,6 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
       setSelectedCity("all");
     }
   }, [cityName, setSelectedCity]);
-
-
 
   
   const handleChangeSearchValue = (value: string) => {
@@ -199,9 +197,8 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   // 2. التعامل مع اختيار المدينة وتغيير الرابط الـ URL
   const handleSelectCity = (city: string) => {
     const rawCity = city.split(",")[0].trim();
-    curentRef.current = rawCity.toLowerCase();
-
-    if (curentRef.current === "nearby") {
+    const currentCity = rawCity.toLowerCase();
+    if (currentCity === "nearby") {
       setNearby((prev) => !prev);
       return;
     }
@@ -213,15 +210,15 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
     }
 
     setLoading(true);
-    setSelectedCity(curentRef.current);
+    setSelectedCity(currentCity);
     setSearchQuery("");
     onLabelChange(null);
 
     // 🚀 الانتقال للمسار الجديد بناءً على المدينة المختارة
     if (
-      curentRef.current === "all" ||
-      curentRef.current === "I'm flexible" ||
-      curentRef.current === "im flexible"
+      currentCity === "all" ||
+      currentCity === "I'm flexible" ||
+      currentCity === "im flexible"
     ) {
       navigate("/");
     } else {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo,  useState } from "react";
 import type { ApiResponse } from "../components/layout/Main/apartments/types/apartment.types";
 
 const API_URL = "https://api.npoint.io/4593405b89d26a12ebdb";
@@ -11,7 +11,6 @@ export const useApartments = () => {
   // الفلاتر
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("all");
-  const curentRef = useRef<string | null>(null);
 
   const fetchData = async () => {
     try {
@@ -22,7 +21,9 @@ export const useApartments = () => {
       const data: ApiResponse = await response.json();
       setCities(data);
     } catch (error) {
-      setError(error instanceof Error ? error.message : "An unexpected error occurred");
+      setError(
+        error instanceof Error ? error.message : "An unexpected error occurred",
+      );
     } finally {
       setLoading(false);
     }
@@ -38,7 +39,7 @@ export const useApartments = () => {
 
     return Object.entries(cities.cities)
       .filter(([cityName]) =>
-        cityName.toLowerCase().includes(searchQuery.trim().toLowerCase())
+        cityName.toLowerCase().includes(searchQuery.trim().toLowerCase()),
       )
       .map(([cityName, cityData]) => ({
         cityName,
@@ -47,62 +48,57 @@ export const useApartments = () => {
   }, [cities, searchQuery]);
 
   // فلترة المدن المحددة
-// فلترة المدن المحددة داخل useApartments
-const filterCityData = useMemo(() => {
-  if (!cities?.cities) return {};
+  // فلترة المدن المحددة داخل useApartments
+  const filterCityData = useMemo(() => {
+    if (!cities?.cities) return {};
 
-  const cityFilter = selectedCity.trim().toLowerCase();
+    const cityFilter = selectedCity.trim().toLowerCase();
 
-  if (!cityFilter || cityFilter === "all") {
-    return cities.cities;
-  }
+    if (!cityFilter || cityFilter === "all") {
+      return cities.cities;
+    }
 
-  // البحث بالحروف الصغيرة للمفتاح
-  if (cities.cities[cityFilter]) {
-    return {
-      [cityFilter]: cities.cities[cityFilter],
-    };
-  }
+    // البحث بالحروف الصغيرة للمفتاح
+    if (cities.cities[cityFilter]) {
+      return {
+        [cityFilter]: cities.cities[cityFilter],
+      };
+    }
 
-  return {};
-}, [cities, selectedCity]);
+    return {};
+  }, [cities, selectedCity]);
   // استخراج المدن التي لا تطابق المدينة المحددة
-// const filter = useMemo(() => {
-//   if (!cities?.cities) return [];
+  // const filter = useMemo(() => {
+  //   if (!cities?.cities) return [];
 
-//   const currentSelected = selectedCity.trim().toLowerCase();
+  //   const currentSelected = selectedCity.trim().toLowerCase();
 
-//   // تحويل كائن المدن بالكامل إلى مصفوفة
-//   const allCitiesArray = Object.entries(cities.cities).map(([cityName, cityData]) => ({
-//     cityName,
-//     ...cityData,
-//   }));
+  //   // تحويل كائن المدن بالكامل إلى مصفوفة
+  //   const allCitiesArray = Object.entries(cities.cities).map(([cityName, cityData]) => ({
+  //     cityName,
+  //     ...cityData,
+  //   }));
 
-//   // 1. إذا كانت الحالة "all" أو غير محدودة، ارجع جميع المدن
-//   if (!currentSelected || currentSelected === "all") {
-//     return allCitiesArray;
-//   }
+  //   // 1. إذا كانت الحالة "all" أو غير محدودة، ارجع جميع المدن
+  //   if (!currentSelected || currentSelected === "all") {
+  //     return allCitiesArray;
+  //   }
 
-//   // 2. عند اختيار مدينة معينة، ابقِ عليها فقط واحذف الباقي من المصفوفة
-//   return allCitiesArray.filter(
-//     (item) => item.cityName.toLowerCase() === currentSelected
-//   );
-// }, [cities, selectedCity]);
+  //   // 2. عند اختيار مدينة معينة، ابقِ عليها فقط واحذف الباقي من المصفوفة
+  //   return allCitiesArray.filter(
+  //     (item) => item.cityName.toLowerCase() === currentSelected
+  //   );
+  // }, [cities, selectedCity]);
 
-
-// 3. ارجاع مصفوفة للمدن الموجودة فقط 
+  // 3. ارجاع مصفوفة للمدن الموجودة فقط
   const cityNames = useMemo(() => {
-    if(!cities?.cities) return [];
-    
+    if (!cities?.cities) return [];
+
     return Object.entries(cities.cities).map(([key, cityData]) => ({
       cityName: key,
       ...cityData,
     }));
-
   }, [cities]);
-
-
-
 
   return {
     cityNames,
@@ -112,7 +108,6 @@ const filterCityData = useMemo(() => {
     fetchData,
     filterCityData,
     citySearchFilter,
-    curentRef,
     search: {
       searchQuery,
       setSearchQuery,
