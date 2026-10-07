@@ -15,7 +15,7 @@ The main objective of this project is to provide a fast, real-time search and fi
 ## 🔗 Live Demo
 
 You can interact with the live application here:
-👉 **[a00ae.github.io/airbnb](https://a00ae.github.io/airbnb)**
+👉 **[airbnb-alpha-flame.vercel.app/](https://airbnb-alpha-flame.vercel.app/)**
 
 ---
 
