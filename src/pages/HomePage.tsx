@@ -1,9 +1,12 @@
-import { Main } from '../components'
+import { PopularApartments } from "../components"
+
 
 
 const Homepage = () => {
   return (
-    <Main />
+   <>
+   <PopularApartments />
+   </>
   )
 }
 

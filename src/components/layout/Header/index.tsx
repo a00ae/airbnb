@@ -1,4 +1,5 @@
 import { RiCompassDiscoverLine, RiHotelLine } from "@remixicon/react";
+import type { ReactNode } from "react";
 
 interface SearchDataButton {
   title: string;
@@ -23,6 +24,50 @@ export type SerachType = {
   type: "where" | "who";
   whereData?: DataSearchWhere[];
   whoData?: DataSearchWho[]
+};
+
+
+
+export type SearchProps = {
+  activeLabel: string | null;
+  onLabelChange: (label: string | null) => void;
+};
+
+export type CityRecord = {
+  id: string | number;
+  cityName: string;
+};
+
+type DestinationData = {
+  id: string | number;
+  iconDataWhere: ReactNode;
+  titleDataWhere: string;
+  descraptionDataWhere: string;
+  bgColor: string;
+};
+
+export type WhereSectionItem = {
+  type: string;
+  whereData?: DestinationData[];
+};
+
+export type CityItemProps = {
+  cityName: string;
+  onSelect: (city: string) => void;
+};
+
+export type DestinationItemProps = {
+  item: DestinationData;
+  onSelect: (city: string) => void;
+};
+
+export type WhereSectionProps = {
+  item: WhereSectionItem;
+  searchQuery: string;
+  citySearchFilter: CityRecord[];
+  cityNames: CityRecord[];
+  nearby: boolean;
+  handleSelectCity: (city: string) => void;
 };
 
 export const itemButtonSearch: SearchDataButton[] = [

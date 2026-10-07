@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ApiResponse } from "../components/layout/Main/apartments/types/apartment.types";
 
 const API_URL = "https://api.npoint.io/4593405b89d26a12ebdb";
@@ -11,6 +11,7 @@ export const useApartments = () => {
   // الفلاتر
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("all");
+  const curentRef = useRef<string | null>(null);
 
   const fetchData = async () => {
     try {
@@ -19,7 +20,6 @@ export const useApartments = () => {
         throw Error("massing data not Found!!");
       }
       const data: ApiResponse = await response.json();
-      console.log(data);
       setCities(data);
     } catch (error) {
       setError(error instanceof Error ? error.message : "An unexpected error occurred");
@@ -112,7 +112,7 @@ const filterCityData = useMemo(() => {
     fetchData,
     filterCityData,
     citySearchFilter,
-    // filter,
+    curentRef,
     search: {
       searchQuery,
       setSearchQuery,

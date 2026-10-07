@@ -1,0 +1,38 @@
+@use "/src/styles/variables" as v;
+
+
+.list_search {
+    @include v.container-padding();
+    padding-top: 45px;
+    padding-bottom: 45px;
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        display: block;
+    }
+    .container {
+        border: 1px solid #fff;
+        padding: 5px ;
+        
+
+        .compnents_search {
+            @include v.flex-row(flex-start, center);
+            gap: 10px;
+
+            .city_inp {
+                background-color: #666;
+                @include v.flex-row(space-between, center);
+                input {
+                    @include v.typography-style(sm, main);
+                    text-transform: capitalize;
+                    line-height: 2.2;
+                }
+            }
+        }
+    }
+
+}

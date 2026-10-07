@@ -10,7 +10,7 @@ import { PopularApartments } from '../components/layout/Main/apartments/PopularA
 
 export const router = createBrowserRouter([
   {
-    path: '/airbnb/',
+    path: '/',
     element: <RootLayout />, // التخطيط الرئيسي الحاوي للهيدر والفوتر
     errorElement: <ErrorPage />, // في حال حدوث خطأ أثناء التحميل
     children: [
