@@ -63,10 +63,7 @@ export type DestinationItemProps = {
 
 export type WhereSectionProps = {
   item: WhereSectionItem;
-  searchQuery: string;
-  citySearchFilter: CityRecord[];
-  cityNames: CityRecord[];
-  nearby: boolean;
+  nearby?: boolean;
   handleSelectCity: (city: string) => void;
 };
 

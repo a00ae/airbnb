@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
         index: true, // يعني الصفحة الرئيسية عند المسار "/"
         element: <HomePage />,
       },
-      { path: 'city/:cityName', element: <PopularApartments /> },
+      { path: '/:cityName', element: <PopularApartments /> },
       { path: '*', element: <NotFoundPage /> },
       {
         path: '*', // يطابق أي رابط خاطئ داخل الـ Layout
