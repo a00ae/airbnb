@@ -105,19 +105,22 @@ const NoResultsFound = () => (
 // 4. المكون الرئيسي
 const WhereSection = ({
   item,
-  searchQuery,
-  citySearchFilter,
-  cityNames,
   nearby,
   handleSelectCity,
-}: WhereSectionProps) => {
+}: WhereSectionProps ) => {
+  const { filterCityData, search, cityNames, citySearchFilter } = useApartmentsContext();
+  const {searchQuery, selectedCity} = search;
+  const serchDateCity = Object.entries(filterCityData);
+
   if (item.type !== "where") return null;
+
+  
 
   const renderContent = () => {
     // حالة البحث (أكثر من حرفين)
     if (searchQuery.length > 2) {
       // إما عرض المدن المطابقة أو عرض رسالة لا توجد نتائج
-      if (citySearchFilter.length > 0) {
+      if (citySearchFilter.length > 0 ) {
         return citySearchFilter.map((ele) => (
           <CityItem
             key={ele.id}
@@ -125,6 +128,16 @@ const WhereSection = ({
             onSelect={handleSelectCity}
           />
         ));
+      }
+
+      if(selectedCity.length > 1) {
+        return serchDateCity.map(([ele, item]) => (
+           <CityItem
+            key={item.id}
+            cityName={ele}
+            onSelect={handleSelectCity}
+          />
+        ))
       }
 
       return <NoResultsFound />;
@@ -140,6 +153,7 @@ const WhereSection = ({
         />
       ));
     }
+
 
     // حالة عدم البحث + تفعيل خيار القريب (عرض قائمة المدن الافتراضية)
     return cityNames.map((ele) => (
@@ -165,9 +179,9 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   const { cityName } = useParams();
   const [nearby, setNearby] = useState<boolean>(false);
   
-  const { search, citySearchFilter, setLoading, cityNames } =
+  const { search, setLoading } =
     useApartmentsContext();
-  const { searchQuery, setSearchQuery, setSelectedCity} = search;
+  const { searchQuery, setSearchQuery, setSelectedCity, selectedCity} = search;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 1. مزامنة المدينة المحددة مع الـ URL عند التخصيص/التحديث
@@ -199,11 +213,11 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
     const rawCity = city.split(",")[0].trim();
     const currentCity = rawCity.toLowerCase();
     if (currentCity === "nearby") {
-      setNearby((prev) => !prev);
+      onLabelChange("when");
+      setSearchQuery("nearby");
+      console.log(selectedCity)
       return;
     }
-
-    setNearby(false);
 
     if (timerRef.current) {
       clearTimeout(timerRef.current);
@@ -222,7 +236,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
     ) {
       navigate("/");
     } else {
-      navigate(`/city/${encodeURIComponent(rawCity)}`);
+      navigate(`/${encodeURIComponent(rawCity)}`);
     }
 
     timerRef.current = setTimeout(() => {
@@ -244,7 +258,7 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   // 3. التنفيذ عند الضغط على أيقونة Search
   const handleExecuteSearch = () => {
     if (searchQuery.trim()) {
-      navigate(`/airbnb/city/${encodeURIComponent(searchQuery.trim())}`);
+      navigate(`/${encodeURIComponent(searchQuery.trim())}`);
       onLabelChange(null);
     }
   };
@@ -317,12 +331,9 @@ const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
                 {item.type === "where" && (
                   <>
                     <WhereSection
-                      cityNames={cityNames}
-                      citySearchFilter={citySearchFilter}
-                      handleSelectCity={handleSelectCity}
                       item={item}
                       nearby={nearby}
-                      searchQuery={searchQuery}
+                      handleSelectCity={handleSelectCity}
                       key={item.type}
                     />
                   </>

@@ -1,14 +1,21 @@
-import { useEffect, useMemo,  useState } from "react";
+import { useEffect, useMemo,   useState } from "react";
 import type { ApiResponse } from "../components/layout/Main/apartments/types/apartment.types";
 
 const API_URL = "https://api.npoint.io/4593405b89d26a12ebdb";
+
+// Title -----------------------------------------
+
+
+
+
 
 export const useApartments = () => {
   const [cities, setCities] = useState<ApiResponse>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  
 
-  // الفلاتر
+  //* الفلاتر
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("all");
 
@@ -33,7 +40,7 @@ export const useApartments = () => {
     Promise.resolve().then(fetchData);
   }, []);
 
-  // البحث في أسماء المدن
+  //* البحث في أسماء المدن
   const citySearchFilter = useMemo(() => {
     if (!cities?.cities) return [];
 
@@ -47,8 +54,8 @@ export const useApartments = () => {
       }));
   }, [cities, searchQuery]);
 
-  // فلترة المدن المحددة
-  // فلترة المدن المحددة داخل useApartments
+  //* فلترة المدن المحددة
+  //* فلترة المدن المحددة داخل useApartments
   const filterCityData = useMemo(() => {
     if (!cities?.cities) return {};
 
@@ -58,7 +65,7 @@ export const useApartments = () => {
       return cities.cities;
     }
 
-    // البحث بالحروف الصغيرة للمفتاح
+    //* البحث بالحروف الصغيرة للمفتاح
     if (cities.cities[cityFilter]) {
       return {
         [cityFilter]: cities.cities[cityFilter],
@@ -90,7 +97,7 @@ export const useApartments = () => {
   //   );
   // }, [cities, selectedCity]);
 
-  // 3. ارجاع مصفوفة للمدن الموجودة فقط
+  // * Note:. ارجاع مصفوفة للمدن الموجودة فقط
   const cityNames = useMemo(() => {
     if (!cities?.cities) return [];
 

@@ -1,38 +1,58 @@
 @use "/src/styles/variables" as v;
 
-
 .list_search {
-    @include v.container-padding();
-    padding-top: 45px;
-    padding-bottom: 45px;
-    opacity: 0;
-    visibility: hidden;
-    display: none;
+  --box-shadow: 0 0px 1px 0px rgb(134 134 134);
+  --border-radius: var(--space-sm);
+  --padding-inputs: var(--space-xxs);
+  --line-height: 2.2;
+  @include v.container-padding();
+  padding-top: 45px;
+  padding-bottom: 45px;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
 
-    &.visible {
-        opacity: 1;
-        visibility: visible;
-        display: block;
-    }
-    .container {
-        border: 1px solid #fff;
-        padding: 5px ;
-        
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    display: block;
+  }
+  .container {
+    padding: 5px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    @include v.flex-row(flex-start, center);
+    gap: 10px;
 
-        .compnents_search {
-            @include v.flex-row(flex-start, center);
-            gap: 10px;
+    .box-input {
+      flex: 1 1 0;
+      box-shadow: var(--box-shadow);
+      background-color: var(--bg-color-section);
+      border-radius: var(--border-radius);
+      padding: var(--padding-inputs);
+      @include v.typography-style(sm, main);
+      @include v.flex-row(space-between, center);
+      &.city_inp, &.street-address {
 
-            .city_inp {
-                background-color: #666;
-                @include v.flex-row(space-between, center);
-                input {
-                    @include v.typography-style(sm, main);
-                    text-transform: capitalize;
-                    line-height: 2.2;
-                }
-            }
+        svg {
+          padding-right: 8px;
         }
-    }
+      }
+      &.price {
+        line-height: var(--line-height);
+        cursor: pointer;
+      }
 
+      //   شارع
+    }
+  }
+}
+
+// inputs
+
+input {
+  text-transform: capitalize;
+  background-color: transparent;
+  line-height: var(--line-height);
+  @include v.typography-style(sm, main);
 }
