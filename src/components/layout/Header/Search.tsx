@@ -177,7 +177,7 @@ const WhereSection = ({
 const Search = ({ activeLabel, onLabelChange }: SearchProps) => {
   const navigate = useNavigate();
   const { cityName } = useParams();
-  const [nearby, setNearby] = useState<boolean>(false);
+  const nearby = false;
   
   const { search, setLoading } =
     useApartmentsContext();
